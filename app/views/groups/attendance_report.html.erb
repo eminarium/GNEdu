@@ -41,11 +41,14 @@
               </thead>
 
               <tbody>
+
+                <% if (@season_end_date.month >= @season_start_date.month) %>
+
                   <% (@season_start_date.month..@season_end_date.month).each do |month|  %>
                     <tr>
                       <td><%=  Date::MONTHNAMES[month] %></td>
 
-                      <% (Date.new(@season_start_date.year, month)..Date.new(@season_start_date.year, month, -1)).each do |month_day| %>
+                      <% (Date.new(@season_start_date.year, month)..Date.new(@season_end_date.year, month, -1)).each do |month_day| %>
 
                         <%# if (month_day == Date.new(@season_start_date.year, month, -1)) %>
                           <%# @group_attendance=@group.attendance_sheets.where("extract(year from \"attendanceSheetDate\") = ? AND extract(month from \"attendanceSheetDate\") = ? AND extract(day from \"attendanceSheetDate\") = ?", @season_start_date.year, month-1, month_day.day) %>
@@ -79,6 +82,88 @@
                       <% end %>
                     </tr>
                   <% end %>
+
+                <% else %>
+
+                  <% (@season_start_date.month..12).each do |month|  %>
+                      <tr>
+                        <td><%=  Date::MONTHNAMES[month] %></td>
+
+                        <% (Date.new(@season_start_date.year, month)..Date.new(@season_start_date.year, 12, -1)).each do |month_day| %>
+
+                            <%# if (month_day == Date.new(@season_start_date.year, month, -1)) %>
+                            <%# @group_attendance=@group.attendance_sheets.where("extract(year from \"attendanceSheetDate\") = ? AND extract(month from \"attendanceSheetDate\") = ? AND extract(day from \"attendanceSheetDate\") = ?", @season_start_date.year, month-1, month_day.day) %>
+                            <%# else %>
+                            <% @group_attendance=@group.attendance_sheets.where("extract(year from \"attendanceSheetDate\") = ? AND extract(month from \"attendanceSheetDate\") = ? AND extract(day from \"attendanceSheetDate\") = ?", @season_start_date.year, month, month_day.day-1) %>
+                            <%# end %>
+                            <% if (month_day < @season_start_date) %> <!-- If this day is not within current season -->
+                                <td style="background: #0000ff; color: white; font-weight: bolder; text-align: center"></td>
+                            <% elsif (month_day.sunday? && (@group_attendance.count == 0)) %> <!-- If Sunday and no accidental attendance taken this day -->
+                                <td style="background: red; color: white; font-weight: bolder; text-align: center">D</td>
+                            <% elsif (month_day.sunday? && (@group_attendance.count > 0)) %> <!-- If Sunday and accidental there is attendance taken this day -->
+                                <td style="background: orange; color: white; font-weight: bolder; text-align: center">
+                                  <%= link_to "D / <i class='fa fa-question'></i>".html_safe, self.attendance_sheet_path(:id => @group_attendance.first.id), :target => "_blank" %>
+                                </td>
+                            <% elsif ((@weekday_array.include? month_day.wday) ) %> <!-- If not Sunday and today is group lesson day  -->
+                                <%# && (month_day <= Date.today) %>
+                                <td style="text-align: center; background: gainsboro">
+                                  <% if (@group_attendance.count > 0) %> <!-- If there is attendance taken this day (and today is group lesson day)  -->
+                                      <%= link_to "<i class='fa fa-smile-o' style='color: blue; font-weight: bolder; font-size:16pt'></i>".html_safe, self.attendance_sheet_path(:id => @group_attendance.first.id), :target => "_blank" %>
+                                  <% else %> <!-- If there is no attendance taken this day (but today is group lesson day) -->
+                                      <%= link_to "<i class='fa fa-frown-o' style='color: red; font-weight: bolder; font-size:16pt'></i>".html_safe, new_attendance_sheet_path(:group_id => @group.id, :attendanceSheetDate => month_day), :target => "_blank" %>
+                                  <% end %>
+                                </td>
+                            <% elsif (@group_attendance.count > 0) %> <!-- This day is not lesson day and accidentally attendance is taken this day  -->
+                                <td style="text-align: center">
+                                  <%= link_to "<i class='fa fa-minus' style='color: #808080'></i> /  <i class='fa fa-question'></i>".html_safe, self.attendance_sheet_path(:id => @group_attendance.first.id), :target => "_blank" %>
+                                </td>
+                            <% else %> <!-- This day is not lesson day and no accidental attendance is taken this day  -->
+                                <td style="text-align: center"><i class="fa fa-minus" style="color: #808080"></i></td>
+                            <% end %>
+                        <% end %>
+                      </tr>
+                  <% end %>
+
+                  <% (1..@season_end_date.month).each do |month|  %>
+                      <tr>
+                        <td><%=  Date::MONTHNAMES[month] %></td>
+
+                        <% (Date.new(@season_end_date.year, month)..Date.new(@season_end_date.year, month, -1)).each do |month_day| %>
+
+                            <%# if (month_day == Date.new(@season_start_date.year, month, -1)) %>
+                            <%# @group_attendance=@group.attendance_sheets.where("extract(year from \"attendanceSheetDate\") = ? AND extract(month from \"attendanceSheetDate\") = ? AND extract(day from \"attendanceSheetDate\") = ?", @season_start_date.year, month-1, month_day.day) %>
+                            <%# else %>
+                            <% @group_attendance=@group.attendance_sheets.where("extract(year from \"attendanceSheetDate\") = ? AND extract(month from \"attendanceSheetDate\") = ? AND extract(day from \"attendanceSheetDate\") = ?", @season_end_date.year, month, month_day.day-1) %>
+                            <%# end %>
+                            <% if (month_day > @season_end_date+1.day) %> <!-- If this day is not within current season -->
+                                <td style="background: #0000ff; color: white; font-weight: bolder; text-align: center"></td>
+                            <% elsif (month_day.sunday? && (@group_attendance.count == 0)) %> <!-- If Sunday and no accidental attendance taken this day -->
+                                <td style="background: red; color: white; font-weight: bolder; text-align: center">D</td>
+                            <% elsif (month_day.sunday? && (@group_attendance.count > 0)) %> <!-- If Sunday and accidental there is attendance taken this day -->
+                                <td style="background: orange; color: white; font-weight: bolder; text-align: center">
+                                  <%= link_to "D / <i class='fa fa-question'></i>".html_safe, self.attendance_sheet_path(:id => @group_attendance.first.id), :target => "_blank" %>
+                                </td>
+                            <% elsif ((@weekday_array.include? month_day.wday) ) %> <!-- If not Sunday and today is group lesson day  -->
+                                <%# && (month_day <= Date.today) %>
+                                <td style="text-align: center; background: gainsboro">
+                                  <% if (@group_attendance.count > 0) %> <!-- If there is attendance taken this day (and today is group lesson day)  -->
+                                      <%= link_to "<i class='fa fa-smile-o' style='color: blue; font-weight: bolder; font-size:16pt'></i>".html_safe, self.attendance_sheet_path(:id => @group_attendance.first.id), :target => "_blank" %>
+                                  <% else %> <!-- If there is no attendance taken this day (but today is group lesson day) -->
+                                      <%= link_to "<i class='fa fa-frown-o' style='color: red; font-weight: bolder; font-size:16pt'></i>".html_safe, new_attendance_sheet_path(:group_id => @group.id, :attendanceSheetDate => month_day), :target => "_blank" %>
+                                  <% end %>
+                                </td>
+                            <% elsif (@group_attendance.count > 0) %> <!-- This day is not lesson day and accidentally attendance is taken this day  -->
+                                <td style="text-align: center">
+                                  <%= link_to "<i class='fa fa-minus' style='color: #808080'></i> /  <i class='fa fa-question'></i>".html_safe, self.attendance_sheet_path(:id => @group_attendance.first.id), :target => "_blank" %>
+                                </td>
+                            <% else %> <!-- This day is not lesson day and no accidental attendance is taken this day  -->
+                                <td style="text-align: center"><i class="fa fa-minus" style="color: #808080"></i></td>
+                            <% end %>
+                        <% end %>
+                      </tr>
+                  <% end %>
+
+                <% end %>
               </tbody>
 
               <tfoot>
