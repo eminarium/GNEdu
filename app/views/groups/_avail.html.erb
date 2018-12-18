@@ -1,0 +1,61 @@
+<h1>Toparlaryň Sanawy</h1>
+
+<%= link_to "<i class='fa fa-plus'></i>&nbsp; Täze Topar".html_safe, new_group_path, :class => "btn btn-primary"  %>
+
+<% if (notice) %>
+    <div class="alert alert-success fade in">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <p id="notice"><%= notice %></p>
+    </div>
+<% end %>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Dersi</th>
+    <th>Tapgyry</th>
+    <th>Wagty</th>
+    <th>Mugallymy</th>
+    <th>Görnüşi</th>
+    <th>Dili</th>
+    <th>Belgisi</th>
+    <th>Rezerw</th>
+    <th>Çäklendirme</th>
+    <th>Bellikler</th>
+    <th colspan="3"></th>
+    <th></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @groups.each do |group| %>
+      <tr>
+        <td><%= group.subject.subjectFullName %></td>
+        <td><%= group.season.seasonTitle %></td>
+        <td><%= group.lesson_time.lessonTimeTitle %></td>
+        <td><%= group.teacher.teacherFName+" "+group.teacher.teacherLName %></td>
+        <td><%= group.group_gender.groupGenderShortName %></td>
+        <td><%= group.group_language.groupLanguageShortName %></td>
+        <td><%= group.groupTitle %></td>
+        <td>
+          <% if (group.isReserve) %>
+              <i class="fa fa-check" style="color: lawngreen"></i>
+          <% else %>
+              <i class="fa fa-times" style="color: red"></i>
+          <% end %>
+        </td>
+        <td><%= group.groupLimit %></td>
+        <td><%= group.notes %></td>
+
+        <td><div style="float: right">
+          <%= link_to "Giňişleýin", group, :class => "btn btn-success" %>
+          <%= link_to "Üýtget", edit_group_path(group), :class => "btn btn-warning" %>
+          <%= link_to "Boz", group, method: :delete, data: { confirm: "Are you sure ?" }, :class => "btn btn-danger" %>
+        </div></td>
+
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>

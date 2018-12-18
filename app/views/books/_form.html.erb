@@ -1,0 +1,59 @@
+<%= form_for(@book) do |f| %>
+    <% if @book.errors.any? %>
+        <div id="error_explanation">
+          <div class="alert alert-danger">
+            <h2><%= @book.errors.count %> ýalňyş sebäpli maglumatlar kabul edilmedi...</h2>
+
+            <ul>
+              <% @book.errors.each do |attr, message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+    <% end %>
+
+    <%= f.file_field :imageUrl%>
+
+    <br>
+
+    <div><label class="col-sm-4 control-label">Ady</label>
+      <div class="col-sm-8"><%= f.text_field :bookName, :type => "text", :class => "form-control" %></div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Dili</label>
+      <div class="col-sm-8">
+        <%= f.collection_select(:book_language_id, @book_languages, :id, :bookLanguageShortName, :include_blank => t("Please_select"), :class => "form-control" ) %>
+      </div>
+    </div>
+
+    <br><br><br>
+
+
+    <div class="form-group">
+      <label class="font-noraml">Awtorlar</label>
+
+      <div class="input-group">
+        <%= f.collection_select(:author_id, @authors, :id, :full_name, {name: "author_id[]", id: "book_author_id", :selected => @id_array}, {class: "chosen-select", style: "width:350px", tabindex: "4", multiple: "true"}) %>
+      </div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Mukdary</label>
+      <div class="col-sm-8"><%= f.text_field :totalQuantity, :type => "text", :class => "form-control" %></div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Bellikler</label>
+      <div class="col-sm-8"><%= f.text_area :notes, :type => "text", :class => "form-control"  %></div>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Kabul Et", :class => "btn btn-success" %>
+    </div>
+
+<% end %>

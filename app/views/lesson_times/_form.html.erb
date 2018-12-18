@@ -1,0 +1,42 @@
+<%= form_for(@lesson_time) do |f| %>
+  <% if @lesson_time.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@lesson_time.errors.count, "error") %> prohibited this lesson_time from being saved:</h2>
+
+      <ul>
+      <% @lesson_time.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<div><label class="col-sm-4 control-label">Ady</label>
+    <div class="col-sm-8"><%= f.text_field :lessonTimeTitle, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Başlanýan Wagty</label>
+    <div class="col-sm-8"><%= f.time_select :lessonTimeFrom %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Tamamlanýan Wagty</label>
+    <div class="col-sm-8"><%= f.time_select :lessonTimeTo %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Bellikler</label>
+    <div class="col-sm-8"><%= f.text_area :notes, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div class="actions">
+    <%= f.submit "Kabul Et", :class => "btn btn-success" %>
+</div>
+
+<% end %>

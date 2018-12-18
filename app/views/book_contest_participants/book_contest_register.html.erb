@@ -1,0 +1,81 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-8">
+
+
+
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Kitap Bäsleşigi Hasaba Almak</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+            <a class="close-link">
+              <i class="fa fa-times"></i>
+            </a>
+          </div>
+        </div>
+
+
+
+
+
+        <div class="ibox-content">
+          <h3>
+            Kitap Bäsleşigi Hasaba Almak
+          </h3>
+          <br>
+
+
+              <div><label class="col-sm-12 control-label">Her Gatnaşyjynyň okajak kitabynyň dilini saýlamaly !</label>
+              </div>
+
+              <br><br><br>
+
+              <div><label class="col-sm-8 control-label">Diňleýjiler</label> <br><br>
+                <% @current_group_contracts.each do |gc| %>
+                    <div class="col-sm-6"><i>
+                      <%= gc.student.first_and_last_name %>
+                    </i></div>
+                      <% if (BookContestParticipant.find_by_contract_id(gc.id).blank?) %>
+                        <div class="col-sm-2"><i> --- </i></div>
+
+                        <div class="col-sm-2"><i>
+                          <%= link_to "Register", new_book_contest_participant_path(:contract_id => gc.id), :target => "_blank" %>
+                        </i></div><br><br>
+
+                    <% else %>
+                        <div class="col-sm-2"><i>
+                          <%= BookContestParticipant.find_by_contract_id(gc.id).book_language.bookLanguageShortName %>
+                        </i></div>
+
+                        <div class="col-sm-2"><i>
+                          <%= link_to "Update", edit_book_contest_participant_path(gc.id), :target => "_blank" %>
+                        </i></div><br><br>
+
+                      <% end %>
+
+                <% end %>
+              </div>
+
+              <br><br><br>
+
+
+          <br><br><br>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

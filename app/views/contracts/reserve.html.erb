@@ -1,0 +1,81 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Ätiýaç Şertnamalar Sanawy</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="ibox-content">
+
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover dataTables-example" >
+              <thead>
+              <tr>
+                <th>ID</th>
+                <th>Şertnama №</th>
+                <th>Diňleýjiniň maglumatlary</th>
+                <th>Öz Belgisi</th>
+                <th>SMS Belgisi</th>
+                <th>Topary</th>
+                <th>Tölegi</th>
+                <th>Şertnama Bellikler</th>
+                <th>Diňleýji Bellikler</th>
+              </tr>
+              </thead>
+
+              <tbody>
+              <% @reserve_contracts.each do |rc| %>
+                  <tr class="gradeA">
+                    <td><%= link_to rc.id, rc %></td>
+                    <td><%= link_to rc.seasonContractNo, rc %></td>
+                    <td><%= link_to rc.student.fName+" "+rc.student.lName+" "+rc.student.patronymic, rc.student %></td>
+                    <td><%= rc.student.mobilePhone %></td>
+                    <td><%= rc.student.smsMobilePhone %></td>
+                    <td>
+                      <% if rc.group %>
+                        <%= rc.group.groupTitle %>
+                      <% end %>
+                    </td>
+                    <td><%= rc.amountPaid %></td>
+                    <td><%= rc.notes %></td>
+                    <td><%= rc.student.notes %></td>
+                  </tr>
+              <% end %>
+              </tbody>
+              <tfoot>
+              <tr>
+                <th>ID</th>
+                <th>Şertnama №</th>
+                <th>Diňleýjiniň maglumatlary</th>
+                <th>Öz Belgisi</th>
+                <th>SMS Belgisi</th>
+                <th>Topary</th>
+                <th>Tölegi</th>
+                <th>Şertnama Bellikler</th>
+                <th>Diňleýji Bellikler</th>
+              </tr>
+              </tfoot>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+

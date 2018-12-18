@@ -1,0 +1,95 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+<div class="row">
+<div class="col-lg-5">
+
+
+
+  <div class="ibox float-e-margins">
+    <div class="ibox-title">
+      <h5>Kitap Maglumatlary</h5>
+      <div class="ibox-tools">
+        <a class="collapse-link">
+          <i class="fa fa-chevron-up"></i>
+        </a>
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          <i class="fa fa-wrench"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-user">
+          <li><a href="#">Config option 1</a>
+          </li>
+          <li><a href="#">Config option 2</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="ibox-content">
+      <h3>
+        Kitap Maglumatlary
+      </h3>
+      <br>
+
+
+      <p id="notice"><%= notice %></p>
+
+
+      <div><label class="col-sm-4 control-label">Ady</label>
+        <div class="col-sm-8"><i><%= @book.bookName %></i></div>
+      </div>
+
+      <br><br><br>
+
+      <div><label class="col-sm-4 control-label">Dili</label>
+        <div class="col-sm-8"><i><%= @book.book_language.bookLanguageFullName %></i></div>
+      </div>
+
+      <br><br><br>
+
+      <div><label class="col-sm-4 control-label">Awtorlary</label>
+        <div class="col-sm-8">
+          <i>
+            <% @authors = Author.where(:id => AuthorsBook.where(:book_id => @book.id).select(:author_id) ) %>
+
+            <% if (@authors.count>0)%>
+                <% @authors.each do |au| %>
+                    <%= link_to (au.authorFName.first(1)+". "+au.authorLName+" / "), au %>
+                <% end %>
+            <% else %>
+                Awtory berkidilmedik ...
+            <% end %>
+          </i>
+        </div>
+      </div>
+
+      <br><br><br>
+
+      <div><label class="col-sm-4 control-label">Mukdary</label>
+        <div class="col-sm-8"><i><%= @book.totalQuantity %></i></div>
+      </div>
+
+      <br><br><br>
+
+      <div><label class="col-sm-4 control-label">Bellikler</label>
+        <div class="col-sm-8"><i><%= @book.notes %></i></div>
+      </div>
+
+      <br><br><br>
+
+      <% if (check_restrictions(controller_name, 'edit')) %>
+          <%= link_to 'Üýtget', edit_book_path(@book), :class => "btn btn-warning" %> &nbsp;
+      <% end %>
+
+      <%= link_to 'Back', books_path, :class => "btn btn-outline btn-success" %>
+
+
+    </div>
+
+  </div>
+</div>
+
+</div>
+
+
+</div>
+</div>

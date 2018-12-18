@@ -1,0 +1,54 @@
+<script>
+    setTimeout(function(){
+        window.location.reload(1)
+    }, 10000)
+</script>
+
+<p id="notice"><%= notice %></p>
+<p id="notice"><%= notice %></p>
+
+<br><br><br><br><br>
+
+<% @current_registrar = @orders.first %>
+
+<div class="col-lg-6">
+    <div class="widget style1 yellow-bg">
+      <div class="row">
+        <div class="col-xs-4">
+          <i class="fa fa-info-circle fa-5x"></i>
+        </div>
+        <div class="col-xs-8 text-right">
+          <span>
+            <h1 class="font-bold">
+                <%= @current_registrar.user.full_name %>
+            </h1>
+          </span>
+          <h1 class="font-bold">
+            <font size='32'>
+              <%= @current_registrar.order_number %>
+            </font>
+          </h1>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<div class="col-lg-6">
+  <div class="widget style1 lazur-bg">
+    <div class="row">
+      <div class="col-xs-4">
+        <i class="fa fa-smile-o fa-5x"></i>
+      </div>
+      <div class="col-xs-8 text-right">
+          <h1 class="font-bold">
+            ÇAGYR -
+            <button type="button" class="btn btn-warning dim btn-large-dim">
+              <i class="fa fa-bell"></i>
+            </button>
+          </h1>
+      </div>
+
+    </div>
+  </div>
+</div>

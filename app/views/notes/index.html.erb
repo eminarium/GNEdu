@@ -1,0 +1,468 @@
+<h1>Bellikler</h1>
+<br>
+
+<!-- <%= link_to 'New Note', new_note_path %> -->
+
+<% if (@personal_notes.count>0) %>
+    <%= link_to "<i class='fa fa-plus'></i>&nbsp; Täze Bellik".html_safe, new_note_path, :class => "btn btn-primary"  %>
+<% end %>
+<br><br>
+
+
+<div class="tabs-container">
+<ul class="nav nav-tabs">
+  <li class="active">
+    <a data-toggle="tab" href="#tab-notes-personal"> Meniň Belliklerim  </a>
+  </li>
+  <li class="">
+    <a data-toggle="tab" href="#tab-notes-shared"> Meniň bilen Paýlaşylanlar </a>
+  </li>
+  <li class="">
+    <a data-toggle="tab" href="#tab-notes-public"> Umumy Paýlaşylan Bellikler (Public) </a>
+  </li>
+</ul>
+<div class="tab-content">
+
+<div id="tab-notes-personal" class="tab-pane active">
+
+  <div class="panel-body">
+
+    <% tmp_brdcrmb_1 = 0 %>
+    <% tmp_note_1 = 0 %>
+
+    <% if (@personal_notes.count>0) %>
+
+        <div class="fh-breadcrumb">
+
+          <div class="fh-column">
+            <div class="full-height-scroll">
+              <ul class="list-group elements-list">
+
+
+                <% @personal_notes.each do |note| %>
+                    <% tmp_brdcrmb_1 = tmp_brdcrmb_1+1 %>
+                    <li class="list-group-item <%= ((tmp_brdcrmb_1==1)?'active':'')%>">
+                      <a data-toggle="tab" href="#tab-<%= tmp_brdcrmb_1.to_s %>">
+                        <small class="pull-right text-muted">
+                          <% if (NotesUser.where(:note_id => note.id).exists?) %>
+                              <i class="fa fa-share-alt" style="font-size: 10pt"></i>
+                          <% elsif (note.isPublic) %>
+                              <i class="fa fa-rss" style="font-size: 10pt"></i>
+                          <% end %>
+                        </small>
+                        <strong>
+                          <% if (note.noteSubject.length>20) %>
+                              <%= note.noteSubject.first(20) %>...
+                          <% else %>
+                              <%= note.noteSubject %>
+                          <% end %>
+                        </strong>
+                        <div class="small m-t-xs">
+                          <p class="m-b-xs">
+                            <% if (note.noteContent.length>50) %>
+                                <%= note.noteContent.first(50) %>...
+                            <% else %>
+                                <%= note.noteContent %>
+                            <% end %>
+                            <br/>
+                          </p>
+                          <p class="m-b-none">
+
+                            <!-- <span class="label pull-right label-primary">SPECIAL</span> -->
+                            <i class="fa fa-clock-o"></i> <%= note.created_at.strftime("%d/%m/%Y %H:%M") %>
+                          </p>
+                        </div>
+                      </a>
+                    </li>
+
+                <% end %>
+
+              </ul>
+
+            </div>
+          </div>
+
+          <div class="full-height">
+            <div class="full-height-scroll white-bg border-left">
+
+              <div class="element-detail-box">
+
+                <div class="tab-content">
+
+                  <% @personal_notes.each do |note| %>
+                      <% tmp_note_1 = tmp_note_1+1 %>
+
+                      <div id="tab-<%= tmp_note_1.to_s %>" class="tab-pane <%= ((tmp_note_1==1)?'active':'')%>">
+                        <div class="pull-right">
+                          <div class="tooltip-demo">
+                            <%= link_to  "<i class='fa fa-edit'></i>".html_safe, edit_note_path(note), :class => "btn btn-white btn-xs" %>
+                            <%= link_to "<i class='fa fa-trash-o'></i>".html_safe, note, method: :delete, data: { confirm: "Hakykatdan hem bozmak isleýärsiňizmi ?" }, :class => "btn btn-white btn-xs" %>
+
+                            <!--
+                            <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="left" title="Plug this message"><i class="fa fa-plug"></i> Plug it</button>
+                            <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="top" title="Mark as read"><i class="fa fa-eye"></i> </button>
+                            <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="top" title="" data-original-title="Mark as important"><i class="fa fa-exclamation"></i> </button>
+                            <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="top" title="" data-original-title="Move to trash"><i class="fa fa-trash-o"></i> </button>
+                            -->
+
+                          </div>
+                        </div>
+                        <div class="small text-muted">
+                          <i class="fa fa-clock-o"></i> <%= note.created_at.strftime("%d/%m/%Y %H:%M") %>
+                        </div>
+
+                        <h1>
+                          <%= note.noteSubject %>
+                        </h1>
+
+                        <p>
+                          <%= note.noteContent %>
+                        </p>
+                        <p class="small">
+                          <strong>
+                            <% @shared_users = User.where(:id => NotesUser.where(:note_id => note.id).select(:user_id) ) %>
+                            <% @shared_users.each do |us| %>
+                                <%= (us.userFName.first(1)+". "+us.userLName+" / ") %>
+                            <% end %>
+                            <% if note.isPublic %>
+                                Ähli Ulanyjylar bilen Paýlaşylan ...
+                            <% end %>
+                          </strong>
+                        </p>
+
+                        <!--
+                      <div class="m-t-lg">
+                        <p>
+                          <span><i class="fa fa-paperclip"></i> 2 attachments - </span>
+                          <a href="#">Download all</a>
+                          |
+                          <a href="#">View all images</a>
+                        </p>
+
+
+                        <div class="attachment">
+                          <div class="file-box">
+                            <div class="file">
+                              <a href="#">
+                                <span class="corner"></span>
+
+                                <div class="icon">
+                                  <i class="fa fa-file"></i>
+                                </div>
+                                <div class="file-name">
+                                  Document_2014.doc
+                                  <br>
+                                  <small>Added: Jan 11, 2014</small>
+                                </div>
+                              </a>
+                            </div>
+
+                          </div>
+                          <div class="file-box">
+                            <div class="file">
+                              <a href="#">
+                                <span class="corner"></span>
+
+                                <div class="icon">
+                                  <i class="fa fa-line-chart"></i>
+                                </div>
+                                <div class="file-name">
+                                  Seels_2015.xls
+                                  <br>
+                                  <small>Added: May 13, 2015</small>
+                                </div>
+                              </a>
+                            </div>
+
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                        </div>
+                        -->
+
+                      </div>
+
+                  <% end %>
+
+                </div>
+
+              </div>
+            </div>
+
+
+
+          </div>
+        </div>
+    <% else %>
+        <ul class="notes">
+          <li>
+            <div>
+              <small><%= Date.today.strftime("%d/%m/%Y") %></small>
+              <h4>BELLIKLER ÝOK ...</h4>
+              <p>Bu ýerde mowzuklar boýunça şahsy bellikleriňizi ýazyp bilersiňiz. Her belligi islendik ulanyjy bilen hem paýlaşyp bilersiňiz...</p>
+              <!-- <a href="#"><i class="fa fa-trash-o "></i></a> -->
+              <%= link_to  "Täze Bellik", new_note_path, :class => 'btn btn-warning btn-rounded' %>
+            </div>
+          </li>
+        </ul>
+    <% end %>
+
+
+  </div>
+</div>
+
+
+<div id="tab-notes-shared" class="tab-pane">
+
+  <div class="panel-body">
+
+    <% tmp_brdcrmb_2 = tmp_brdcrmb_1 %>
+    <% tmp_note_2 = tmp_note_1 %>
+
+    <% if (@shared_notes.count>0) %>
+
+        <div class="fh-breadcrumb">
+
+          <div class="fh-column">
+            <div class="full-height-scroll">
+              <ul class="list-group elements-list">
+
+                <% @shared_notes.each do |note| %>
+                    <% tmp_brdcrmb_2 = tmp_brdcrmb_2+1 %>
+                    <li class="list-group-item <%= ((tmp_brdcrmb_2==(tmp_brdcrmb_1+1))?'active':'')%>">
+                      <a data-toggle="tab" href="#tab-<%= tmp_brdcrmb_2.to_s %>">
+                        <small class="pull-right text-muted">
+                          <% @note_user = User.find_by_id(note.user_id) %>
+                          <%= (@note_user.userFName.first(1)+". "+@note_user.userLName) %>
+                        </small>
+                        <strong>
+                          <% if (note.noteSubject.length>20) %>
+                              <%= note.noteSubject.first(20) %>...
+                          <% else %>
+                              <%= note.noteSubject %>
+                          <% end %>
+                        </strong>
+                        <div class="small m-t-xs">
+                          <p class="m-b-xs">
+                            <% if (note.noteContent.length>50) %>
+                                <%= note.noteContent.first(50) %>...
+                            <% else %>
+                                <%= note.noteContent %>
+                            <% end %>
+                            <br/>
+                          </p>
+                          <p class="m-b-none">
+
+                            <!-- <span class="label pull-right label-primary">SPECIAL</span> -->
+                            <i class="fa fa-clock-o"></i> <%= note.created_at.strftime("%d/%m/%Y %H:%M") %>
+                          </p>
+                        </div>
+                      </a>
+                    </li>
+
+                <% end %>
+
+              </ul>
+
+            </div>
+          </div>
+
+          <div class="full-height">
+            <div class="full-height-scroll white-bg border-left">
+
+              <div class="element-detail-box">
+
+                <div class="tab-content">
+
+                  <% @shared_notes.each do |note| %>
+                      <% tmp_note_2 = tmp_note_2+1 %>
+
+                      <div id="tab-<%= tmp_note_2.to_s %>" class="tab-pane <%= ((tmp_note_2==(tmp_note_1+1))?'active':'')%>">
+                        <div class="pull-right">
+                          <div class="tooltip-demo">
+                            <!--
+                            <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="left" title="Plug this message"><i class="fa fa-plug"></i> Plug it</button>
+                            <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="top" title="Mark as read"><i class="fa fa-eye"></i> </button>
+                            <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="top" title="" data-original-title="Mark as important"><i class="fa fa-exclamation"></i> </button>
+                            <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="top" title="" data-original-title="Move to trash"><i class="fa fa-trash-o"></i> </button>
+                            -->
+
+                          </div>
+                        </div>
+                        <div class="small text-muted">
+                          <i class="fa fa-clock-o"></i> <%= note.created_at.strftime("%d/%m/%Y %H:%M") %>
+                        </div>
+
+                        <h1>
+                          <%= note.noteSubject %>
+                        </h1>
+
+                        <p>
+                          <%= note.noteContent %>
+                        </p>
+                        <p class="small">
+                          <strong>
+                            <% @note_user = User.find_by_id(note.user_id) %>
+                            <%= (@note_user.userFName.first(1)+". "+@note_user.userLName) %>
+                          </strong>
+                        </p>
+
+                      </div>
+
+                  <% end %>
+
+                </div>
+
+              </div>
+            </div>
+
+
+
+          </div>
+        </div>
+    <% else %>
+        <ul class="notes">
+          <li>
+            <div>
+              <small><%= Date.today.strftime("%d/%m/%Y") %></small>
+              <h4>SIZIŇ BILEN PAÝLAŞYLAN BELLIKLER ÝOK ...</h4>
+              <p>Bu ýerde başga ulanyjylar tarapyndan ýazylan we Siziň bilen paýlaşylan bellikler peýda bolýar...</p>
+              <!-- <a href="#"><i class="fa fa-trash-o "></i></a> -->
+            </div>
+          </li>
+        </ul>
+    <% end %>
+
+  </div>
+</div>
+
+
+    <!-- Umumy Ähli ulanyjylar bilen paýlaşylan Bellikler -->
+
+<div id="tab-notes-public" class="tab-pane">
+
+  <div class="panel-body">
+
+    <% tmp_brdcrmb_3 = tmp_brdcrmb_2 %>
+    <% tmp_note_3 = tmp_note_2 %>
+
+    <% if (@public_notes.count>0) %>
+
+        <div class="fh-breadcrumb">
+
+          <div class="fh-column">
+            <div class="full-height-scroll">
+              <ul class="list-group elements-list">
+
+                <% @public_notes.each do |note| %>
+                    <% tmp_brdcrmb_3 = tmp_brdcrmb_3+1 %>
+                    <li class="list-group-item <%= ((tmp_brdcrmb_3==(tmp_brdcrmb_2+1))?'active':'')%>">
+                      <a data-toggle="tab" href="#tab-<%= tmp_brdcrmb_3.to_s %>">
+                        <small class="pull-right text-muted">
+                          <% @note_user = User.find_by_id(note.user_id) %>
+                          <%= (@note_user.userFName.first(1)+". "+@note_user.userLName) %>
+                        </small>
+                        <strong>
+                          <% if (note.noteSubject.length>20) %>
+                              <%= note.noteSubject.first(20) %>...
+                          <% else %>
+                              <%= note.noteSubject %>
+                          <% end %>
+                        </strong>
+                        <div class="small m-t-xs">
+                          <p class="m-b-xs">
+                            <% if (note.noteContent.length>50) %>
+                                <%= note.noteContent.first(50) %>...
+                            <% else %>
+                                <%= note.noteContent %>
+                            <% end %>
+                            <br/>
+                          </p>
+                          <p class="m-b-none">
+
+                            <!-- <span class="label pull-right label-primary">SPECIAL</span> -->
+                            <i class="fa fa-clock-o"></i> <%= note.created_at.strftime("%d/%m/%Y %H:%M") %>
+                          </p>
+                        </div>
+                      </a>
+                    </li>
+
+                <% end %>
+
+              </ul>
+
+            </div>
+          </div>
+
+          <div class="full-height">
+            <div class="full-height-scroll white-bg border-left">
+
+              <div class="element-detail-box">
+
+                <div class="tab-content">
+
+                  <% @public_notes.each do |note| %>
+                      <% tmp_note_3 = tmp_note_3+1 %>
+
+                      <div id="tab-<%= tmp_note_3.to_s %>" class="tab-pane <%= ((tmp_note_3==(tmp_note_2+1))?'active':'')%>">
+                        <div class="pull-right">
+                          <div class="tooltip-demo">
+                            <!--
+                            <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="left" title="Plug this message"><i class="fa fa-plug"></i> Plug it</button>
+                            <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="top" title="Mark as read"><i class="fa fa-eye"></i> </button>
+                            <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="top" title="" data-original-title="Mark as important"><i class="fa fa-exclamation"></i> </button>
+                            <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="top" title="" data-original-title="Move to trash"><i class="fa fa-trash-o"></i> </button>
+                            -->
+
+                          </div>
+                        </div>
+                        <div class="small text-muted">
+                          <i class="fa fa-clock-o"></i> <%= note.created_at.strftime("%d/%m/%Y %H:%M") %>
+                        </div>
+
+                        <h1>
+                          <%= note.noteSubject %>
+                        </h1>
+
+                        <p>
+                          <%= note.noteContent %>
+                        </p>
+                        <p class="small">
+                          <strong>
+                            <% @note_user = User.find_by_id(note.user_id) %>
+                            <%= (@note_user.userFName.first(1)+". "+@note_user.userLName) %>
+                          </strong>
+                        </p>
+
+                      </div>
+
+                  <% end %>
+
+                </div>
+
+              </div>
+            </div>
+
+
+
+          </div>
+        </div>
+    <% else %>
+        <ul class="notes">
+          <li>
+            <div>
+              <small><%= Date.today.strftime("%d/%m/%Y") %></small>
+              <h4>UMUMY PAÝLAŞYLAN BELLIKLER ÝOK ...</h4>
+              <p>Bu ýerde başga ulanyjylar tarapyndan ýazylan we Umumy paýlaşylan bellikler peýda bolýar...</p>
+              <!-- <a href="#"><i class="fa fa-trash-o "></i></a> -->
+            </div>
+          </li>
+        </ul>
+    <% end %>
+
+  </div>
+</div>
+
+
+</div>
+</div>

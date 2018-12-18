@@ -1,0 +1,110 @@
+<h1>Ýaryşa Gatnaşyjylar Sanawy</h1>
+<%= link_to "<i class='fa fa-plus'></i>&nbsp; Täze Ýaryşa Gatnaşyjy".html_safe, new_book_contest_participant_path, :class => "btn btn-primary"  %>
+
+<% if (notice) %>
+    <div class="alert alert-success fade in">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <p id="notice"><%= notice %></p>
+    </div>
+<% end %>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Ýaryşa Gatnaşyjylar Sanawy</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="ibox-content">
+
+          <div class="table-responsive">
+
+            <table class="table table-striped table-bordered table-hover dataTables-example">
+              <thead>
+              <tr>
+                <th>Gatnaşyjy</th>
+                <th>Ýaryş</th>
+                <th>Kitaby</th>
+                <th>Ugry</th>
+                <th>Derejesi</th>
+                <th>Mobile</th>
+                <th>SMS</th>
+                <th>Öý Belgisi</th>
+                <th>Salgysy</th>
+                <th>Mekdebi</th>
+                <th>Mekdebi-2</th>
+                <th>Synpy</th>
+                <th>Bellikler</th>
+                <th>Amallar</th>
+              </tr>
+              </thead>
+
+              <tbody>
+              <% @book_contest_participants.each do |book_contest_participant| %>
+                  <tr>
+                    <td><%= link_to book_contest_participant.contract.student.first_and_last_name, book_contest_participant.contract %></td>
+                    <td><%= link_to book_contest_participant.book_contest.bookContestName, book_contest_participant.book_contest %></td>
+                    <td><%= link_to book_contest_participant.book_language.bookLanguageShortName, book_contest_participant.book_language %></td>
+                    <td><%= book_contest_participant.contract.group.subject.subject_category.subjectCategoryFullName %></td>
+                    <td><%= book_contest_participant.contract.group.subject.subjectFullName %></td>
+                    <td><%= book_contest_participant.contract.student.mobilePhone %></td>
+                    <td><%= book_contest_participant.contract.student.smsMobilePhone %></td>
+                    <td><%= book_contest_participant.contract.student.homePhone %></td>
+                    <td><%= book_contest_participant.contract.student.addressBody %></td>
+                    <td><%= book_contest_participant.contract.student.schoolNo %></td>
+                    <td><%= book_contest_participant.contract.student.schoolName %></td>
+                    <td><%= book_contest_participant.contract.student.schoolYear %></td>
+                    <td><%= book_contest_participant.notes %></td>
+                    <td><div style="float: right">
+                      <%= link_to "Giňişleýin", book_contest_participant, :class => "btn btn-success" %>
+                      <%= link_to "Üýtget", edit_book_contest_participant_path(book_contest_participant), :class => "btn btn-warning" %>
+                      <% link_to "Boz", book_contest_participant, method: :delete, data: { confirm: "Are you sure ?" }, :class => "btn btn-danger" %>
+                    </div></td>
+                  </tr>
+              <% end %>
+              </tbody>
+
+              <tfoot>
+              <tr>
+                <th>Gatnaşyjy</th>
+                <th>Ýaryş</th>
+                <th>Kitaby</th>
+                <th>Ugry</th>
+                <th>Derejesi</th>
+                <th>Mobile</th>
+                <th>SMS</th>
+                <th>Öý Belgisi</th>
+                <th>Salgysy</th>
+                <th>Mekdebi</th>
+                <th>Mekdebi-2</th>
+                <th>Synpy</th>
+                <th>Bellikler</th>
+                <th>Amallar</th>
+              </tr>
+              </tfoot>
+
+            </table>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+

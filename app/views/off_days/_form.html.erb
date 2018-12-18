@@ -1,0 +1,45 @@
+<%= form_for(@off_day) do |f| %>
+    <% if @off_day.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@off_day.errors.count, "error") %> prohibited this high_school from being saved:</h2>
+
+          <ul>
+            <% @off_day.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div><label class="col-sm-4 control-label">Dynç Güni Sebäbi</label>
+      <div class="col-sm-8"><%= f.text_field :off_day_title, :type => "text", :class => "form-control" %></div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Senesi</label>
+      <div class="col-sm-8"><%= f.date_select :off_day_date, :start_year => 2015, :end_year => 2017 %></div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Ýyllyk gaýtalanýarmy:</label>
+      <div class="col-sm-8"><%= f.check_box :is_annual, :type => "checkbox", :class => "checkbox checkbox-primary", :id => "checkboxProjector" %></div>
+      <label for="checkboxProjector">
+
+      </label>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Bellikler</label>
+      <div class="col-sm-8"><%= f.text_area :notes, :type => "text", :class => "form-control"  %></div>
+    </div>
+
+    <br><br><br>
+
+    <div class="actions">
+      <%= f.submit "Kabul Et", :class => "btn btn-success" %>
+    </div>
+
+<% end %>

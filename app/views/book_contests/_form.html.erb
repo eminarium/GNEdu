@@ -1,0 +1,40 @@
+<%= form_for(@book_contest) do |f| %>
+    <% if @book_contest.errors.any? %>
+        <div id="error_explanation">
+          <div class="alert alert-danger">
+            <h2><%= @book_contest.errors.count %> ýalňyş sebäpli maglumatlar kabul edilmedi...</h2>
+
+            <ul>
+              <% @book_contest.errors.each do |attr, message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+    <% end %>
+
+    <div><label class="col-sm-4 control-label">Ýaryşyň Ady</label>
+      <div class="col-sm-8"><%= f.text_field :bookContestName, :type => "text", :class => "form-control" %></div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Tapgyry</label>
+      <div class="col-sm-8">
+        <%= f.collection_select(:season_id, @seasons, :id, :seasonNo, :include_blank => t("Please_select"), :class => "form-control" ) %>
+      </div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Bellikler</label>
+      <div class="col-sm-8"><%= f.text_area :notes, :type => "text", :class => "form-control"  %></div>
+    </div>
+
+    <br><br><br>
+
+    <div class="actions">
+      <%= f.submit "Kabul Et", :class => "btn btn-success" %>
+    </div>
+
+<% end %>

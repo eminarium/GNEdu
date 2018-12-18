@@ -1,0 +1,335 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-5">
+
+
+
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Mugallym Maglumatlary</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+        <div class="ibox-content">
+          <h3>
+            Mugallymyň Maglumatlary
+          </h3>
+          <br>
+
+
+<p id="notice"><%= notice %></p>
+
+
+<div><label class="col-sm-4 control-label">Ady</label>
+    <div class="col-sm-8"><i><%= @teacher.teacherFName %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Familiýasy</label>
+    <div class="col-sm-8"><i><%= @teacher.teacherLName %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Atasynyň Ady</label>
+    <div class="col-sm-8"><i><%= @teacher.teacherPatronymic %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Jynsy</label>
+    <div class="col-sm-8">
+      <i>
+        <% if (@teacher.gender)  %>
+            <%= Student::GENDER_TYPES[1][0] %>
+        <% else %>
+            <%= Student::GENDER_TYPES[0][0] %>
+        <% end %>
+      </i>
+    </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Ulanyjysy</label>
+    <div class="col-sm-8"><i><%= ((@teacher.user) ? @teacher.user.userLogin : "") %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Ulanyjy Role</label>
+    <div class="col-sm-8"><i><%= ((@teacher.user) ? @teacher.user.role.name : "") %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Bellikler</label>
+    <div class="col-sm-8"><i><%= @teacher.notes %></i></div>
+</div>
+
+<br><br><br>
+
+<% if (check_restrictions(controller_name, 'edit')) %>
+    <%= link_to 'Üýtget', edit_teacher_path(@teacher), :class => "btn btn-warning" %> &nbsp;
+<% end %>
+
+<% if (check_restrictions(controller_name, 'index')) %>
+    <%= link_to 'Back', teachers_path, :class => "btn btn-outline btn-success" %>
+<% end %>
+
+
+        </div>
+
+      </div>
+    </div>
+
+
+<div class="col-lg-7">
+
+  <!-- #########################################  TOPAR MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+  <div class="ibox  float-e-margins">
+    <div class="ibox-title" style="border-color: green">
+      <h5>OKADÝAN TOPARLARY (Tapgyr - <%= Season.find_by_id(@current_season_id).seasonNo %>)</h5>
+      <div class="ibox-tools">
+        <a class="collapse-link">
+          <i class="fa fa-chevron-up" style="color: green"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="ibox-content" style="border-color: green">
+
+<!-- #########################################  TOPAR MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+<!-- #########################################  TOPAR MAGLUMATLARY - START ############################# -->
+
+<!-- <h3>i</h3> -->
+
+
+
+
+<% if (@teachersCurrentGroups.count > 0) %>
+
+<div class="col-sm-4"><u><b>Topary</b></u></div>
+<div class="col-sm-3"><u><b>Ady</b></u></div>
+<div class="col-sm-2"><u><b>Wagty</b></u></div>
+<div class="col-sm-3"><u><b>Günleri</b></u></div>
+<br><br><br>
+
+<% @teachersCurrentGroups.order(:groupTitle).each do |tg| %>
+  <div>
+    <div class="col-sm-4"><i><%= link_to ((tg.isClosed) ? "<font color='red'>".html_safe+tg.groupTitle+"</font>".html_safe : tg.groupTitle), tg %> <%= ((tg.isClosed) ? "(<font color='red'>x</font>)".html_safe : "") %> (<%= tg.group_language.groupLanguageShortName %> / <%= tg.group_gender.groupGenderShortName %>)</i></div>
+    <div class="col-sm-3">
+      <i>
+        <% if (check_restrictions('subjects', 'show')) %>
+            <%= link_to tg.subject.subjectFullName, tg.subject %>
+        <% else %>
+            <%= tg.subject.subjectFullName %>
+        <% end %>
+      </i>
+    </div>
+    <div class="col-sm-2"><i><%= tg.lesson_time.lessonTimeTitle %></i></div>
+    <div class="col-sm-3">
+      <i>
+          <% @groupTimetable = Timetable.where(:group_id => tg.id) %>
+          <% @days_str="" %>
+          <% @groupTimetable.order(:weekday).each do |gt| %>
+              <% if @days_str!= "" %>
+                  <% @days_str = @days_str+","+gt.weekday.to_s %>
+              <% else %>
+                  <% @days_str = gt.weekday.to_s %>
+              <% end %>
+          <% end %>
+
+        <%= @days_str %>
+      </i>
+    </div>
+    <br><br>
+  </div>
+<% end %>
+
+<% else %>
+    <div class="col-sm-12"><i>Bu mugallyma berkidilen hiç topar ýok !</i></div>
+<% end %>
+
+
+    </div>
+  </div>
+</div>
+
+<!-- #########################################  DERS GÜNLERI MAGLUMATLARY - END ############################# -->
+
+
+<!-- #########################################  GEÇIŞ STATISTIKASY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+<div class="col-lg-7">
+
+  <div class="ibox  float-e-margins">
+    <div class="ibox-title" style="border-color: orange">
+      <h5>GEÇIŞ STATISTIKASY</h5>
+      <div class="ibox-tools">
+        <a data-toggle="tooltip" data-placement="top" title="Mugallymyň geçen tapgyrdaky toparlaryndan indiki tapgyra näçe diňleýji dowam edendigi barada maglumat... ">
+          <i class="fa fa-question" style="color: orange"></i>
+        </a>
+        <a class="collapse-link">
+          <i class="fa fa-chevron-up" style="color: orange"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="ibox-content" style="border-color: orange">
+
+      <!-- #########################################  GEÇIŞ STATISTIKASY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+      <!-- #########################################  GEÇIŞ STATISTIKASY - START ############################# -->
+
+      <!-- <h3>i</h3> -->
+
+
+
+
+      <% if (@teachersPreviousGroups && @teachersPreviousGroups.count > 0) %>
+
+          <div class="col-sm-4"><u><b>Topary</b></u></div>
+          <div class="col-sm-3"><u><b>Tapgyr -
+            <% if Season.find_by_seasonNo(Season.find_by_id(@current_season_id).seasonNo-1) %>
+                (<%= Season.find_by_seasonNo(Season.find_by_id(@current_season_id).seasonNo-1).seasonNo %>)
+            <% else %>
+                (-)
+            <% end %>
+                </b></u></div>
+          <div class="col-sm-3"><u><b>Tapgyr - (<%= Season.find_by_id(@current_season_id).seasonNo %>)</b></u></div>
+          <div class="col-sm-2"><u><b>Göterim </b></u></div>
+          <br><br><br>
+
+          <% @teachersPreviousGroups.order(:groupTitle).each do |tg| %>
+
+              <% @current_group_contracts = Contract.where(:group_id => tg.id, :isMoneyReturned => false, :season_id => tg.season_id) %>
+              <% @current_group_student_id = Contract.select(:student_id).where(:group_id => tg.id, :isMoneyReturned => false, :season_id => tg.season_id) %>
+
+              <% @tmp_array_of_student_ids = Array.new(Contract.where(:group_id => tg.id, :isMoneyReturned => false, :season_id => tg.season_id).select(:student_id).each{|el| el.student_id }) %>
+
+              <% @id_array = [] %>
+              <% @tmp_array_of_student_ids.each{|a| @id_array.push(a.student_id)} %>
+
+              <% @group_students_count = Student.where(:id => @id_array).count %>
+              <% @continuing_students_count = Contract.where(:student_id => @id_array, :season_id => @current_season_id, :isMoneyReturned => false).count %>
+
+              <div>
+                <div class="col-sm-4"><i><%= link_to ((tg.isClosed) ? "<font color='red'>".html_safe+tg.groupTitle+"</font>".html_safe : tg.groupTitle), tg %> <%= ((tg.isClosed) ? "(<font color='red'>x</font>)".html_safe : "") %> (<%= tg.group_language.groupLanguageShortName %> / <%= tg.group_gender.groupGenderShortName %>)</i></div>
+                <div class="col-sm-3"><i><%= @group_students_count %></i></div>
+                <div class="col-sm-3"><i><%= @continuing_students_count %></i></div>
+                <div class="col-sm-2"><i><%= ((@continuing_students_count.to_f/@group_students_count)*100).round(2) %> %</i></div>
+                <br><br>
+              </div>
+          <% end %>
+
+      <% else %>
+          <div class="col-sm-12"><i>Geçen tapgyrda bu mugallyma berkidilen hiç topar ýok !</i></div> <br>
+      <% end %>
+
+
+
+    </div>
+  </div>
+
+  <!-- #########################################  GEÇIŞ STATISTIKASY MAGLUMATLARY - END ############################# -->
+
+
+  <!-- #########################################  OKUW TARYHY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+    <div class="ibox  float-e-margins">
+      <div class="ibox-title" style="border-color: green">
+        <h5>TAPGYR OKUW TEJRIBESI </h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up" style="color: green"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="ibox-content" style="border-color: green">
+
+        <!-- #########################################  OKUW TARYHY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+        <!-- #########################################  OKUW TARYHY - START ############################# -->
+
+        <!-- <h3>i</h3> -->
+
+
+
+
+        <% if (@teachersGroupHistory.count > 0) %>
+
+            <div class="col-sm-2"><u><b>Tapgyry</b></u></div>
+            <div class="col-sm-4"><u><b>Topary</b></u></div>
+            <div class="col-sm-2"><u><b>Ady</b></u></div>
+            <div class="col-sm-2"><u><b>Wagty</b></u></div>
+            <div class="col-sm-2"><u><b>Günleri</b></u></div>
+            <br><br><br>
+
+            <% @teachersGroupHistory.order(:groupTitle).each do |tg| %>
+                <div>
+                  <div class="col-sm-2"><i><%= Season.find_by_id(tg.season_id).seasonNo %></i></div>
+                  <div class="col-sm-4"><i><%= link_to ((tg.isClosed) ? "<font color='red'>".html_safe+tg.groupTitle+"</font>".html_safe : tg.groupTitle), tg %> <%= ((tg.isClosed) ? "(<font color='red'>x</font>)".html_safe : "") %> (<%= tg.group_language.groupLanguageShortName %> / <%= tg.group_gender.groupGenderShortName %>)</i></div>
+                  <div class="col-sm-2">
+                    <i>
+                      <% if (check_restrictions('subjects', 'show')) %>
+                          <%= link_to tg.subject.subjectFullName, tg.subject %>
+                      <% else %>
+                          <%= tg.subject.subjectFullName %>
+                      <% end %>
+                    </i>
+                  </div>
+                  <div class="col-sm-2"><i><%= tg.lesson_time.lessonTimeTitle %></i></div>
+                  <div class="col-sm-2">
+                    <i>
+                      <% @groupTimetable = Timetable.where(:group_id => tg.id) %>
+                      <% @days_str="" %>
+                      <% @groupTimetable.order(:weekday).each do |gt| %>
+                          <% if @days_str!= "" %>
+                              <% @days_str = @days_str+","+gt.weekday.to_s %>
+                          <% else %>
+                              <% @days_str = gt.weekday.to_s %>
+                          <% end %>
+                      <% end %>
+
+                      <%= @days_str %>
+                    </i>
+                  </div>
+
+                  <br><br>
+                </div>
+            <% end %>
+
+        <% else %>
+            <div class="col-sm-12"><i>Bu mugallyma berkidilen hiç topar ýok !</i></div>
+        <% end %>
+
+
+      </div>
+    </div>
+
+  <!-- #########################################  OKUW TARYHY MAGLUMATLARY - END ############################# -->
+
+</div>
+
+
+  </div>
+</div>

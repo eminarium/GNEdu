@@ -1,0 +1,328 @@
+<%= form_for(@contract) do |f| %>
+  <% if @contract.errors.any? %>
+    <div id="error_explanation">
+      <div class="alert alert-danger">
+        <h2><%= @contract.errors.count %> ýalňyş sebäpli maglumatlar kabul edilmedi...</h2>
+
+        <ul>
+          <% @contract.errors.each do |attr, message| %>
+              <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+
+    <% if (!@duplicate_contract.nil?) %>
+        <% if (@duplicate_contract.count>0) %>
+            <div class="alert alert-danger">
+              <ul>
+                <li style="font-weight: bold">
+                  <%= @duplicate_message %> <%= link_to @duplicate_contract.first.id.to_s, @duplicate_contract.first %></li>
+                <%= "Mukdary = "+@duplicate_contract.count.to_s %>
+                </li>
+              </ul>
+            </div>
+        <% end %>
+    <% end %>
+
+
+    <div class="col-lg-6">
+
+<!-- #########################################  ESASY PENJIRE - START ############################# -->
+
+<!-- #########################################  ESASY MAGLUMATLAR PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+<div class="ibox float-e-margins">
+<div class="ibox-title" style="border-color: red">
+  <% if action_name == 'new' %>
+      <h5>Täze Ýazylyşyk</h5>
+  <% else %>
+      <h5>Ýazylyşyk Maglumatlaryny Üýtget</h5>
+  <% end %>
+  <div class="ibox-tools">
+    <a class="collapse-link">
+      <i class="fa fa-chevron-up" style="color: red"></i>
+    </a>
+    <!--
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+      <i class="fa fa-wrench"></i>
+    </a>
+    <ul class="dropdown-menu dropdown-user">
+      <li><a href="#">Config option 1</a>
+      </li>
+      <li><a href="#">Config option 2</a>
+      </li>
+    </ul>
+    -->
+  </div>
+</div>
+
+
+<div class="ibox-content" style="border-color: red">
+<h3>
+  Şahsy Maglumatlar
+</h3>
+<br>
+
+<!-- #########################################  ŞERTNAMA MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+
+<!-- #########################################  ŞERTNAMA MAGLUMATLARY - START ############################# -->
+
+
+<div><label class="col-sm-4 control-label">Şertnama Belgisi</label>
+  <div class="col-sm-8"><%= f.text_field :seasonContractNo, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Tapgyry</label>
+  <div class="col-sm-8">
+    <%= f.collection_select(:season_id, @seasons, :id, :seasonTitle, :include_blank => t("Please_select"), :class => "form-control" ) %>
+  </div>
+</div>
+
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Topary</label>
+  <div class="col-sm-8">
+    <%= f.collection_select(:group_id, @groups, :id, :groupTitle, :include_blank => t("Please_select"), :class => "form-control" ) %>
+  </div>
+</div>
+
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Diňleýji</label>
+  <div class="col-sm-8">
+    <%= f.collection_select(:student_id, @students, :id, :first_and_last_name, :include_blank => t("Please_select"), :class => "form-control" ) %>
+  </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Senesi</label>
+  <div class="col-sm-8"><%= f.date_select :registrationDate, :start_year => 2015, :end_year => 2018 %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Kitap Berildimi :</label>
+  <div class="col-sm-8"><%= f.check_box :isBookGiven, :type => "checkbox", :class => "checkbox checkbox-primary", :id => "checkboxProjector" %></div>
+  <label for="checkboxProjector">
+
+  </label>
+</div>
+
+<br>
+
+<div><label class="col-sm-4 control-label">Töleg Görnüşi</label>
+    <div class="col-sm-8">
+        <%= f.collection_select(:payment_type_id, @payment_types, :id, :paymentTypeName, :include_blank => t("Please_select"), :class => "form-control" ) %>
+    </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Tölenen Töleg </label>
+  <div class="col-sm-8"><%= f.text_field :amountPaid, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Rezerw :</label>
+    <div class="col-sm-8"><%= f.check_box :isReserve, :type => "checkbox", :class => "checkbox checkbox-primary", :id => "checkboxReserve" %></div>
+<label for="checkboxReserve">
+
+</label>
+</div>
+
+<br>
+
+<div><label class="col-sm-4 control-label">Bellikler</label>
+  <div class="col-sm-8"><%= f.text_area :notes, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br><br><br><br>
+
+
+<!-- #########################################  ARZANLADYŞ MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+<div class="ibox collapsed">
+<div class="ibox-title" style="border-color: green">
+  <h5>ARZANLADYŞ MAGLUMATLARY</h5>
+  <div class="ibox-tools">
+    <a class="collapse-link">
+      <i class="fa fa-chevron-up" style="color: green"></i>
+    </a>
+  </div>
+</div>
+
+
+
+
+
+<div class="ibox-content" style="border-color: green">
+
+<!-- #########################################  ARZANLADYŞ MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+<!-- #########################################  ARZANLADYŞ MAGLUMATLARY  - START ############################# -->
+<div><label class="col-sm-4 control-label">Arzanladyş</label>
+<div class="col-sm-8">
+  <%= f.collection_select(:discount_id, @discounts, :id, :discountName, :include_blank => t("Please_select"), :class => "form-control" ) %>
+</div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Arzanladyş Sebäbi</label>
+    <div class="col-sm-8"><%= f.text_area :discountReason, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br><br>
+
+</div>
+</div>
+<!-- #########################################  ARZANLADYŞ MAGLUMATLARY - END ############################# -->
+
+
+
+
+
+<!-- #########################################  NAGT DÄL HASAPLAŞYKLAR MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+<div class="ibox collapsed">
+  <div class="ibox-title" style="border-color: orange">
+    <h5>NAGT DÄL HASAPLAŞYK MAGLUMATLARY</h5>
+    <div class="ibox-tools">
+      <a class="collapse-link">
+        <i class="fa fa-chevron-up" style="color: orange"></i>
+      </a>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="ibox-content" style="border-color: orange">
+
+    <!-- #########################################  ANAGT DÄL HASAPLAŞYKLAR MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+    <!-- #########################################  NAGT DÄL HASAPLAŞYKLAR MAGLUMATLARY  - START ############################# -->
+
+    <div><label class="col-sm-4 control-label">Şertnama Belgisi </label>
+      <div class="col-sm-8"><%= f.text_field :otherContractNo, :type => "text", :class => "form-control"  %></div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Kwitansiýa Belgisi </label>
+      <div class="col-sm-8"><%= f.text_field :otherReceiptNo, :type => "text", :class => "form-control"  %></div>
+    </div>
+
+    <br><br><br><br>
+
+  </div>
+</div>
+<!-- #########################################  NAGT DÄL HASAPLAŞYKLAR MAGLUMATLARY - END ############################# -->
+
+
+
+<!-- #########################################  GAÝTARMA MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+<div class="ibox collapsed">
+<div class="ibox-title" style="border-color: blue">
+  <h5>GAÝTARMA MAGLUMATLARY</h5>
+  <div class="ibox-tools">
+    <a class="collapse-link">
+      <i class="fa fa-chevron-up" style="color: blue"></i>
+    </a>
+  </div>
+</div>
+
+
+
+
+
+<div class="ibox-content" style="border-color: blue">
+
+<!-- #########################################  GAÝTARMA MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+<!-- #########################################  GAÝTARMA MAGLUMATLARY  - START ############################# -->
+<div><label class="col-sm-4 control-label">Tölegi Gaýtarylan :</label>
+    <div class="col-sm-8"><%= f.check_box :isMoneyReturned, :type => "checkbox", :class => "checkbox checkbox-primary", :id => "checkboxProjector" %></div>
+        <label for="checkboxProjector">
+
+        </label>
+    </div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Gaýtaryş Sebäbi</label>
+    <div class="col-sm-8"><%= f.text_area :moneyReturnReason, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br><br>
+
+
+</div>
+</div>
+<!-- #########################################  GAÝTARMA MAGLUMATLARY - END ############################# -->
+
+
+
+<!-- #########################################  ÝÖRITE TOPAR MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+<div class="ibox collapsed">
+  <div class="ibox-title" style="border-color: blue">
+    <h5>ÝÖRITE TOPAR MAGLUMATLARY</h5>
+    <div class="ibox-tools">
+      <a class="collapse-link">
+        <i class="fa fa-chevron-up" style="color: blue"></i>
+      </a>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="ibox-content" style="border-color: blue">
+
+    <!-- #########################################  ÝÖRITE TOPAR  MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+    <!-- #########################################  ÝÖRITE TOPAR  MAGLUMATLARY  - START ############################# -->
+    <div><label class="col-sm-4 control-label">Ýörite Topary</label>
+      <div class="col-sm-8">
+        <%= f.collection_select(:special_group_id, @special_groups, :id, :specialGroupTitle, :include_blank => t("Please_select"), :class => "form-control" ) %>
+      </div>
+    </div>
+
+    <br><br><br><br>
+
+
+  </div>
+</div>
+<!-- #########################################  ÝÖRITE TOPAR MAGLUMATLARY - END ############################# -->
+
+
+
+<div class="actions">
+    <%= f.submit "Kabul Et", :class => "btn btn-success" %>
+</div>
+<br>
+<%= link_to 'Yza', contracts_path, :class => "btn btn-outline btn-success" %>
+<% end %>
+
+
+<!-- ##### -->
+</div>
+</div>
+<!-- #########################################  ESASY PENJIRE - END ############################# -->
+
+
+</div> <!-- Column window -->

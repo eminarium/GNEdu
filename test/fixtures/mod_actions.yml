@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  role_id: 
+  modObject_id: 
+  modActionName: MyString
+  auditTrack: false
+  description: MyText
+
+two:
+  role_id: 
+  modObject_id: 
+  modActionName: MyString
+  auditTrack: false
+  description: MyText

@@ -1,0 +1,47 @@
+<div class="wrapper wrapper-content animated fadeInRight ecommerce">
+  <div class="ibox-content m-b-sm border-bottom">
+    <div class="row">
+<%#= @current_season.seasonFromDate.strftime("%d %m %Y").inspect %>
+      <%= form_tag mycontractssearch_contracts_path, :method => 'get', :id => "contracts_search" do %>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <!-- <label class="control-label" for="date_id">Senesi</label> -->
+              <div class="input-group date"> <% i=0 %>
+                <%= select_tag( "date_id", options_for_select(@my_dates_array), :prompt =>"Sene Saýlaň", :class => "form-control" ) %>
+                <%#= select_tag( "date_id", options_from_collection_for_select(@my_dates, "created_at", "lessonTime_id"), :prompt =>"Sene Saýlaň", :class => "form-control" ) %>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <%#= submit_tag "<i class='fa fa-search'></i> Gözle ".html_safe, :name => nil, class: "btn btn-success" %>
+              <%= submit_tag "Gözle ".html_safe, :name => nil, class: "btn btn-success" %>
+            </div>
+          </div>
+
+      <% end %>
+
+    </div>
+  </div>
+</div>
+
+
+<div id="ads">
+  <%= render 'mycontractslist' %>
+</div>
+
+<script>
+    $(function () {
+        // Search form.
+        $('#contracts_search input').keyup(function () {
+            $.get($('#contracts_search').attr('action'), &crarr;
+            $('#contracts_search').serialize(), null, 'script');
+            return false;
+        });
+    });
+
+
+    $('#ads').html('<%= escape_javascript(render 'mycontractslist') %>');
+</script>

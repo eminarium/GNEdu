@@ -1,0 +1,218 @@
+<h1>Diňleýjiler Sanawy</h1>
+<%= link_to "<i class='fa fa-plus'></i>&nbsp; Täze Diňleýji".html_safe, new_student_path, :class => "btn btn-primary"  %>
+
+<% if (notice) %>
+    <div class="alert alert-success fade in">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <p id="notice"><%= notice %></p>
+    </div>
+<% end %>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+<div class="row">
+<div class="col-lg-12">
+<div class="ibox float-e-margins">
+<div class="ibox-title">
+  <h5>Diňleýjiler Sanawy</h5>
+  <div class="ibox-tools">
+    <a class="collapse-link">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+      <i class="fa fa-wrench"></i>
+    </a>
+    <ul class="dropdown-menu dropdown-user">
+      <li><a href="#">Config option 1</a>
+      </li>
+      <li><a href="#">Config option 2</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="ibox-content">
+
+<div class="table-responsive">
+<table class="table table-striped table-bordered table-hover dataTables-example" >
+<thead>
+<tr>
+  <th>Suraty</th>
+  <th>Ady</th>
+  <th>Familiýasy</th>
+  <th>Atasynyň Ady</th>
+  <th>Milleti</th>
+  <th>Jynsy</th>
+  <th>Doglan Senesi</th>
+  <th>Ýaşy</th>
+  <th>Amallar</th>
+</tr>
+</thead>
+<tbody>
+
+<% @students.each do |student| %>
+    <tr class="gradeA">
+
+      <td>
+        <% if !student.imageUrl.blank? %>
+            <%= image_tag "/uploads/images/"+student.imageUrl, width: 100 %>
+        <% else %>
+            <%= image_tag "/uploads/images/no_photo_6.png", width: 100 %>
+        <% end %>
+      </td>
+      <td><%= student.fName %></td>
+      <td><%= student.lName %></td>
+      <td><%= student.patronymic %></td>
+      <td><%= student.nationality.nationalityName %></td>
+      <td>
+        <% if (student.gender)  %>
+            <%= Student::GENDER_TYPES[1][0] %>
+        <% else %>
+            <%= Student::GENDER_TYPES[0][0] %>
+        <% end %>
+      </td>
+      <td><%= student.birthDate %></td>
+      <td>
+        <% @age = Date.today.year-student.birthDate.year %>
+        <% @age -= 1 if Date.today < student.birthDate + @age.years %>
+        <%= @age %>
+      </td>
+      <td><div style="float: right">
+        <%= link_to "Giňişleýin", student, :class => "btn btn-success" %>
+        <%= link_to "Üýtget", edit_student_path(student), :class => "btn btn-warning" %>
+        <% link_to "Boz", student, method: :delete, data: { confirm: "Are you sure ?" }, :class => "btn btn-danger" %>
+      </div></td>
+
+    </tr>
+<% end %>
+
+
+</tbody>
+<tfoot>
+<tr>
+  <th>Suraty</th>
+  <th>Ady</th>
+  <th>Familiýasy</th>
+  <th>Atasynyň Ady</th>
+  <th>Milleti</th>
+  <th>Jynsy</th>
+  <th>Doglan Senesi</th>
+  <th>Ýaşy</th>
+  <th>Amallar</th>
+</tr>
+</tfoot>
+</table>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!--
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Suraty</th>
+      <th>Ady</th>
+      <th>Familiýasy</th>
+      <th>Atasynyň Ady</th>
+      <th>Milleti</th>
+      <th>Jynsy</th>
+      <th>Doglan Senesi</th>
+      <th>Ýaşy</th>
+
+      <th>SMS Belgisi</th>
+      <th>Okuwçymy ?</th>
+      <th>Talypmy ?</th>
+      <th>Işgärmi ?</th>
+      <th>Kakasynyň Ady</th>
+      <th>Kakasynyň Familiýasy</th>
+      <th>Kakasynyň Iş Ýeri</th>
+      <th>Kakasynyň Wezipesi</th>
+      <th>Kakasynyň Iş Ýeri Belgisi</th>
+      <th>Kakasynyň Mobil Belgisi</th>
+      <th>Ejesiniň Ady</th>
+      <th>Ejesiniň Familiýasy</th>
+      <th>Ejesiniň Iş Ýeri</th>
+      <th>Ejesiniň Wezipesi</th>
+      <th>Ejesiniň Iş Ýeri Belgisi</th>
+      <th>Ejesiniň Mobil Belgisi</th>
+      <th>Iş Ýeri</th>
+      <th>Wezipesi</th>
+      <th>Iş Ýeri Belgisi</th>
+      <th>Mobil Belgisi</th>
+      <th>ÝOJ Ady</th>
+      <th>ÝOJ Okuw Ýyly</th>
+      <th>Mekdep Belgisi</th>
+      <th>Mekdebiň Ady</th>
+      <th>Mekdepde Klasy</th>
+      <th>Bellikler</th>
+      <th colspan="3"></th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @students.each do |student| %>
+      <tr>
+
+        <td><%= image_tag "/uploads/"+student.imageUrl.to_s.force_encoding('UTF-8'), width: 100 %></td>
+        <td><%= student.fName %></td>
+        <td><%= student.lName %></td>
+        <td><%= student.patronymic %></td>
+        <td><%= student.nationality.nationalityName %></td>
+        <td>
+          <% if (student.gender)  %>
+              <%= Student::GENDER_TYPES[1][0] %>
+          <% else %>
+              <%= Student::GENDER_TYPES[0][0] %>
+          <% end %>
+        </td>
+        <td><%= student.birthDate %></td>
+        <td>
+          <% @age = Date.today.year-student.birthDate.year %>
+          <% @age -= 1 if Date.today < student.birthDate + @age.years %>
+          <%= @age %>
+        </td>
+
+        <td><%= student.smsMobilePhone %></td>
+        <td><%= student.isPupil %></td>
+        <td><%= student.isStudent %></td>
+        <td><%= student.isWorker %></td>
+        <td><%= student.faFName %></td>
+        <td><%= student.faLName %></td>
+        <td><%= student.faWorkPlace %></td>
+        <td><%= student.faOccupation %></td>
+        <td><%= student.faOfficePhone %></td>
+        <td><%= student.faMobilePhone %></td>
+        <td><%= student.maFName %></td>
+        <td><%= student.maLName %></td>
+        <td><%= student.maWorkPlace %></td>
+        <td><%= student.maOccupation %></td>
+        <td><%= student.maOfficePhone %></td>
+        <td><%= student.maMobilePhone %></td>
+        <td><%= student.workPlace %></td>
+        <td><%= student.occupation %></td>
+        <td><%= student.officePhone %></td>
+        <td><%= student.mobilePhone %></td>
+
+        <td><%= student.schoolNo %></td>
+        <td><%= student.schoolName %></td>
+        <td><%= student.schoolYear %></td>
+        <td><%= student.notes %></td>
+
+
+        <td><div style="float: right">
+          <%= link_to "Giňişleýin", student, :class => "btn btn-success" %>
+          <%= link_to "Üýtget", edit_student_path(student), :class => "btn btn-warning" %>
+          <%= link_to "Boz", student, method: :delete, data: { confirm: "Are you sure ?" }, :class => "btn btn-danger" %>
+        </div></td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+-->
+<br>
+
+<%#= link_to 'New Student', new_student_path %>

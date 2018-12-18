@@ -1,0 +1,629 @@
+<script>
+ setTimeout(function(){
+     window.location.reload(1)
+ }, 180000)
+</script>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+
+
+    <div class="col-lg-6">
+
+
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5><img src="/images/flags/32/United-Kingdom.png"> &nbsp;&nbsp;IŇLISÇE  / АНГЛИЙСКИЙ / ENGLISH </h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="ibox-content">
+
+          <table class="table">
+            <thead>
+            <tr>
+              <th></th>
+              <% @lessonTimes = LessonTime.where.not(:lessonTimeTitle => "Günortan").order(:lessonTimeFrom) %>
+              <th style="width: 33%">
+                <font size='4pt'><%= @lessonTimes[0].lessonTimeFrom.strftime("%H:%M")+"-"+@lessonTimes[0].lessonTimeTo.strftime("%H:%M") %></font>
+              </th>
+              <th style="width: 33%">
+                <font size='4pt'><%= @lessonTimes[1].lessonTimeFrom.strftime("%H:%M")+"-"+@lessonTimes[1].lessonTimeTo.strftime("%H:%M") %></font>
+              </th>
+              <th style="width: 33%">
+                <font size='4pt'><%= @lessonTimes[2].lessonTimeFrom.strftime("%H:%M")+"-"+@lessonTimes[2].lessonTimeTo.strftime("%H:%M") %></font>
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @english_subjects = Subject.where(:subject_category_id => SubjectCategory.where(:subjectCategoryFullName => "English")[0].id).all.order(:subjectLevel) %>
+            <% @english_subjects.each do |eng_subj| %>
+                <tr>
+                  <td>
+                    <%= "<font size='4pt'>".html_safe+eng_subj.subjectFullName.to_s+"</font>".html_safe %>
+                  </td>
+                  <td>
+                  <%# Group.where(:season_id => @current_season_id, :subject_id => eng_subj.id, :lessonTime_id => @lessonTimes[0].id) %>
+                    <% if Group.where(:season_id => @current_season_id, :subject_id => eng_subj.id, :lesson_time_id => @lessonTimes[0].id).count == 0 %>
+                        <%= "<font size='4pt'><i class='fa fa-minus' style='color: gray;'></i></font>".html_safe %>
+                     <%# elsif eng_subj.subjectFullName=="Advanced" %>
+                        <%#= "<font size='4pt'><i class='fa fa-question' style='color: gray;'></i></font>".html_safe %>
+                    <% else %>
+                        <% @group_limit_sum = 0 %>
+                        <% @contract_sum = 0 %>
+
+                        <% Group.where(:season_id => @current_season_id, :subject_id => eng_subj.id, :lesson_time_id => @lessonTimes[0].id).each do |tmp_gr| %>
+                            <% @group_limit_sum = @group_limit_sum + tmp_gr.groupLimit %>
+                            <% @grp_contracts = Contract.where(:group_id => tmp_gr.id) %>
+                            <% @contract_sum = @contract_sum + ((@grp_contracts.count>tmp_gr.groupLimit) ? tmp_gr.groupLimit : @grp_contracts.count) %>
+                        <% end %>
+
+                        <%= ((@contract_sum < @group_limit_sum) ? "<font size='4pt'><i class='fa fa-check' style='color: lawngreen'></i></font>".html_safe : "<font size='4pt'><i class='fa fa-times' style='color: red'></i></font>".html_safe) %>
+                    <% end %>
+                  </td>
+
+                  <td>
+                    <%# Group.where(:season_id => @current_season_id, :subject_id => eng_subj.id, :lessonTime_id => @lessonTimes[1].id) %>
+                    <% if Group.where(:season_id => @current_season_id, :subject_id => eng_subj.id, :lesson_time_id => @lessonTimes[1].id).count == 0 %>
+                        <%= "<font size='4pt'><i class='fa fa-minus' style='color: gray'></i></font>".html_safe %>
+                    <%# elsif eng_subj.subjectFullName=="Advanced" %>
+                        <%#= "<font size='4pt'><i class='fa fa-question' style='color: gray;'></i></font>".html_safe %>
+                    <% else %>
+                        <% @group_limit_sum = 0 %>
+                        <% @contract_sum = 0 %>
+
+                        <% Group.where(:season_id => @current_season_id, :subject_id => eng_subj.id, :lesson_time_id => @lessonTimes[1].id).each do |tmp_gr| %>
+                            <% @group_limit_sum = @group_limit_sum + tmp_gr.groupLimit %>
+                            <% @grp_contracts = Contract.where(:group_id => tmp_gr.id) %>
+                            <% @contract_sum = @contract_sum + ((@grp_contracts.count>tmp_gr.groupLimit) ? tmp_gr.groupLimit : @grp_contracts.count) %>
+                        <% end %>
+
+                        <%= ((@contract_sum < @group_limit_sum) ? "<font size='4pt'><i class='fa fa-check' style='color: lawngreen'></i></font>".html_safe : "<font size='4pt'><i class='fa fa-times' style='color: red'></i></font>".html_safe) %>
+                    <% end %>
+                  </td>
+
+                  <td>
+                    <%# Group.where(:season_id => @current_season_id, :subject_id => eng_subj.id, :lessonTime_id => @lessonTimes[2].id) %>
+                    <% if Group.where(:season_id => @current_season_id, :subject_id => eng_subj.id, :lesson_time_id => @lessonTimes[2].id).count == 0 %>
+                        <%= "<font size='4pt'><i class='fa fa-minus' style='color: gray'></i></font>".html_safe %>
+                    <%# elsif eng_subj.subjectFullName=="Advanced" %>
+                        <%#= "<font size='4pt'><i class='fa fa-question' style='color: gray;'></i></font>".html_safe %>
+                    <% else %>
+                        <% @group_limit_sum = 0 %>
+                        <% @contract_sum = 0 %>
+
+                        <% Group.where(:season_id => @current_season_id, :subject_id => eng_subj.id, :lesson_time_id => @lessonTimes[2].id).each do |tmp_gr| %>
+                            <% @group_limit_sum = @group_limit_sum + tmp_gr.groupLimit %>
+                            <% @grp_contracts = Contract.where(:group_id => tmp_gr.id) %>
+                            <% @contract_sum = @contract_sum + ((@grp_contracts.count>tmp_gr.groupLimit) ? tmp_gr.groupLimit : @grp_contracts.count) %>
+                        <% end %>
+
+                        <%= ((@contract_sum < @group_limit_sum) ? "<font size='4pt'><i class='fa fa-check' style='color: lawngreen'></i></font>".html_safe : "<font size='4pt'><i class='fa fa-times' style='color: red'></i></font>".html_safe) %>
+                    <% end %>
+                  </td>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5><img src="/images/flags/32/Russia.png"> &nbsp;RUSÇA  / РУССКИЙ / RUSSIAN</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="ibox-content">
+
+          <table class="table">
+            <thead>
+            <tr>
+              <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+              <% @lessonTimes = LessonTime.where.not(:lessonTimeTitle => "Günortan").order(:lessonTimeFrom) %>
+              <th style="width: 33%">
+                <font size='4pt'><%= @lessonTimes[0].lessonTimeFrom.strftime("%H:%M")+"-"+@lessonTimes[0].lessonTimeTo.strftime("%H:%M") %></font>
+              </th>
+              <th style="width: 33%">
+                <font size='4pt'><%= @lessonTimes[1].lessonTimeFrom.strftime("%H:%M")+"-"+@lessonTimes[1].lessonTimeTo.strftime("%H:%M") %></font>
+              </th>
+              <th style="width: 33%">
+                <font size='4pt'><%= @lessonTimes[2].lessonTimeFrom.strftime("%H:%M")+"-"+@lessonTimes[2].lessonTimeTo.strftime("%H:%M") %></font>
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @russian_subjects = Subject.where(:subject_category_id => SubjectCategory.where(:subjectCategoryFullName => "Rusça")[0].id).all.order(:subjectLevel) %>
+            <% @russian_subjects.each do |eng_subj| %>
+                <tr>
+                  <td>
+                    <%= "<font size='4pt'>".html_safe+eng_subj.subjectFullName.to_s+"</font>".html_safe %>
+                  </td>
+                  <td>
+                    <%# Group.where(:season_id => @current_season_id, :subject_id => eng_subj.id, :lessonTime_id => @lessonTimes[0].id).where(:isClosed => false) %>
+                    <% if Group.where(:season_id => @current_season_id, :subject_id => eng_subj.id, :lesson_time_id => @lessonTimes[0].id).where(:isClosed => false).count == 0 %>
+                        <%= "<font size='4pt'><i class='fa fa-minus' style='color: gray'></i></font>".html_safe %>
+                    <% else %>
+                        <% @group_limit_sum = 0 %>
+                        <% @contract_sum = 0 %>
+
+                        <% Group.where(:season_id => @current_season_id, :subject_id => eng_subj.id, :lesson_time_id => @lessonTimes[0].id).where(:isClosed => false).each do |tmp_gr| %>
+                            <% @group_limit_sum = @group_limit_sum + tmp_gr.groupLimit %>
+                            <% @grp_contracts = Contract.where(:group_id => tmp_gr.id) %>
+                            <% @contract_sum = @contract_sum + ((@grp_contracts.count>tmp_gr.groupLimit) ? tmp_gr.groupLimit : @grp_contracts.count) %>
+                        <% end %>
+
+                        <%= ((@contract_sum < @group_limit_sum) ? "<font size='4pt'><i class='fa fa-check' style='color: lawngreen'></i></font>".html_safe : "<font size='4pt'><i class='fa fa-times' style='color: red'></i></font>".html_safe) %>
+                    <% end %>
+                  </td>
+
+                  <td>
+                    <%# Group.where(:season_id => @current_season_id, :subject_id => eng_subj.id, :lessonTime_id => @lessonTimes[1].id).where(:isClosed => false) %>
+                    <% if Group.where(:season_id => @current_season_id, :subject_id => eng_subj.id, :lesson_time_id => @lessonTimes[1].id).where(:isClosed => false).count == 0 %>
+                        <%= "<font size='4pt'><i class='fa fa-minus' style='color: gray'></i></font>".html_safe %>
+                    <% else %>
+                        <% @group_limit_sum = 0 %>
+                        <% @contract_sum = 0 %>
+
+                        <% Group.where(:season_id => @current_season_id, :subject_id => eng_subj.id, :lesson_time_id => @lessonTimes[1].id).where(:isClosed => false).each do |tmp_gr| %>
+                            <% @group_limit_sum = @group_limit_sum + tmp_gr.groupLimit %>
+                            <% @grp_contracts = Contract.where(:group_id => tmp_gr.id) %>
+                            <% @contract_sum = @contract_sum + ((@grp_contracts.count>tmp_gr.groupLimit) ? tmp_gr.groupLimit : @grp_contracts.count) %>
+                        <% end %>
+
+                        <%= ((@contract_sum < @group_limit_sum) ? "<font size='4pt'><i class='fa fa-check' style='color: lawngreen'></i></font>".html_safe : "<font size='4pt'><i class='fa fa-times' style='color: red'></i></font>".html_safe) %>
+                    <% end %>
+                  </td>
+
+                  <td>
+                    <%# Group.where(:season_id => @current_season_id, :subject_id => eng_subj.id, :lessonTime_id => @lessonTimes[2].id).where(:isClosed => false) %>
+                    <% if Group.where(:season_id => @current_season_id, :subject_id => eng_subj.id, :lesson_time_id => @lessonTimes[2].id).where(:isClosed => false).count == 0 %>
+                        <%= "<font size='4pt'><i class='fa fa-minus' style='color: gray'></i></font>".html_safe %>
+                    <% else %>
+                        <% @group_limit_sum = 0 %>
+                        <% @contract_sum = 0 %>
+
+                        <% Group.where(:season_id => @current_season_id, :subject_id => eng_subj.id, :lesson_time_id => @lessonTimes[2].id).where(:isClosed => false).each do |tmp_gr| %>
+                            <% @group_limit_sum = @group_limit_sum + tmp_gr.groupLimit %>
+                            <% @grp_contracts = Contract.where(:group_id => tmp_gr.id) %>
+                            <% @contract_sum = @contract_sum + ((@grp_contracts.count>tmp_gr.groupLimit) ? tmp_gr.groupLimit : @grp_contracts.count) %>
+                        <% end %>
+
+                        <%= ((@contract_sum < @group_limit_sum) ? "<font size='4pt'><i class='fa fa-check' style='color: lawngreen'></i></font>".html_safe : "<font size='4pt'><i class='fa fa-times' style='color: red'></i></font>".html_safe) %>
+                    <% end %>
+                  </td>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="col-lg-6">
+
+    <!--
+        <div class="ibox float-e-margins">
+          <div class="ibox-title"  style="background: orange">
+            <h5 style="color: white">BELGILER  / ОБОЗНАЧЕНИЯ / SIGNS</h5>
+            <div class="ibox-tools">
+              <a class="collapse-link">
+                <i class="fa fa-chevron-up" style="color:white"></i>
+              </a>
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <i class="fa fa-wrench" style="color:white"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-user">
+                <li><a href="#">Config option 1</a>
+                </li>
+                <li><a href="#">Config option 2</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="ibox-content">
+
+            <table class="table">
+              <tbody>
+                  <tr>
+                    <td style="color: navy;">
+                      <font size='4pt'><i class='fa fa-minus' style='color: gray'></i></font>
+                    </td>
+                    <td style="color:black">
+                      <b>TOPAR ÝOK &nbsp;&nbsp;/ &nbsp;&nbsp;НЕТ ГРУППЫ &nbsp;&nbsp;/ &nbsp;&nbsp; NO GROUP</b>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="color: navy;">
+                      <font size='4pt'><i class='fa fa-check' style='color: green'></i></font>
+                    </td>
+                    <td style="color:black">
+                      <b>ÝER BAR &nbsp;&nbsp;/ &nbsp;&nbsp;ЕСТЬ МЕСТА &nbsp;&nbsp; / &nbsp;&nbsp; GROUP AVAILABLE</b>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="color: navy;">
+                      <font size='4pt'><i class='fa fa-times' style='color: red'></i></font>
+                    </td>
+                    <td style="color:black">
+                      </i><b>ÝER ÝOK &nbsp;&nbsp; / &nbsp;&nbsp; НЕТ МЕСТ &nbsp;&nbsp; / &nbsp;&nbsp; GROUPS FULL</b>
+                    </td>
+                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+    -->
+
+
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5><font size='4pt'><i class='fa fa-laptop' style='color: blue'></i></font> &nbsp;KOMPÝUTER / КОМПЬЮТЕР / COMPUTER </h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="ibox-content">
+
+          <table class="table">
+            <thead>
+            <tr>
+              <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+              <% @lessonTimes = LessonTime.where.not(:lessonTimeTitle => "Günortan").order(:lessonTimeFrom) %>
+              <th style="width: 33%">
+                <font size='4pt'><%= @lessonTimes[0].lessonTimeFrom.strftime("%H:%M")+"-"+@lessonTimes[0].lessonTimeTo.strftime("%H:%M") %></font>
+              </th>
+              <th style="width: 33%">
+                <font size='4pt'><%= @lessonTimes[1].lessonTimeFrom.strftime("%H:%M")+"-"+@lessonTimes[1].lessonTimeTo.strftime("%H:%M") %></font>
+              </th>
+              <th style="width: 33%">
+                <font size='4pt'><%= @lessonTimes[2].lessonTimeFrom.strftime("%H:%M")+"-"+@lessonTimes[2].lessonTimeTo.strftime("%H:%M") %></font>
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @computer_subjects = Subject.where(:subject_category_id => SubjectCategory.where(:subjectCategoryFullName => "Kompýuter")[0].id).all.order(:subjectLevel) %>
+            <% @computer_subjects.each do |eng_subj| %>
+                <tr>
+                  <td>
+                    <%= "<font size='4pt'>".html_safe+eng_subj.subjectFullName.to_s+" (TKM)</font>".html_safe %>
+                  </td>
+                  <td>
+                    <% @this_category_tkm_groups = Group.where(:season_id => @current_season_id, :subject_id => eng_subj.id, :group_language_id => GroupLanguage.find_by_groupLanguageShortName("TKM").id)%>
+
+                    <% @this_category_tkm_morning_groups = @this_category_tkm_groups.where(:lesson_time_id => @lessonTimes[0].id) %>
+
+                    <% if @this_category_tkm_morning_groups.count == 0 %>
+                        <%= "<font size='4pt'><i class='fa fa-minus' style='color: gray'></i></font>".html_safe %>
+                    <% else %>
+                        <% @group_limit_sum = 0 %>
+                        <% @contract_sum = 0 %>
+
+                        <% @this_category_tkm_morning_groups.each do |tmp_gr| %>
+                            <% @group_limit_sum = @group_limit_sum + tmp_gr.groupLimit %>
+                            <% @grp_contracts = Contract.where(:group_id => tmp_gr.id) %>
+                            <% @contract_sum = @contract_sum + ((@grp_contracts.count>tmp_gr.groupLimit) ? tmp_gr.groupLimit : @grp_contracts.count) %>
+                        <% end %>
+
+                        <%= ((@contract_sum < @group_limit_sum) ? "<font size='4pt'><i class='fa fa-check' style='color: lawngreen'></i></font>".html_safe : "<font size='4pt'><i class='fa fa-times' style='color: red'></i></font>".html_safe) %>
+                    <% end %>
+                  </td>
+
+                  <td>
+                    <% @this_category_tkm_afternoon_groups = @this_category_tkm_groups.where(:lesson_time_id => @lessonTimes[1].id) %>
+                    <% if @this_category_tkm_afternoon_groups.count == 0 %>
+                        <%= "<font size='4pt'><i class='fa fa-minus' style='color: gray'></i></font>".html_safe %>
+                    <% else %>
+                        <% @group_limit_sum = 0 %>
+                        <% @contract_sum = 0 %>
+
+                        <% @this_category_tkm_afternoon_groups.each do |tmp_gr| %>
+                            <% @group_limit_sum = @group_limit_sum + tmp_gr.groupLimit %>
+                            <% @grp_contracts = Contract.where(:group_id => tmp_gr.id) %>
+                            <% @contract_sum = @contract_sum + ((@grp_contracts.count>tmp_gr.groupLimit) ? tmp_gr.groupLimit : @grp_contracts.count) %>
+                        <% end %>
+
+                        <%= ((@contract_sum < @group_limit_sum) ? "<font size='4pt'><i class='fa fa-check' style='color: lawngreen'></i></font>".html_safe : "<font size='4pt'><i class='fa fa-times' style='color: red'></i></font>".html_safe) %>
+                    <% end %>
+                  </td>
+
+                  <td>
+                    <% @this_category_tkm_evening_groups = @this_category_tkm_groups.where(:lesson_time_id => @lessonTimes[2].id) %>
+                    <% if @this_category_tkm_evening_groups .count == 0 %>
+                        <%= "<font size='4pt'><i class='fa fa-minus' style='color: gray'></i></font>".html_safe %>
+                    <% else %>
+                        <% @group_limit_sum = 0 %>
+                        <% @contract_sum = 0 %>
+
+                        <% @this_category_tkm_evening_groups.each do |tmp_gr| %>
+                            <% @group_limit_sum = @group_limit_sum + tmp_gr.groupLimit %>
+                            <% @grp_contracts = Contract.where(:group_id => tmp_gr.id) %>
+                            <% @contract_sum = @contract_sum + ((@grp_contracts.count>tmp_gr.groupLimit) ? tmp_gr.groupLimit : @grp_contracts.count) %>
+                        <% end %>
+
+                        <%= ((@contract_sum < @group_limit_sum) ? "<font size='4pt'><i class='fa fa-check' style='color: lawngreen'></i></font>".html_safe : "<font size='4pt'><i class='fa fa-times' style='color: red'></i></font>".html_safe) %>
+                    <% end %>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <%= "<font size='4pt'>".html_safe+eng_subj.subjectFullName.to_s+" (RUS)</font>".html_safe %>
+                  </td>
+                  <td>
+                    <% @this_category_rus_groups = Group.where(:season_id => @current_season_id, :subject_id => eng_subj.id, :group_language_id => GroupLanguage.find_by_groupLanguageShortName("RUS").id)%>
+
+                    <% @this_category_rus_morning_groups = @this_category_rus_groups.where(:lesson_time_id => @lessonTimes[0].id) %>
+
+                    <% if @this_category_rus_morning_groups.count == 0 %>
+                        <%= "<font size='4pt'><i class='fa fa-minus' style='color: gray'></i></font>".html_safe %>
+                    <% else %>
+                        <% @group_limit_sum = 0 %>
+                        <% @contract_sum = 0 %>
+
+                        <% @this_category_rus_morning_groups.each do |tmp_gr| %>
+                            <% @group_limit_sum = @group_limit_sum + tmp_gr.groupLimit %>
+                            <% @grp_contracts = Contract.where(:group_id => tmp_gr.id) %>
+                            <% @contract_sum = @contract_sum + ((@grp_contracts.count>tmp_gr.groupLimit) ? tmp_gr.groupLimit : @grp_contracts.count) %>
+                        <% end %>
+
+                        <%= ((@contract_sum < @group_limit_sum) ? "<font size='4pt'><i class='fa fa-check' style='color: lawngreen'></i></font>".html_safe : "<font size='4pt'><i class='fa fa-times' style='color: red'></i></font>".html_safe) %>
+                    <% end %>
+                  </td>
+
+                  <td>
+                    <% @this_category_rus_afternoon_groups = @this_category_rus_groups.where(:lesson_time_id => @lessonTimes[1].id) %>
+                    <% if @this_category_rus_afternoon_groups.count == 0 %>
+                        <%= "<font size='4pt'><i class='fa fa-minus' style='color: gray'></i></font>".html_safe %>
+                    <% else %>
+                        <% @group_limit_sum = 0 %>
+                        <% @contract_sum = 0 %>
+
+                        <% @this_category_rus_afternoon_groups.each do |tmp_gr| %>
+                            <% @group_limit_sum = @group_limit_sum + tmp_gr.groupLimit %>
+                            <% @grp_contracts = Contract.where(:group_id => tmp_gr.id) %>
+                            <% @contract_sum = @contract_sum + ((@grp_contracts.count>tmp_gr.groupLimit) ? tmp_gr.groupLimit : @grp_contracts.count) %>
+                        <% end %>
+
+                        <%= ((@contract_sum < @group_limit_sum) ? "<font size='4pt'><i class='fa fa-check' style='color: lawngreen'></i></font>".html_safe : "<font size='4pt'><i class='fa fa-times' style='color: red'></i></font>".html_safe) %>
+                    <% end %>
+                  </td>
+
+                  <td>
+                    <% @this_category_rus_evening_groups = @this_category_rus_groups.where(:lesson_time_id => @lessonTimes[2].id) %>
+                    <% if @this_category_rus_evening_groups.count == 0 %>
+                        <%= "<font size='4pt'><i class='fa fa-minus' style='color: gray'></i></font>".html_safe %>
+                    <% else %>
+                        <% @group_limit_sum = 0 %>
+                        <% @contract_sum = 0 %>
+
+                        <% @this_category_rus_evening_groups.each do |tmp_gr| %>
+                            <% @group_limit_sum = @group_limit_sum + tmp_gr.groupLimit %>
+                            <% @grp_contracts = Contract.where(:group_id => tmp_gr.id) %>
+                            <% @contract_sum = @contract_sum + ((@grp_contracts.count>tmp_gr.groupLimit) ? tmp_gr.groupLimit : @grp_contracts.count) %>
+                        <% end %>
+
+                        <%= ((@contract_sum < @group_limit_sum) ? "<font size='4pt'><i class='fa fa-check' style='color: lawngreen'></i></font>".html_safe : "<font size='4pt'><i class='fa fa-times' style='color: red'></i></font>".html_safe) %>
+                    <% end %>
+                  </td>
+                </tr>
+
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5><font size='4pt'><i class='fa fa-superscript' style='color: blue'></i></font> &nbsp; MATEMATIKA / МАТЕМАТИКА / MATHS </h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="ibox-content">
+
+          <table class="table">
+            <thead>
+            <tr>
+              <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+              <% @lessonTimes = LessonTime.where.not(:lessonTimeTitle => "Günortan").order(:lessonTimeFrom) %>
+              <th style="width: 33%">
+                <font size='4pt'><%= @lessonTimes[0].lessonTimeFrom.strftime("%H:%M")+"-"+@lessonTimes[0].lessonTimeTo.strftime("%H:%M") %></font>
+              </th>
+              <th style="width: 33%">
+                <font size='4pt'><%= @lessonTimes[1].lessonTimeFrom.strftime("%H:%M")+"-"+@lessonTimes[1].lessonTimeTo.strftime("%H:%M") %></font>
+              </th>
+              <th style="width: 33%">
+                <font size='4pt'><%= @lessonTimes[2].lessonTimeFrom.strftime("%H:%M")+"-"+@lessonTimes[2].lessonTimeTo.strftime("%H:%M") %></font>
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @maths_subjects = Subject.where(:subject_category_id => SubjectCategory.where(:subjectCategoryFullName => "Matematika")[0].id).all.order(:subjectLevel) %>
+            <% @maths_subjects.each do |eng_subj| %>
+                <tr>
+                  <td>
+                    <%= "<font size='4pt'>".html_safe+eng_subj.subjectFullName.to_s+" (TKM)</font>".html_safe %>
+                  </td>
+                  <td>
+                    <% @this_category_tkm_groups = Group.where(:season_id => @current_season_id, :subject_id => eng_subj.id, :group_language_id => GroupLanguage.find_by_groupLanguageShortName("TKM").id)%>
+
+                    <% @this_category_tkm_morning_groups = @this_category_tkm_groups.where(:lesson_time_id => @lessonTimes[0].id) %>
+
+                    <% if @this_category_tkm_morning_groups.count == 0 %>
+                        <%= "<font size='4pt'><i class='fa fa-minus' style='color: gray'></i></font>".html_safe %>
+                    <% else %>
+                        <% @group_limit_sum = 0 %>
+                        <% @contract_sum = 0 %>
+
+                        <% @this_category_tkm_morning_groups.each do |tmp_gr| %>
+                            <% @group_limit_sum = @group_limit_sum + tmp_gr.groupLimit %>
+                            <% @grp_contracts = Contract.where(:group_id => tmp_gr.id) %>
+                            <% @contract_sum = @contract_sum + ((@grp_contracts.count>tmp_gr.groupLimit) ? tmp_gr.groupLimit : @grp_contracts.count) %>
+                        <% end %>
+
+                        <%= ((@contract_sum < @group_limit_sum) ? "<font size='4pt'><i class='fa fa-check' style='color: lawngreen'></i></font>".html_safe : "<font size='4pt'><i class='fa fa-times' style='color: red'></i></font>".html_safe) %>
+                    <% end %>
+                  </td>
+
+                  <td>
+                    <% @this_category_tkm_afternoon_groups = @this_category_tkm_groups.where(:lesson_time_id => @lessonTimes[1].id) %>
+                    <% if @this_category_tkm_afternoon_groups.count == 0 %>
+                        <%= "<font size='4pt'><i class='fa fa-minus' style='color: gray'></i></font>".html_safe %>
+                    <% else %>
+                        <% @group_limit_sum = 0 %>
+                        <% @contract_sum = 0 %>
+
+                        <% @this_category_tkm_afternoon_groups.each do |tmp_gr| %>
+                            <% @group_limit_sum = @group_limit_sum + tmp_gr.groupLimit %>
+                            <% @grp_contracts = Contract.where(:group_id => tmp_gr.id) %>
+                            <% @contract_sum = @contract_sum + ((@grp_contracts.count>tmp_gr.groupLimit) ? tmp_gr.groupLimit : @grp_contracts.count) %>
+                        <% end %>
+
+                        <%= ((@contract_sum < @group_limit_sum) ? "<font size='4pt'><i class='fa fa-check' style='color: lawngreen'></i></font>".html_safe : "<font size='4pt'><i class='fa fa-times' style='color: red'></i></font>".html_safe) %>
+                    <% end %>
+                  </td>
+
+                  <td>
+                    <% @this_category_tkm_evening_groups = @this_category_tkm_groups.where(:lesson_time_id => @lessonTimes[2].id) %>
+                    <% if @this_category_tkm_evening_groups.count == 0 %>
+                        <%= "<font size='4pt'><i class='fa fa-minus' style='color: gray'></i></font>".html_safe %>
+                    <% else %>
+                        <% @group_limit_sum = 0 %>
+                        <% @contract_sum = 0 %>
+
+                        <% @this_category_tkm_evening_groups.each do |tmp_gr| %>
+                            <% @group_limit_sum = @group_limit_sum + tmp_gr.groupLimit %>
+                            <% @grp_contracts = Contract.where(:group_id => tmp_gr.id) %>
+                            <% @contract_sum = @contract_sum + ((@grp_contracts.count>tmp_gr.groupLimit) ? tmp_gr.groupLimit : @grp_contracts.count) %>
+                        <% end %>
+
+                        <%= ((@contract_sum < @group_limit_sum) ? "<font size='4pt'><i class='fa fa-check' style='color: lawngreen'></i></font>".html_safe : "<font size='4pt'><i class='fa fa-times' style='color: red'></i></font>".html_safe) %>
+                    <% end %>
+                  </td>
+                </tr>
+
+
+                <tr>
+                  <td>
+                    <%= "<font size='4pt'>".html_safe+eng_subj.subjectFullName.to_s+" (RUS)</font>".html_safe %>
+                  </td>
+                  <td>
+                    <% @this_category_rus_groups = Group.where(:season_id => @current_season_id, :subject_id => eng_subj.id, :group_language_id => GroupLanguage.find_by_groupLanguageShortName("RUS").id)%>
+
+                    <% @this_category_rus_morning_groups = @this_category_rus_groups.where(:lesson_time_id => @lessonTimes[0].id) %>
+
+                    <% if @this_category_rus_morning_groups.count == 0 %>
+                        <%= "<font size='4pt'><i class='fa fa-minus' style='color: gray'></i></font>".html_safe %>
+                    <% else %>
+                        <% @group_limit_sum = 0 %>
+                        <% @contract_sum = 0 %>
+
+                        <% @this_category_rus_morning_groups.each do |tmp_gr| %>
+                            <% @group_limit_sum = @group_limit_sum + tmp_gr.groupLimit %>
+                            <% @grp_contracts = Contract.where(:group_id => tmp_gr.id) %>
+                            <% @contract_sum = @contract_sum + ((@grp_contracts.count>tmp_gr.groupLimit) ? tmp_gr.groupLimit : @grp_contracts.count) %>
+                        <% end %>
+
+                        <%= ((@contract_sum < @group_limit_sum) ? "<font size='4pt'><i class='fa fa-check' style='color: lawngreen'></i></font>".html_safe : "<font size='4pt'><i class='fa fa-times' style='color: red'></i></font>".html_safe) %>
+                    <% end %>
+                  </td>
+
+                  <td>
+                    <% @this_category_rus_afternoon_groups = @this_category_rus_groups.where(:lesson_time_id => @lessonTimes[1].id) %>
+                    <% if @this_category_rus_afternoon_groups.count == 0 %>
+                        <%= "<font size='4pt'><i class='fa fa-minus' style='color: gray'></i></font>".html_safe %>
+                    <% else %>
+                        <% @group_limit_sum = 0 %>
+                        <% @contract_sum = 0 %>
+
+                        <% @this_category_rus_afternoon_groups.each do |tmp_gr| %>
+                            <% @group_limit_sum = @group_limit_sum + tmp_gr.groupLimit %>
+                            <% @grp_contracts = Contract.where(:group_id => tmp_gr.id) %>
+                            <% @contract_sum = @contract_sum + ((@grp_contracts.count>tmp_gr.groupLimit) ? tmp_gr.groupLimit : @grp_contracts.count) %>
+                        <% end %>
+
+                        <%= ((@contract_sum < @group_limit_sum) ? "<font size='4pt'><i class='fa fa-check' style='color: lawngreen'></i></font>".html_safe : "<font size='4pt'><i class='fa fa-times' style='color: red'></i></font>".html_safe) %>
+                    <% end %>
+                  </td>
+
+                  <td>
+                    <% @this_category_rus_evening_groups = @this_category_rus_groups.where(:lesson_time_id => @lessonTimes[2].id) %>
+                    <% if @this_category_rus_evening_groups.count == 0 %>
+                        <%= "<font size='4pt'><i class='fa fa-minus' style='color: gray'></i></font>".html_safe %>
+                    <% else %>
+                        <% @group_limit_sum = 0 %>
+                        <% @contract_sum = 0 %>
+
+                        <% @this_category_rus_evening_groups.each do |tmp_gr| %>
+                            <% @group_limit_sum = @group_limit_sum + tmp_gr.groupLimit %>
+                            <% @grp_contracts = Contract.where(:group_id => tmp_gr.id) %>
+                            <% @contract_sum = @contract_sum + ((@grp_contracts.count>tmp_gr.groupLimit) ? tmp_gr.groupLimit : @grp_contracts.count) %>
+                        <% end %>
+
+                        <%= ((@contract_sum < @group_limit_sum) ? "<font size='4pt'><i class='fa fa-check' style='color: lawngreen'></i></font>".html_safe : "<font size='4pt'><i class='fa fa-times' style='color: red'></i></font>".html_safe) %>
+                    <% end %>
+                  </td>
+                </tr>
+
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+
+</div>

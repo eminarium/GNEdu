@@ -1,0 +1,84 @@
+<%= render 'student_search_breadcrumb' %>
+
+<br>
+<!-- <div class="wrapper wrapper-content animated fadeInRight ecommerce"> -->
+  <div class="ibox-content m-b-sm border-bottom">
+    <div class="row">
+
+<%= form_tag search_students_path, :method => 'get', :id => "students_search" do %>
+
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label class="control-label" for="fName">Ady</label>
+      <%= text_field_tag :fName, params[:fName], placeholder:  "Ady", :class => "form-control" %>
+    </div>
+  </div>
+
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label class="control-label" for="lName">Familiýasy</label>
+      <%= text_field_tag :lName, params[:lName], placeholder:  "Familiýasy", :class => "form-control" %>
+    </div>
+  </div>
+
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label class="control-label" for="lName">Atasynyň Ady</label>
+      <%= text_field_tag :patronymic, params[:patronymic], placeholder:  "Atasynyň Ady", :class => "form-control" %>
+    </div>
+  </div>
+
+  <hr style="font-weight: bold; color: navy; height: 3px;">
+
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label class="control-label" for="lName">Telefon Belgisi</label>
+      <%= text_field_tag :mobilePhone, params[:mobilePhone], placeholder:  "Telefon Belgisi", :class => "form-control" %>
+    </div>
+  </div>
+
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label class="control-label" for="lName">SMS Belgisi</label>
+      <%= text_field_tag :smsMobilePhone, params[:smsMobilePhone], placeholder:  "SMS Belgisi", :class => "form-control" %>
+    </div>
+  </div>
+
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label class="control-label" for="lName">Öý Tel. Belgisi</label>
+      <%= text_field_tag :homePhone, params[:homePhone], placeholder:  "Öý Tel. Belgisi", :class => "form-control" %>
+    </div>
+  </div>
+
+  <div class="col-sm-4">
+    <div class="form-group">
+      <%#= submit_tag "<i class='fa fa-search'></i> Gözle ".html_safe, :name => nil, class: "btn btn-success" %>
+      <%= submit_tag "Gözle ".html_safe, :name => nil, class: "btn btn-success" %>
+    </div>
+  </div>
+
+    <% end %>
+
+    </div>
+  </div>
+<!-- </div> -->
+
+
+<div id="ads">
+  <%= render 'studentslist' %>
+</div>
+
+<script>
+    $(function () {
+        // Search form.
+        $('#students_search input').keyup(function () {
+            $.get($('#students_search').attr('action'), &crarr;
+            $('#students_search').serialize(), null, 'script');
+            return false;
+        });
+    });
+
+
+    $('#ads').html('<%= escape_javascript(render 'studentslist') %>');
+</script>

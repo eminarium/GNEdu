@@ -1,0 +1,36 @@
+<%= form_for(@author) do |f| %>
+    <% if @author.errors.any? %>
+        <div id="error_explanation">
+          <div class="alert alert-danger">
+            <h2><%= @author.errors.count %> ýalňyş sebäpli maglumatlar kabul edilmedi...</h2>
+
+            <ul>
+              <% @author.errors.each do |attr, message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+    <% end %>
+
+    <div><label class="col-sm-4 control-label">Ady</label>
+      <div class="col-sm-8"><%= f.text_field :authorFName, :type => "text", :class => "form-control" %></div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Familiýasy</label>
+      <div class="col-sm-8"><%= f.text_field :authorLName, :type => "text", :class => "form-control" %></div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Bellikler</label>
+      <div class="col-sm-8"><%= f.text_area :notes, :type => "text", :class => "form-control"  %></div>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Kabul Et", :class => "btn btn-success" %>
+    </div>
+
+<% end %>

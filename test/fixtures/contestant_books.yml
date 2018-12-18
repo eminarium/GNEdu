@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  book_id: 
+  bookContest_id: 
+  notes: MyText
+
+two:
+  book_id: 
+  bookContest_id: 
+  notes: MyText

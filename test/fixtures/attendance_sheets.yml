@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  group_id: 
+  attendanceSheetDate: 2017-02-06 22:25:39
+  attendanceSheetNotes: MyText
+
+two:
+  group_id: 
+  attendanceSheetDate: 2017-02-06 22:25:39
+  attendanceSheetNotes: MyText

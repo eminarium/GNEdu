@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  season_id: 
+  specialGroupTitle: MyString
+  notes: MyText
+
+two:
+  season_id: 
+  specialGroupTitle: MyString
+  notes: MyText

@@ -1,0 +1,72 @@
+<%= render 'teacher_available_teachers_breadcrumb' %>
+
+
+<% @days = Array.new() %>
+<% @days = ["Duşenbe", "Sişenbe", "Çarşenbe", "Penşenbe", "Anna", "Şenbe"] %>
+
+<div class="wrapper wrapper-content animated fadeInRight ecommerce">
+  <div class="ibox-content m-b-sm border-bottom">
+    <div class="row">
+
+      <%= form_tag available_teachers_timetables_path, :method => 'get', :id => "timetables_available_teachers" do %>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label class="control-label" for="lesson_time_id">Dersi</label>
+              <%= select_tag( "subject_category_id", options_from_collection_for_select(@subject_categories, "id", "subjectCategoryFullName", :selected => @subject_category), :prompt =>"Dersi Saýlaň", :class => "form-control" ) %>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label class="control-label" for="day_id">Güni</label>
+                  <select name="day_id" class = "form-control">
+                    <option value="0">Güni Saýlaň...</option>
+                    <% (1..6).each do |day| %>
+                       <option value="<%= day %>" <% if (day == @day) %>  selected="selected" <% end %> ><%= day %> - <%= @days[day-1] %> </option>
+                    <% end %>
+                  </select>
+              <%#= select_tag( "group_id", options_from_collection_for_select(@days, "id", "lessonTimeTitle", "lessonTime_id"), :prompt =>"Güni Saýlaň", :class => "form-control" ) %>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label class="control-label" for="lesson_time_id">Wagty</label>
+              <%= select_tag( "lesson_time_id", options_from_collection_for_select(@lesson_times, "id", "lessonTimeTitle", :selected => @lesson_time), :prompt =>"Wagty Saýlaň", :class => "form-control" ) %>
+            </div>
+          </div>
+
+          <br><br><br><br>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <%#= submit_tag "<i class='fa fa-search'></i> Gözle ".html_safe, :name => nil, class: "btn btn-success" %>
+              <%= submit_tag "Gözle ".html_safe, :name => nil, class: "btn btn-success" %>
+            </div>
+          </div>
+
+      <% end %>
+
+    </div>
+  </div>
+</div>
+
+
+<div id="ads">
+  <%= render 'timetableslist' %>
+</div>
+
+<script>
+    $(function () {
+        // Search form.
+        $('#timetables_search input').keyup(function () {
+            $.get($('#timetables_available_teachers').attr('action'), &crarr;
+            $('#timetables_available_teachers').serialize(), null, 'script');
+            return false;
+        });
+    });
+
+
+    $('#ads').html('<%= escape_javascript(render 'timetableslist') %>');
+</script>

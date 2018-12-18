@@ -1,0 +1,279 @@
+<html>
+<body>
+<div class="invoice"><div class="invoice-middle"><div class="invoice-middle-inner">
+
+<table style="float: left; border: 1px solid #000; letter-spacing: -0.004em">
+  <tr>
+    <td colspan="4" style="text-align: center; padding-top: 10px; ">"Gujurly Nesil" HK Bilim Bölümi</td>
+  </tr>
+  <tr>
+    <td colspan="4" style="text-align: center; padding-left: 1px; padding-right: 1px;">Magtymguly şaýoly 73 Tel. 94-28-00, 94-27-55, 94-29-07</td>
+  </tr>
+  <tr>
+    <td colspan="4" style="text-align: center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="4" style="text-align: center">Girdeji Orderi № : <%= ((@contract.payment_type.paymentTypeName == "BANK AMALY") || (@contract.payment_type.paymentTypeName == "KART AMALY")) ? @contract.otherContractNo : @contract.seasonContractNo %></td>
+  </tr>
+  <tr>
+    <td style="text-align: center"></td>
+    <td style="text-align: center; border: 1px solid #000">Güni </td>
+    <td style="text-align: center; border: 1px solid #000">Aýy</td>
+    <td style="text-align: center"><%= @contract.registrationDate.year %>ý.</td>
+  </tr>
+  <tr>
+    <td style="text-align: center"></td>
+    <td style="text-align: center; border: 1px solid #000"><%= @contract.registrationDate.day %></td>
+    <td style="text-align: center; border: 1px solid #000"><%= Contract::MONTH_NAMES_TM[@contract.registrationDate.month-1] %></td>
+    <td style="text-align: center"></td>
+  </tr>
+  <tr>
+    <td style="text-align: center"></td>
+    <td style="text-align: center; border: 1px solid #000; padding: 0px 1px 0px 1px">Pul Möçberi</td>
+    <td style="text-align: center; border: 1px solid #000">
+      <% if (@contract.amountPaid && @contract.amountPaid>=0) %>
+        <%= @contract.amountPaid.to_i %>
+      <% else %>
+        0
+      <% end %>
+    </td>
+    <td style="text-align: center"></td>
+  </tr>
+  <tr>
+    <td colspan="4" style="text-align: center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="text-align: left; padding-left: 1px">Kimden alnan:</td>
+    <td style="text-align: left">raýat</td>
+    <td style="text-align: center; padding-right: 1px" colspan="2"><%= @contract.student.fName %>&nbsp;<%= @contract.student.lName %>'dan</td>
+  </tr>
+  <tr>
+    <td style="text-align: left; padding-left: 1px">Esas:</td>
+    <td style="text-align: center; padding-right: 1" colspan="3">
+      <% if (@contract.group) %>
+          <%= @contract.group.subject.subjectFullName %>
+
+          (<%= @contract.group.groupTitle %>) kursynda okamaklyk üçin</td>
+      <% end %>
+  </tr>
+  <tr>
+    <td style="text-align: right; padding-left: 1px" colspan="3">
+      <u>
+        <% if (@contract.amountPaid && @contract.amountPaid>=0) %>
+            <%= @contract.int_to_text(@contract.amountPaid) %>
+        <% else %>
+            0
+        <% end %>
+      </u>
+    </td>
+    <td style="text-align: center">DTM</td>
+  </tr>
+  <tr>
+    <td style="text-align: left; padding-left: 1px">Goşulma</td>
+    <td style="text-align: left" colspan="3">
+      <u>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </u>
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: left; padding-left: 1px" colspan="4">
+      <u>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </u>
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: left; padding-left: 1px">Aldym</td>
+    <td colspan="3"></td>
+  </tr>
+  <tr>
+    <td style="text-align: left; padding: 0px 0px 1px 10px">Esasy Hünärmen &nbsp;</td>
+    <td style="text-align: left" colspan="3">
+      <u>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </u>
+    </td>
+  </tr>
+
+</table>
+
+<table style="float: left" id="boshluk_1">
+  <tr>
+    <td></td>
+  </tr>
+</table>
+
+<table style="float: left; border: 1px solid #000;" id="kwitansiya">
+<tr>
+  <td colspan="4" style="text-align: center; padding-top: 10px; ">"Gujurly Nesil" HK Bilim Bölümi</td>
+</tr>
+<tr>
+  <td colspan="4" style="text-align: center; padding-left: 1px; padding-right: 1px;">Magtymguly şaýoly 73 Tel. 94-28-00, 94-27-55, 94-29-07</td>
+</tr>
+<tr>
+    <td colspan="4" style="text-align: center">&nbsp;</td>
+</tr>
+<tr>
+  <td colspan="4" style="text-align: center">Girdeji Orderi</td>
+</tr>
+<tr>
+  <td style="text-align: center" colspan="4">KWITANSIÝASY № : <%= ((@contract.payment_type.paymentTypeName == "BANK AMALY") || (@contract.payment_type.paymentTypeName == "KART AMALY")) ? @contract.otherContractNo : @contract.seasonContractNo %> </td>
+</tr>
+<tr>
+    <td colspan="4" style="text-align: center">&nbsp;</td>
+</tr>
+<tr>
+  <td style="text-align: left; padding-left: 1px">Kimden alnan:</td>
+  <td style="text-align: left">raýat</td>
+  <td style="text-align: center; padding-right: 1px" colspan="2"><%= @contract.student.fName %>&nbsp;<%= @contract.student.lName %>'dan</td>
+</tr>
+<tr>
+  <td style="text-align: left; padding-left: 1px">Esas:</td>
+  <td style="text-align: center; padding-right: 1px" colspan="3"><%= @contract.group.subject.subjectFullName %> (<%= @contract.group.groupTitle %>) kursynda okamaklyk üçin</td>
+</tr>
+<tr>
+  <td style="text-align: left; padding-left: 1px" colspan="4">
+    <u>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </u>
+  </td>
+</tr>
+<tr>
+  <td style="text-align: left; padding-left: 10px" colspan="4">
+    <u>
+      <% if (@contract.amountPaid && @contract.amountPaid>=0) %>
+          <%= @contract.int_to_text(@contract.amountPaid) %> DTM
+      <% else %>
+          0 DTM
+      <% end %>
+    </u>
+  </td>
+</tr>
+<tr>
+  <td style="text-align: left; padding-left: 1px" colspan="4">
+    <u>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </u>
+  </td>
+</tr>
+<tr>
+  <td style="text-align: right" colspan="2">"<%= @contract.registrationDate.day %>"</td>
+  <td style="text-align: center"><%= Contract::MONTH_NAMES_TM[@contract.registrationDate.month-1] %></td>
+  <td style="text-align: left"><%= @contract.registrationDate.year %>ý.</td>
+</tr>
+<tr>
+  <td colspan="4" style="text-align: left; padding-left: 1px">M.Ý.</td>
+</tr>
+<tr>
+    <td colspan="4"style="text-align: center">&nbsp;</td>
+</tr>
+<tr>
+  <td style="text-align: left; padding: 0px 0px 1px 1px">Esasy Hünärmen &nbsp;</td>
+  <td style="text-align: left" colspan="3">
+    <u>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </u>
+  </td>
+</tr>
+
+</table>
+
+<table style="float: left" id="boshluk_2">
+    <tr>
+        <td></td>
+    </tr>
+</table>
+
+
+
+<table style="float: left; border: 1px solid #000;" id="meyilnama">
+  <tr>
+    <td style="text-decoration: underline; text-align: center; padding: 1px 1px 0px 1px; ">Sapak Günleri we Tertibi</td>
+  </tr>
+  <tr>
+    <td style="text-align: center">
+      <% @contractGroupTimetable.each do |cgt| %>
+            <%= cgt.weekday %>&nbsp;&nbsp;
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="text-decoration: underline; text-align: center;">Synp Otaglary</td>
+  </tr>
+  <tr>
+    <td style="text-align: center">
+      <% @contractGroupTimetable.each do |cgt| %>
+          <%= cgt.room.roomShortTitle %>&nbsp;&nbsp;
+      <% end %>
+
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="text-decoration: underline; text-align: center;">Wagty</td>
+  </tr>
+  <tr>
+    <td style="text-align: center">
+      <!-- 3 we 4 GUNLUKLERDE SHU GORNUSHDE  - START -->
+      <%= @contract.group.lesson_time.lessonTimeTitle+" "+@contract.group.lesson_time.lessonTimeFrom.strftime("%H:%M")+"-"+@contract.group.lesson_time.lessonTimeTo.strftime("%H:%M") %>
+      <!-- 3 we 4 GUNLUKLERDE SHU GORNUSHDE  - END -->
+
+      <!-- DINE 5  GUNLUKLERDE SHU GORNUSHDE   - START -->
+      <%# if ((@contract.group.subject.subjectShortName == "PRE") || (@contract.group.subject.subjectShortName == "INT") || (@contract.group.subject.subjectShortName == "UPR") || (@contract.group.subject.subjectShortName == "ADV")) %>
+        <%#= @contract.group.lesson_time.lessonTimeTitle+" "+@contract.group.lesson_time.lessonTimeFrom.strftime("%H:%M")+"-"+@contract.group.lesson_time.lessonTimeTo.strftime("%H:%M") %>
+      <%# else %>
+        <%#= @contract.group.lesson_time.lessonTimeTitle+" "+@contract.group.lesson_time.lessonTimeFrom.strftime("%H:%M")+"-"+(@contract.group.lesson_time.lessonTimeTo).strftime("%H:%M") %>
+    <%# end %>
+      <!-- DINE 5  GUNLUKLERDE SHU GORNUSHDE  - END -->
+
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="text-decoration: underline; text-align: center;">Mugallymyň Ady</td>
+  </tr>
+  <tr>
+    <td style="text-align: center">
+      <% if (@contract.group.teacher) %>
+          <%= @contract.group.teacher.teacherFName+" "+@contract.group.teacher.teacherLName %></td>
+      <% end %>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="text-decoration: underline; text-align: center;">Kursyň Başlaýan Wagty</td>
+  </tr>
+  <tr>
+    <td style="text-align: center; padding: 0px 0px 1px 0px"><%= @contract.season.seasonFromDate.strftime("%d-%m-%Y") %></td>
+  </tr>
+</table>
+
+</div></div></div>
+
+
+<style>
+
+    @page {
+        size: A4 landscape;
+    }
+
+    @media print {
+        html, body{margin: 0 0 0 0; padding: 0 7 0 7;}
+        .invoice{box-sizing: border-box; height: 100%; width: 100%; border: 1px solid transparent; page-break-after: always;}
+        .invoice-middle{height: 100%; width: 100%; display: table;}
+        .invoice-middle-inner{height: 100%; width: 100%; display: table-cell; vertical-align: middle;}
+    }
+
+</style>
+</body>
+
+</html>

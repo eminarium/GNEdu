@@ -1,0 +1,63 @@
+<%= form_for(@room) do |f| %>
+  <% if @room.errors.any? %>
+    <div id="error_explanation">
+      <div class="alert alert-danger">
+        <h2><%= @room.errors.count %> ýalňyş sebäpli maglumatlar kabul edilmedi...</h2>
+
+        <ul>
+          <% @room.errors.each do |attr, message| %>
+              <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+
+<div><label class="col-sm-4 control-label">Synpyň Doly Ady</label>
+    <div class="col-sm-8"><%= f.text_field :roomFullTitle, :type => "text", :class => "form-control" %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Synpyň Gysga Ady</label>
+  <div class="col-sm-8"><%= f.text_field :roomShortTitle, :type => "text", :class => "form-control" %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Ýer Sany</label>
+    <div class="col-sm-8"><%= f.text_field :roomCapacity, :type => "text", :class => "form-control" %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Proýektor Bar</label>
+  <div class="col-sm-8"><%= f.check_box :hasProjector, :type => "checkbox", :class => "checkbox checkbox-primary", :id => "checkboxProjector" %></div>
+      <label for="checkboxProjector">
+
+      </label>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Elektron Tagta Bar</label>
+    <div class="col-sm-8"><%= f.check_box :hasEboard, :type => "checkbox", :class => "checkbox checkbox-primary", :id => "checkboxEBoard" %></div>
+        <label for="checkboxEBoard">
+
+        </label>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Bellikler</label>
+    <div class="col-sm-8"><%= f.text_area :notes, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div class="actions">
+    <%= f.submit "Kabul Et", :class => "btn btn-success" %>
+</div>
+
+<% end %>

@@ -1,0 +1,2 @@
+module ContestantBooksHelper
+end

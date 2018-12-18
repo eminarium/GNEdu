@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  teacherFName: MyString
+  teacherLName: MyString
+  teacherPatronymic: MyString
+  notes: MyText
+
+two:
+  teacherFName: MyString
+  teacherLName: MyString
+  teacherPatronymic: MyString
+  notes: MyText

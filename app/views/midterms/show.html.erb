@@ -1,0 +1,102 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+<div class="row">
+<div class="col-lg-6">
+
+
+
+  <div class="ibox float-e-margins">
+    <div class="ibox-title">
+      <h5>Arasynag Maglumatlary</h5>
+      <div class="ibox-tools">
+        <a class="collapse-link">
+          <i class="fa fa-chevron-up"></i>
+        </a>
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          <i class="fa fa-wrench"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-user">
+          <li><a href="#">Config option 1</a>
+          </li>
+          <li><a href="#">Config option 2</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="ibox-content">
+      <h3>
+        Arasynag Maglumatlary
+      </h3>
+      <br>
+
+
+      <p id="notice"><%= notice %></p>
+
+      <div><label class="col-sm-4 control-label">Şertnama №</label>
+        <div class="col-sm-8"><i>
+          <% if @midterm.contract.seasonContractNo %>
+              <%= link_to (@midterm.contract.seasonContractNo > 99) ? @midterm.contract.seasonContractNo.to_s : ((@midterm.contract.seasonContractNo > 9) ? "0"+@midterm.contract.seasonContractNo.to_s : "00"+@midterm.contract.seasonContractNo.to_s), @midterm.contract %>
+          <% end %>
+        </i></div>
+      </div>
+
+      <br><br><br>
+
+      <div><label class="col-sm-4 control-label">Diňleýji</label>
+        <div class="col-sm-8"><i>
+          <%= link_to @midterm.contract.student.first_and_last_name, @midterm.contract.student %>
+        </i></div>
+      </div>
+
+      <br><br><br>
+
+      <div><label class="col-sm-4 control-label">Topary</label>
+        <div class="col-sm-8"><i><%= link_to @midterm.contract.group.groupTitle, @midterm.contract.group %></i></div>
+      </div>
+
+      <br><br><br>
+
+      <div><label class="col-sm-4 control-label">Arasynag Belgisi</label>
+        <div class="col-sm-8"><i><%= @midterm.midtermOrderNo %></i></div>
+      </div>
+
+      <br><br><br>
+
+      <div><label class="col-sm-4 control-label">Arasynag Bahasy</label>
+        <div class="col-sm-8"><i><%= @midterm.midtermPoints %></i></div>
+      </div>
+
+      <br><br><br>
+
+      <div><label class="col-sm-4 control-label">Rugsatly</label>
+        <div class="col-sm-8">
+          <% if (@midterm.isReleasedFrom) %>
+              <i class="fa fa-check" style="color: lawngreen"></i>
+          <% else %>
+              <i class="fa fa-times" style="color: red"></i>
+          <% end %>
+        </div>
+      </div>
+
+      <br><br><br>
+
+      <div><label class="col-sm-4 control-label">Bellikler</label>
+        <div class="col-sm-8"><i><%= @midterm.midtermNotes %></i></div>
+      </div>
+
+      <br><br><br>
+
+
+      <%= link_to 'Üýtget', edit_midterm_path(@midterm), :class => "btn btn-warning"  %>
+      <%= link_to 'Yza', midterms_path, :class => "btn btn-outline btn-success" %>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+</div>
+</div>

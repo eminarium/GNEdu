@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Contract:</strong>
+  <%= @attendance.contract %>
+</p>
+
+<p>
+  <strong>Attendancedate:</strong>
+  <%= @attendance.attendanceDate %>
+</p>
+
+<p>
+  <strong>Attendancelist:</strong>
+  <%= @attendance.attendanceList %>
+</p>
+
+<p>
+  <strong>Attendancenotes:</strong>
+  <%= @attendance.attendanceNotes %>
+</p>
+
+<%= link_to 'Edit', edit_attendance_path(@attendance) %> |
+<%= link_to 'Back', attendances_path %>

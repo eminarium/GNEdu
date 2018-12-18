@@ -1,0 +1,107 @@
+
+<div class="wrapper wrapper-content animated fadeInRight">
+<div class="row">
+<div class="col-lg-12">
+<div class="ibox float-e-margins">
+<div class="ibox-title">
+  <h5>Hepdelik Ders Meýilnamasy</h5>
+  <div class="ibox-tools">
+    <a class="collapse-link">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+      <i class="fa fa-wrench"></i>
+    </a>
+    <ul class="dropdown-menu dropdown-user">
+      <li><a href="#">Config option 1</a>
+      </li>
+      <li><a href="#">Config option 2</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="ibox-content">
+
+<div class="table-responsive">
+<table class="table table-striped table-bordered table-hover dataTables-example" >
+<thead>
+<tr style="font-size: 14pt;">
+  <th>Duşenbe</th>
+  <th>Sişenbe</th>
+  <th>Çarşenbe</th>
+  <th>Penşenbe</th>
+  <th>Anna</th>
+  <th>Şenbe</th>
+</tr>
+</thead>
+<tbody>
+
+<% @current_groups.each do |cg| %>
+
+    <% case  cg.lesson_time.lessonTimeTitle %>
+        <% when "Irden" %>
+            <% @btn_color = "btn btn-warning" %>
+        <% when "Öýlän" %>
+            <% @btn_color = "btn btn-danger" %>
+        <% when "Agşam" %>
+            <% @btn_color = "btn btn-success" %>
+    <% end %>
+
+    <tr class="gradeA">
+      <td>
+        <% if(Timetable.where("group_id = ? AND weekday = ?", cg.id, "1").exists?) %>
+            <% @groupRoom = Timetable.where(["group_id = ? AND weekday = ?", cg.id, "1"]).first.room %>
+            <%= link_to cg.groupTitle+" / "+cg.lesson_time.lessonTimeTitle+" / "+@groupRoom.roomFullTitle, cg, :class => @btn_color %>
+        <% end %>
+      </td>
+
+      <td>
+        <% if(Timetable.where("group_id = ? AND weekday = ?", cg.id, "2").exists?) %>
+            <% @groupRoom = Timetable.where(["group_id = ? AND weekday = ?", cg.id, "2"]).first.room %>
+            <%= link_to cg.groupTitle+" / "+cg.lesson_time.lessonTimeTitle+" / "+@groupRoom.roomFullTitle, cg, :class => @btn_color %>
+        <% end %>
+      </td>
+
+      <td>
+        <% if(Timetable.where("group_id = ? AND weekday = ?", cg.id, "3").exists?) %>
+            <% @groupRoom = Timetable.where(["group_id = ? AND weekday = ?", cg.id, "3"]).first.room %>
+            <%= link_to cg.groupTitle+" / "+cg.lesson_time.lessonTimeTitle+" / "+@groupRoom.roomFullTitle, cg, :class => @btn_color %>
+        <% end %>
+      </td>
+
+      <td>
+        <% if(Timetable.where("group_id = ? AND weekday = ?", cg.id, "4").exists?) %>
+            <% @groupRoom = Timetable.where(["group_id = ? AND weekday = ?", cg.id, "4"]).first.room %>
+            <%= link_to cg.groupTitle+" / "+cg.lesson_time.lessonTimeTitle+" / "+@groupRoom.roomFullTitle, cg, :class => @btn_color %>
+        <% end %>
+      </td>
+
+      <td>
+        <% if(Timetable.where("group_id = ? AND weekday = ?", cg.id, "5").exists?) %>
+            <% @groupRoom = Timetable.where(["group_id = ? AND weekday = ?", cg.id, "5"]).first.room %>
+            <%= link_to cg.groupTitle+" / "+cg.lesson_time.lessonTimeTitle+" / "+@groupRoom.roomFullTitle, cg, :class => @btn_color %>
+        <% end %>
+      </td>
+
+      <td>
+        <% if(Timetable.where("group_id = ? AND weekday = ?", cg.id, "6").exists?) %>
+            <% @groupRoom = Timetable.where(["group_id = ? AND weekday = ?", cg.id, "6"]).first.room %>
+            <%= link_to cg.groupTitle+" / "+cg.lesson_time.lessonTimeTitle+" / "+@groupRoom.roomFullTitle, cg, :class => @btn_color %>
+        <% end %>
+      </td>
+
+    </tr>
+<% end %>
+
+</tbody>
+</table>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+

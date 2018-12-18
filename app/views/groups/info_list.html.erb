@@ -1,0 +1,83 @@
+<html>
+<body>
+
+
+<table>
+  <thead>
+  <tr>
+    <th style="border-width:1; border-style: groove;" rowspan="3">T/b</th>
+    <th style="border-width:1; border-style: groove" rowspan="3">Ady</th>
+    <th style="border-width:1; border-style: groove" rowspan="3">Familiýasy</th>
+    <th style="border-width:1; border-style: groove" rowspan="3">Doglan Senesi</th>
+    <th style="border-width:1; border-style: groove">Topary</th>
+    <th style="border-width:1; border-style: groove">Wagty</th>
+    <th style="border-width:1; border-style: groove">Mugallymy</th>
+    <th style="border-width:1; border-style: groove" colspan="6">Ders Rejesi</th>
+  </tr>
+  <tr>
+    <th style="border-width:1; border-style: groove"><%= @group.groupTitle.to_s %></th>
+    <th style="border-width:1; border-style: groove"><%= @group.lesson_time.lessonTimeFrom.strftime("%H:%M")+" "+@group.lesson_time.lessonTimeTo.strftime("%H:%M") %></th>
+    <th style="border-width:1; border-style: groove">
+      <% if @group.teacher %>
+          <%= @group.teacher.teacherFName+" "+@group.teacher.teacherLName %>
+      <% end %>
+    </th>
+
+    <% for i in 1..6 %>
+        <th style="border-width:1; border-style: groove; vertical-align: top">
+          <%= i %><br>
+          <% @timetable_item = Timetable.where(:group_id => @group.id, :weekday => i) %>
+          <% if @timetable_item[0] %>
+              <%= @timetable_item[0].room.roomShortTitle.to_s %>
+          <% else %>
+              -
+          <% end %>
+        </th>
+    <% end %>
+
+  </tr>
+
+  <tr>
+    <th colspan="2" style="border-width:1; border-style: groove">Mobil Belgisi</th>
+    <th style="border-width:1; border-style: groove">Goşmaça Belgisi</th>
+    <th colspan="6" style="border-width:1; border-style: groove">Öý Belgisi</th>
+  </tr>
+
+  </thead>
+
+  <tbody>
+
+  <% @num = 0 %>
+  <% @group_students.each do |student| %>
+      <tr class="gradeA">
+
+        <td style="border-width:1; border-style: groove;"><%= @num = @num+1 %></td>
+        <td style="border-width:1; border-style: groove;"><%= student.fName %></td>
+        <td style="border-width:1; border-style: groove;"><%= student.lName %></td>
+        <td style="border-width:1; border-style: groove;"><%= student.birthDate.strftime("%d/%m/%Y") %></td>
+        <td style="border-width:1; border-style: groove;" colspan="2"><%= student.mobilePhone %></td>
+        <td style="border-width:1; border-style: groove;"><%= student.smsMobilePhone %></td>
+        <td style="border-width:1; border-style: groove;" colspan="6"><%= student.homePhone %></td>
+      </tr>
+  <% end %>
+
+  </tbody>
+</table>
+
+<style>
+
+    @page {
+        size: A4 portrait;
+    }
+
+    @media print {
+        html, body{margin: 0 0 0 0; padding: 0 7 0 7;}
+        .invoice{box-sizing: border-box; height: 100%; width: 100%; border: 1px solid transparent; page-break-after: always;}
+        .invoice-middle{height: 100%; width: 100%; display: table;}
+        .invoice-middle-inner{height: 100%; width: 100%; display: table-cell; vertical-align: middle;}
+    }
+
+</style>
+
+</body>
+</html>

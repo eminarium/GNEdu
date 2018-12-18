@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  group_id: 
+  room_id: 
+  weekday: 1
+  notes: MyText
+
+two:
+  group_id: 
+  room_id: 
+  weekday: 1
+  notes: MyText

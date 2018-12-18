@@ -1,0 +1,85 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-6">
+
+
+
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Tapgyr Synagy Maglumatlary</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+            <a class="close-link">
+              <i class="fa fa-times"></i>
+            </a>
+          </div>
+        </div>
+
+
+        <div class="ibox-content">
+          <h3>
+            Tapgyr Synagy Maglumatlary
+          </h3>
+          <br>
+
+
+          <p id="notice"><%= notice %></p>
+
+
+          <div><label class="col-sm-4 control-label">Ady</label>
+            <div class="col-sm-8"><i><%= @season_test.seasonTestTitle %></i></div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-4 control-label">Senesi</label>
+            <div class="col-sm-8"><i><%= @season_test.seasonTestDate %></i></div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-4 control-label">Tapgyry</label>
+            <div class="col-sm-8"><i><%= @season_test.season.seasonTitle %></i></div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-4 control-label">Finalmy ?</label>
+            <div class="col-sm-8">
+              <% if (@season_test.isFinal) %>
+                  <i class="fa fa-check" style="color: lawngreen"></i>
+              <% else %>
+                  <i class="fa fa-times" style="color: red"></i>
+              <% end %>
+            </div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-4 control-label">Bellikler</label>
+            <div class="col-sm-8"><i><%= @season_test.seasonTestNotes %></i></div>
+          </div>
+
+          <br><br><br>
+
+          <%= link_to 'Üýtget', edit_season_test_path(@season_test), :class => "btn btn-warning"  %>
+          <%= link_to 'Yza', season_tests_path, :class => "btn btn-outline btn-success" %>
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

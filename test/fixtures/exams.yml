@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  examinee_id: 
+  subject_id: 
+  examDate: 2016-03-09 17:49:14
+  examResult: 1.5
+  notes: MyText
+
+two:
+  examinee_id: 
+  subject_id: 
+  examDate: 2016-03-09 17:49:14
+  examResult: 1.5
+  notes: MyText

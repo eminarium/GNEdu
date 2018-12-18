@@ -1,0 +1,174 @@
+<html>
+<body>
+
+
+<table>
+  <thead>
+  <tr>
+    <th style="border-width:1; border-style: groove">Diňleýji</th>
+
+    <th style="border-width:1; border-style: groove">Topary</th>
+    <th style="border-width:1; border-style: groove">Wagty</th>
+    <th style="border-width:1; border-style: groove">Mugallymy</th>
+    <th style="border-width:1; border-style: groove" colspan="6">Ders Rejesi</th>
+    <th style="border-width:1; border-style: groove"> &nbsp;&nbsp;&nbsp; </th>
+    <th style="border-width:1; border-style: groove">Tapgyryň Başy</th>
+    <th style="border-width:1; border-style: groove">Tapgyryň Soňy</th>
+  </tr>
+  <tr>
+    <th style="border-width:1; border-style: groove"><%= @contract.student.first_and_last_name %></th>
+    <th style="border-width:1; border-style: groove"><%= @contract.group.groupTitle.to_s %></th>
+    <th style="border-width:1; border-style: groove"><%= @contract.group.lesson_time.lessonTimeFrom.strftime("%H:%M")+" - "+@contract.group.lesson_time.lessonTimeTo.strftime("%H:%M") %></th>
+    <th style="border-width:1; border-style: groove">
+      <% if @contract.group.teacher %>
+        <%= @contract.group.teacher.teacherFName+" "+@contract.group.teacher.teacherLName %>
+      <% end %>
+    </th>
+
+    <% for i in 1..6 %>
+        <th style="border-width:1; border-style: groove; vertical-align: top">
+          <%= i %><br>
+          <% @timetable_item = Timetable.where(:group_id => @contract.group.id, :weekday => i) %>
+          <% if @timetable_item[0] %>
+              <%= @timetable_item[0].room.roomShortTitle.to_s %>
+          <% else %>
+            -
+          <% end %>
+        </th>
+    <% end %>
+
+    <th style="border-width:1; border-style: groove"> &nbsp;&nbsp;&nbsp; </th>
+    <th style="border-width:1; border-style: groove"><%= @season_start_date.strftime("%d / %m / %Y") %></th>
+    <th style="border-width:1; border-style: groove"><%= @season_end_date.strftime("%d / %m / %Y") %></th>
+  </tr>
+  </thead>
+
+  <tbody>
+
+  <!-- ******************************** -->
+  </tbody>
+</table>
+
+<br>
+
+<table>
+  <thead>
+    <tr>
+      <th style="border-width:1; border-style: groove">Aýlar</th>
+      <% (1..31).each do |day|  %>
+          <th  style="border-width:1; border-style: groove; text-align: center"><%= day %></th>
+      <% end %>
+    </tr>
+  <% (@season_start_date.month..@season_end_date.month).each do |month|  %>
+      <tr>
+          <th style="border-width:1; border-style: groove">
+            <%=  Date::MONTHNAMES[month] %>
+          </th>
+
+        <% (Date.new(@season_start_date.year, month)..Date.new(@season_start_date.year, month, -1)).each do |month_day| %>
+
+            <% @contract_group_attendance_sheets=@contract.group.attendance_sheets.where("extract(year from \"attendanceSheetDate\") = ? AND extract(month from \"attendanceSheetDate\") = ? AND extract(day from \"attendanceSheetDate\") = ?", @season_start_date.year, month, month_day.day-1) %>
+            <% if (!@contract_group_attendance_sheets.empty?)  %>
+                <% @contract_attendance=@contract_group_attendance_sheets[0].attendances.where(:contract_id => @contract.id).first %>
+            <% else %>
+                <% @contract_attendance = nil %>
+            <% end %>
+
+            <% if (month_day < @season_start_date || month_day > @season_end_date+1.day) %> <!-- If this day is not within current season -->
+                <td style="background: #0000ff; color: white; font-weight: bolder; text-align: center; width:25pt"></td>
+            <% elsif (month_day.sunday?) %> <!-- If Sunday and no accidental attendance taken this day -->
+                <td style="border-width:1; border-style: groove; background: red; color: white; font-weight: bolder; text-align: center">D</td>
+            <% elsif (month_day.sunday? && (@contract_attendance)) %> <!-- If Sunday and accidental there is attendance taken this day -->
+                <td style="background: orange; color: white; font-weight: bolder; text-align: center">
+                  D / <i class="fa fa-question"></i>
+                </td>
+            <% elsif ((@weekday_array.include? month_day.wday) ) %> <!-- If not Sunday and today is group lesson day  -->
+                <%# && (month_day <= Date.today) %>
+                <td   style="border-width:1; border-style: groove; text-align: center; background: gainsboro">
+                  <% if (!@contract_attendance.blank?) %> <!-- If there is attendance taken this day (and today is group lesson day)  -->
+                      <%= ((@contract_attendance.lesson_1) ? "+" : "-") %>/<%= ((@contract_attendance.lesson_2) ? "+" : "-") %>/<%= ((@contract_attendance.lesson_3) ? "+" : "-") %>
+                  <% else %> <!-- If there is no attendance taken this day (but today is group lesson day) -->
+                      X
+                  <% end %>
+                </td>
+            <% elsif (@contract_attendance) %> <!-- This day is not lesson day and accidentally attendance is taken this day  -->
+                <td style="text-align: center">
+                  <i class="fa fa-minus" style="color: #808080"></i> /  <i class="fa fa-question"></i>
+                </td>
+            <% else %> <!-- This day is not lesson day and no accidental attendance is taken this day  -->
+                <td style="border-width:1; border-style: groove; text-align: center"></td>
+            <% end %>
+        <% end %>
+
+      </tr>
+  <% end %>
+  </thead>
+</table>
+
+<br><br><br>
+
+<table>
+  <thead>
+  <th>Bellik</th>
+  <th>&nbsp;&nbsp;&nbsp;</th>
+  <th>Manysy</th>
+  </thead>
+  <tbody>
+  <tr>
+    <td style="border-width:1; border-style: groove; background: #0000ff; color: white; font-weight: bolder; text-align: center"></td>
+    <td>&nbsp;&nbsp;&nbsp;</td>
+    <td>Bu tapgyryň çäklerindäki seneden daşary günler (tapgyryň okuw seneleri däl)...</td>
+  </tr>
+  <tr>
+    <td style="border-width:1; border-style: groove; "></td>
+    <td>&nbsp;&nbsp;&nbsp;</td>
+    <td>(BOŞ ÖÝJÜK) Bu günde bu toparyň dersi ýok...</td>
+  </tr>
+  <tr>
+    <td style="border-width:1; border-style: groove; background: red; color: white; font-weight: bolder; text-align: center">D</td>
+    <td>&nbsp;&nbsp;&nbsp;</td>
+    <td>Hepdäniň Dynç güni...</td>
+  </tr>
+  <tr>
+    <td style="border-width:1; border-style: groove; font-weight: bolder; text-align: center">X</i></td>
+    <td>&nbsp;&nbsp;&nbsp;</td>
+    <td>Bu senede gatnaşyk girizilmändir...</td>
+  </tr>
+  <tr>
+    <td style="border-width:1; border-style: groove; background: orange; color: white; font-weight: bolder; text-align: center">+/+/+</td>
+    <td>&nbsp;&nbsp;&nbsp;</td>
+    <td>Diňleýji ders güni ähli 3 (üç) derse hem gatnaşypdyr..</td>
+  </tr>
+  <tr>
+    <td style="border-width:1; border-style: groove; background: orange; color: white; font-weight: bolder; text-align: center">-/-/-</td>
+    <td>&nbsp;&nbsp;&nbsp;</td>
+    <td>Diňleýji ders güni 3 (üç) dersiň hiçisine hem gatnaşmandyr ...</td>
+  </tr>
+  <tr>
+    <td style="border-width:1; border-style: groove; background: orange; color: white; font-weight: bolder; text-align: center">-/+/+</td>
+    <td>&nbsp;&nbsp;&nbsp;</td>
+    <td>Diňleýji ders güni 1-nji derse gatnaşmandyr, 2-nji we 3-nji derse gatnaşypdyr ...</td>
+  </tr>
+  </tbody>
+</table>
+
+
+
+
+<style>
+
+    @page {
+        size: A4 landscape;
+    }
+
+    @media print {
+        html, body{margin: 0 0 0 0; padding: 0 7 0 7;}
+        .invoice{box-sizing: border-box; height: 100%; width: 100%; border: 1px solid transparent; page-break-after: always;}
+        .invoice-middle{height: 100%; width: 100%; display: table;}
+        .invoice-middle-inner{height: 100%; width: 100%; display: table-cell; vertical-align: middle;}
+    }
+
+</style>
+
+</body>
+</html>

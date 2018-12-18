@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Contract:</strong>
+  <%= @final.contract %>
+</p>
+
+<p>
+  <strong>Finalpoints:</strong>
+  <%= @final.finalPoints %>
+</p>
+
+<p>
+  <strong>Finalnotes:</strong>
+  <%= @final.finalNotes %>
+</p>
+
+<%= link_to 'Edit', edit_final_path(@final) %> |
+<%= link_to 'Back', finals_path %>

@@ -1,0 +1,60 @@
+<%#= render 'student_search_breadcrumb' %>
+
+<div class="wrapper wrapper-content animated fadeInRight ecommerce">
+  <div class="ibox-content m-b-sm border-bottom">
+    <div class="row">
+
+<%= form_tag birthdays_contracts_path, :method => 'get', :id => "birthdays_search" do %>
+
+  <div class="col-sm-2">
+    <div class="form-group">
+      <label class="control-label" for="birthday_date">Aýy : </label>
+      <%#= date_select :birthday_date, params[:birthday_date], :class => "form-control" %>
+      <% @months = Array.new(["Ýanwar", "Fewral", "Mart", "Aprel", "Maý", "Iýun", "Iýul", "Awgust", "Sentýabr", "Oktýabr", "Noýabr", "Dekabr"]) %>
+      <%= select_tag :month_id, options_for_select(@months.collect.with_index.to_a) %>
+    </div>
+  </div>
+
+  <div class="col-sm-2">
+    <div class="form-group">
+      <label class="control-label" for="birthday_date">Güni : </label>
+      <%#= date_select :birthday_date, params[:birthday_date], :class => "form-control" %>
+      <%= select_tag :day_id, options_for_select((1..31)) %>
+
+    </div>
+  </div>
+
+
+<br><br><br>
+
+  <div class="col-sm-4">
+    <div class="form-group">
+      <%#= submit_tag "<i class='fa fa-search'></i> Gözle ".html_safe, :name => nil, class: "btn btn-success" %>
+      <%= submit_tag "Gözle ".html_safe, :name => nil, class: "btn btn-success" %>
+    </div>
+  </div>
+
+<% end %>
+
+    </div>
+  </div>
+</div>
+
+
+<div id="ads">
+  <%= render 'birthdayslist' %>
+</div>
+
+<script>
+    $(function () {
+        // Search form.
+        $('#birthdays_search input').keyup(function () {
+            $.get($('#birthdays_search').attr('action'), &crarr;
+            $('#birthdays_search').serialize(), null, 'script');
+            return false;
+        });
+    });
+
+
+    $('#ads').html('<%= escape_javascript(render 'birthdayslist') %>');
+</script>

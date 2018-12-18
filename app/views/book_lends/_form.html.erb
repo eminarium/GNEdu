@@ -1,0 +1,84 @@
+<%= form_for(@book_lend) do |f| %>
+    <% if @book_lend.errors.any? %>
+        <div id="error_explanation">
+          <div class="alert alert-danger">
+            <h2><%= @book_lend.errors.count %> ýalňyş sebäpli maglumatlar kabul edilmedi...</h2>
+
+            <ul>
+              <% @book_lend.errors.each do |attr, message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+    <% end %>
+
+
+<!--
+    <div><label class="col-sm-4 control-label">Diňleýji</label>
+      <div class="col-sm-8"><%= f.text_field :student_id, :type => "text", :class => "form-control" %></div>
+    </div>
+
+    <br><br><br>
+-->
+
+    <div class="form-group">
+      <label class="font-noraml">Diňleýji</label>
+
+      <div class="input-group">
+        <%= f.collection_select(:student_id, @season_studs, :id, :first_and_last_name, {include_blank: "Diňleýji Saýlaň",name: "student_id[]", id: "book_student_id", :selected => @selected_student}, {class: "chosen-select", style: "width:350px", tabindex: "0"}) %>
+      </div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Berlen Senesi</label>
+      <div class="col-sm-8"><%= f.date_select :lendDateTime, :start_year => 1900, :end_year => 2016 %></div>
+    </div>
+
+    <br><br><br>
+
+    <div class="form-group">
+      <label class="font-noraml">Kitap</label>
+
+      <div class="input-group">
+
+        <!--
+                <select data-placeholder="Choose a Country..." class="chosen-select" multiple style="width:350px;" tabindex="4">
+                    <option value="">Select</option>
+                    <option value="United States">United States</option>
+                    <option value="United Kingdom">United Kingdom</option>
+                </select>
+        -->
+
+        <%= f.collection_select(:book_id, @books, :id, :bookName, {include_blank: "Kitap Saýlaň", name: "author_id[]", id: "book_author_id", :selected => @selected_book}, {class: "chosen-select", style: "width:350px", tabindex: "2"} ) %>
+      </div>
+    </div>
+
+    <div><label class="col-sm-4 control-label">Gaýtarylan ?</label>
+      <div class="col-sm-8"><%= f.check_box :isReturned, :type => "checkbox", :class => "checkbox checkbox-primary", :id => "checkboxEBoard" %></div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Gaýtarylan Senesi</label>
+      <div class="col-sm-8"><%= f.date_select :returnDateTime, :start_year => 1900, :end_year => 2016 %></div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Zeper Ýetirilen ?</label>
+      <div class="col-sm-8"><%= f.check_box :isDamaged, :type => "checkbox", :class => "checkbox checkbox-primary", :id => "checkboxEBoard" %></div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Bellikler</label>
+      <div class="col-sm-8"><%= f.text_area :notes, :type => "text", :class => "form-control"  %></div>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Kabul Et", :class => "btn btn-success" %>
+    </div>
+
+<% end %>

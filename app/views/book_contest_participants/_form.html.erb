@@ -1,0 +1,58 @@
+<%= form_for(@book_contest_participant) do |f| %>
+    <% if @book_contest_participant.errors.any? %>
+        <div id="error_explanation">
+          <div class="alert alert-danger">
+            <h2><%= @book_contest_participant.errors.count %> ýalňyş sebäpli maglumatlar kabul edilmedi...</h2>
+
+            <ul>
+              <% @book_contest_participant.errors.each do |attr, message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+    <% end %>
+
+    <div><label class="col-sm-4 control-label">Gatnaşyjy</label>
+        <% if (!@contract_id.nil?) %>
+          <div class="col-sm-8" hidden="hidden">
+            <%= f.collection_select(:contract_id, @contracts, :id, :id, :selected => @contract_id, :class => "form-control", :hidden=>"yes" ) %>
+          </div>
+            <%= Contract.find_by_id(@contract_id).student.first_and_last_name %>
+        <% else %>
+          <div class="col-sm-8" hidden="hidden">
+            <% f.collection_select(:contract_id, @contracts, :id, :id, :class => "form-control", :hidden=>"yes" ) %>
+          </div>
+            <%= Contract.find_by_id(@book_contest_participant.contract.id).student.first_and_last_name %>
+      <% end %>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Ýaryşyň Ady</label>
+      <div class="col-sm-8">
+        <%= f.collection_select(:book_contest_id, @book_contests, :id, :bookContestName, :class => "form-control" ) %>
+      </div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Kitaby</label>
+      <div class="col-sm-8">
+        <%= f.collection_select(:book_language_id, @book_languages, :id, :bookLanguageShortName, :class => "form-control" ) %>
+      </div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Bellikler</label>
+      <div class="col-sm-8"><%= f.text_area :notes, :type => "text", :class => "form-control"  %></div>
+    </div>
+
+    <br><br><br>
+
+    <div class="actions">
+      <%= f.submit "Kabul Et", :class => "btn btn-success" %>
+    </div>
+
+<% end %>

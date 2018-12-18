@@ -1,0 +1,248 @@
+<html>
+<body>
+
+<% @teacher_count = 0 %>
+<% @group_count = 0 %>
+
+<table>
+  <thead>
+  <tr>
+    <th style="border-width:1; border-style: groove" colspan="3"> DIŇLEÝJINIŇ MAGLUMAT SAHYPASY</th>
+  </tr>
+  </thead>
+  <tbody>
+
+      <tr>
+        <td style="border-width:1; border-style: groove; text-align: center" colspan="3">
+          <% if !@student.imageUrl.blank? %>
+              <%= image_tag "/uploads/images/"+@student.imageUrl, width: 300 %>
+          <% else %>
+              <%= image_tag "/uploads/images/no_photo_6.png", width: 300 %>
+          <% end %>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> Ady </td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <%= @student.fName %>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> Familiýasy </td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <%= @student.lName %>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> Atasynyň Ady</td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <%= @student.patronymic %>
+        </td>
+      </tr>
+
+      <tr><td colspan="3"></td></tr>
+      <tr><td style="background: #5E5E5E" colspan="3"></td></tr>
+      <tr><td colspan="3"></td></tr>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> Milleti </td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <%= @student.nationality.nationalityName %>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> Jynsy </td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <% if (@student.gender)  %>
+              <%= Student::GENDER_TYPES[1][0] %>
+          <% else %>
+              <%= Student::GENDER_TYPES[0][0] %>
+          <% end %>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> Doglan Senesi </td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <%= @student.birthDate.strftime("%d-%m-%Y") %>
+        </td>
+      </tr>
+
+      <tr><td colspan="3"></td></tr>
+      <tr><td style="background: #5E5E5E" colspan="3"></td></tr>
+      <tr><td colspan="3"></td></tr>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> Mobil Belgisi </td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <%= @student.mobilePhone %>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> SMS Belgisi </td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <%= @student.smsMobilePhone %>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> Öý Belgisi </td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <%= @student.homePhone %>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> Salgysy </td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <%= @student.city.cityName %>, <%= @student.addressBody %>
+        </td>
+      </tr>
+
+      <tr><td colspan="3"></td></tr>
+      <tr><td style="background: #5E5E5E" colspan="3"></td></tr>
+      <tr><td colspan="3"></td></tr>
+
+      <% if (@student.isPupil) %>
+          <tr>
+            <td style="border-width:1; border-style: groove"> Okuwçymy </td>
+            <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+                  Hawa
+            </td>
+          </tr>
+
+          <% if @student.school_city_id %>
+              <tr>
+                <td style="border-width:1; border-style: groove"> Mekdep Şäheri </td>
+                <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+                      <%= @student.school_city.cityName %>
+                </td>
+              </tr>
+          <% end %>
+
+          <% if @student.schoolNo %>
+              <tr>
+                <td style="border-width:1; border-style: groove"> Mekdep Belgisi </td>
+                <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+                    <%= @student.schoolNo %>
+                </td>
+              </tr>
+          <% end %>
+
+          <% if !@student.schoolName.empty? %>
+              <tr>
+                <td style="border-width:1; border-style: groove"> Mekdebiniň Ady </td>
+                <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+                  <%= @student.schoolName %>
+                </td>
+              </tr>
+          <% end %>
+
+          <% if @student.schoolYear %>
+              <tr>
+                <td style="border-width:1; border-style: groove"> Mekdep Synpy </td>
+                <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+                  <%= @student.schoolYear %>
+                </td>
+              </tr>
+          <% end %>
+
+      <% end %>
+
+
+      <% if (@student.isStudent) %>
+          <tr>
+            <td style="border-width:1; border-style: groove"> Talypmy </td>
+            <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+              Hawa
+            </td>
+          </tr>
+
+          <% if @student.high_school_id %>
+              <tr>
+                <td style="border-width:1; border-style: groove"> ÝOJ Ady </td>
+                <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+                  <%= @student.high_school.highSchoolName %>
+                </td>
+              </tr>
+          <% end %>
+
+          <% if @student.special_school_id %>
+              <tr>
+                <td style="border-width:1; border-style: groove"> ÝOM Ady </td>
+                <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+                  <%= @student.special_school.specialSchoolName %>
+                </td>
+              </tr>
+          <% end %>
+
+          <% if !@student.highSpecialSchoolOther %>
+              <tr>
+                <td style="border-width:1; border-style: groove"> Başga ÝOJ </td>
+                <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+                  <%= @student.highSpecialSchoolOther %>
+                </td>
+              </tr>
+          <% end %>
+
+          <% if @student.highSpecialSchoolYear %>
+              <tr>
+                <td style="border-width:1; border-style: groove"> Okuw Ýyly </td>
+                <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+                  <%= @student.highSpecialSchoolYear %>
+                </td>
+              </tr>
+          <% end %>
+
+      <% end %>
+
+      <tr>
+        <th style="border-width:1; border-style: groove" colspan="3"> OKUW TARYHY</th>
+      </tr>
+
+      <% if (Contract.where(:student_id => @student.id).count > 0) %>
+          <% Contract.where(:student_id => @student.id).order(:season_id).each do |contr| %>
+          <tr>
+            <td style="border-width:1; border-style: groove; text-align: left">
+              <% @season = Season.find_by_id(contr.season_id) %>
+              <%= @season.seasonNo %> T - <%= @season.seasonTitle %>
+            </td>
+              <% if contr.group %>
+                  <td style="border-width:1; border-style: groove; text-align: right">
+                    <%= contr.group.subject.subjectFullName %>
+                  </td>
+              <% end %>
+              <% if (contr.group && contr.group.teacher)%>
+                  <td style="border-width:1; border-style: groove; text-align: right">
+                    <%= contr.group.teacher.teacherFName+" "+contr.group.teacher.teacherLName.first+"." %>
+                  </td>
+              <% end %>
+          </tr>
+          <% end %>
+      <% end %>
+
+  </tbody>
+</table>
+
+<style>
+
+    @page {
+        size: A4 portrait;
+    }
+
+    @media print {
+        html, body{margin: 0 0 0 0; padding: 0 7 0 7;}
+        .invoice{box-sizing: border-box; height: 100%; width: 100%; border: 1px solid transparent; page-break-after: always;}
+        .invoice-middle{height: 100%; width: 100%; display: table;}
+        .invoice-middle-inner{height: 100%; width: 100%; display: table-cell; vertical-align: middle;}
+    }
+
+</style>
+
+</body>
+</html>

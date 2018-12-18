@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  seasonTitle: MyString
+  seasonFromDate: 2016-03-09 16:11:35
+  seasonToDate: 2016-03-09 16:11:35
+  notes: MyText
+
+two:
+  seasonTitle: MyString
+  seasonFromDate: 2016-03-09 16:11:35
+  seasonToDate: 2016-03-09 16:11:35
+  notes: MyText

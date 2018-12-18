@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  groupLanguageFullName: MyString
+  groupLanguageShortName: MyString
+  notes: MyText
+
+two:
+  groupLanguageFullName: MyString
+  groupLanguageShortName: MyString
+  notes: MyText

@@ -1,0 +1,215 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>TGB Hasabat</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="ibox-content">
+
+          <div class="tabs-container">
+            <ul class="nav nav-tabs">
+              <li class="active">
+                <a data-toggle="tab" href="#tab-report-season-end"> Umumy  </a>
+              </li>
+              <li class="">
+                <a data-toggle="tab" href="#tab-report-returned"> Gaýtarylanlar  </a>
+              </li>
+            </ul>
+
+            <div class="tab-content">
+
+              <div id="tab-report-season-end" class="tab-pane active">
+
+                <div class="panel-body">
+
+                  <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover dataTables-example" >
+                      <thead>
+                      <tr>
+                        <th>Şertnama ID</th>
+                        <th>Okuwçy ID</th>
+                        <th>Şertnama №</th>
+                        <th>Bank/Kart Tölegi Şertnama №</th>
+                        <th>BANK TÖLEGI</th>
+                        <th>KART TÖLEGI</th>
+                        <th>NAGT</th>
+                        <th>REZERW</th>
+                        <th>Gaýtarylan</th>
+                        <th>Ady</th>
+                        <th>Familiýasy</th>
+                        <th>Atasynyň Ady</th>
+                        <th>Jynsy</th>
+                        <th>Kursy</th>
+                        <th>Derejesi</th>
+                        <th>Topary</th>
+                        <th>Mugallymy</th>
+                        <th>Dersi</th>
+                        <th>Wagty</th>
+                        <th>Ýaşy</th>
+                        <th>Telefon Belgisi</th>
+                        <th>SMS Belgisi</th>
+                        <th>Öý belgisi</th>
+                      </tr>
+                      </thead>
+                      <% @num = 0 %>
+                      <tbody>
+                      <% @season_end_report_contracts.order(:id).each do |rc| %>
+                          <tr class="gradeA">
+                            <td><%= rc.id %></td>
+                            <td><%= rc.student_id %></td>
+                            <td><%= rc.seasonContractNo %></td>
+                            <td><%= (rc.payment_type_id == PaymentType.find_by_paymentTypeName("BANK AMALY").id || rc.payment_type_id == PaymentType.find_by_paymentTypeName("KART AMALY").id) ? (rc.otherContractNo) : ("") %></td>
+                            <td><%= ((rc.payment_type_id == PaymentType.find_by_paymentTypeName("BANK AMALY").id) ? ("HAWA") : ("ÝOK")) %></td>
+                            <td><%= ((rc.payment_type_id == PaymentType.find_by_paymentTypeName("KART AMALY").id) ? ("HAWA") : ("ÝOK")) %></td>
+                            <td><%= ((rc.payment_type_id == PaymentType.find_by_paymentTypeName("NAGT").id) ? ("HAWA") : ("ÝOK")) %></td>
+                            <td><%= ((rc.isReserve) ? ("HAWA") : ("ÝOK")) %></td>
+                            <td><%= ((rc.isMoneyReturned) ? ("HAWA") : ("ÝOK")) %></td>
+                            <td><%= rc.student.fName %></td>
+                            <td><%= rc.student.lName %></td>
+                            <td><%= rc.student.patronymic %></td>
+                            <td><%= ((rc.student.gender) ? ("ERKEK") : ("ZENAN")) %></td>
+                            <td><%= rc.group.subject.subject_category.subject_code %></td>
+                            <td><%= rc.group.subject.subjectLevel %></td>
+                            <td><%= rc.group.groupTitle %></td>
+                            <td>
+                              <% if (rc.group.teacher) %>
+                                  <%= rc.group.teacher.full_name %>
+                              <% else %>
+                                  <%= "" %>
+                              <% end %>
+                            </td>
+                            <td><%= rc.group.subject.subjectFullName %></td>
+                            <td><%= rc.group.lesson_time.lessonTimeTitle %></td>
+                            <td>
+                              <% @age = Date.today.year-rc.student.birthDate.year %>
+                              <% @age -= 1 if (Date.today < rc.student.birthDate + @age.years) %>
+                              <%= @age %>
+                            </td>
+                            <td><%= rc.student.mobilePhone %></td>
+                            <td><%= rc.student.smsMobilePhone %></td>
+                            <td><%= rc.student.homePhone %></td>
+                          </tr>
+                      <% end %>
+                      </tbody>
+                      <tfoot>
+                      <tr>
+                        <th>Şertnama ID</th>
+                        <th>Okuwçy ID</th>
+                        <th>Şertnama №</th>
+                        <th>Bank/Kart Tölegi Şertnama №</th>
+                        <th>BANK TÖLEGI</th>
+                        <th>KART TÖLEGI</th>
+                        <th>NAGT</th>
+                        <th>REZERW</th>
+                        <th>Gaýtarylan</th>
+                        <th>Ady</th>
+                        <th>Familiýasy</th>
+                        <th>Atasynyň Ady</th>
+                        <th>Jynsy</th>
+                        <th>Kursy</th>
+                        <th>Derejesi</th>
+                        <th>Topary</th>
+                        <th>Mugallymy</th>
+                        <th>Dersi</th>
+                        <th>Wagty</th>
+                        <th>Ýaşy</th>
+                        <th>Telefon Belgisi</th>
+                        <th>SMS Belgisi</th>
+                        <th>Öý belgisi</th>
+                      </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+
+                </div>
+              </div>
+
+
+
+              <div id="tab-report-returned" class="tab-pane">
+
+                <div class="panel-body">
+
+
+
+
+                  <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover dataTables-example" >
+                      <thead>
+                      <tr>
+                        <th>Şertnama ID</th>
+                        <th>Okuwçy ID</th>
+                        <th>T/b</th>
+                        <th>Ady</th>
+                        <th>Familiýasy</th>
+                        <th>Atasynyň Ady</th>
+                        <th>Jynsy</th>
+                        <th>Kursy</th>
+                        <th>Wagty</th>
+                        <th>Derejesi</th>
+                        <th>Topary</th>
+                      </tr>
+                      </thead>
+                      <% @num = 0 %>
+                      <tbody>
+                      <% @contracts_returned.order(:id).each do |rc| %>
+                          <tr class="gradeA">
+                            <td><%= rc.id %></td>
+                            <td><%= rc.student_id %></td>
+                            <td><%= @num = @num+1 %></td>
+                            <td><%= rc.student.fName %></td>
+                            <td><%= rc.student.lName %></td>
+                            <td><%= rc.student.patronymic %></td>
+                            <td><%= ((rc.student.gender) ? ("ERKEK") : ("ZENAN")) %></td>
+                            <td><%= rc.group.subject.subject_category.subjectCategoryShortName.to_s.first %></td>
+                            <td><%= rc.group.lesson_time.lessonTimeTitle %></td>
+                            <td><%= rc.group.subject.subjectLevel %></td>
+                            <td><%= rc.group.groupTitle %></td>
+                          </tr>
+                      <% end %>
+                      </tbody>
+                      <tfoot>
+                      <tr>
+                        <th>Şertnama ID</th>
+                        <th>Okuwçy ID</th>
+                        <th>T/b</th>
+                        <th>Ady</th>
+                        <th>Familiýasy</th>
+                        <th>Atasynyň Ady</th>
+                        <th>Jynsy</th>
+                        <th>Kursy</th>
+                        <th>Wagty</th>
+                        <th>Derejesi</th>
+                        <th>Topary</th>
+                      </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>

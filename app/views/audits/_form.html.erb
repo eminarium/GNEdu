@@ -1,0 +1,29 @@
+<%= form_for(@audit) do |f| %>
+  <% if @audit.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@audit.errors.count, "error") %> prohibited this audit from being saved:</h2>
+
+      <ul>
+      <% @audit.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :user_id %><br>
+    <%= f.text_field :user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :mod_action_id %><br>
+    <%= f.text_field :modAction_id %>
+  </div>
+  <div class="field">
+    <%= f.label :interactionDate %><br>
+    <%= f.datetime_select :interactionDate %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

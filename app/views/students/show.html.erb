@@ -1,0 +1,658 @@
+<%= render 'student_show_breadcrumb' %>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+<div class="row">
+<div class="col-lg-6">
+
+
+
+<!-- #########################################  ŞAHSY MAGLUMATLAR PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+<div class="ibox float-e-margins">
+<div class="ibox-title" style="border-color: red">
+  <% if action_name == 'new' %>
+      <h5>Täze Okuwçy</h5>
+  <% else %>
+      <h5>Okuwçy Maglumatlary</h5>
+  <% end %>
+  <div class="ibox-tools">
+    <a class="collapse-link">
+      <i class="fa fa-chevron-up" style="color: red"></i>
+    </a>
+    <!--
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+      <i class="fa fa-wrench"></i>
+    </a>
+    <ul class="dropdown-menu dropdown-user">
+      <li><a href="#">Config option 1</a>
+      </li>
+      <li><a href="#">Config option 2</a>
+      </li>
+    </ul>
+    -->
+  </div>
+</div>
+
+<div class="ibox-content" style="border-color: red">
+<h3>
+  Şahsy Maglumatlar
+</h3>
+<br>
+
+<!-- #########################################  ŞAHSY MAGLUMATLAR PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+
+<!-- #########################################  ŞAHSY MAGLUMATLARY - START ############################# -->
+
+<p id="notice"><%= notice %></p>
+
+<div><label class="col-sm-4 control-label">Ady</label>
+    <div class="col-sm-8"><i><%= @student.fName %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Familiýasy</label>
+    <div class="col-sm-8"><i><%= @student.lName %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Atasynyň Ady</label>
+    <div class="col-sm-8"><i><%= @student.patronymic %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Milleti</label>
+    <div class="col-sm-8"><i><%= @student.nationality.nationalityName %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Jynsy</label>
+    <div class="col-sm-8">
+      <i>
+        <% if (@student.gender)  %>
+            <%= Student::GENDER_TYPES[1][0] %>
+        <% else %>
+            <%= Student::GENDER_TYPES[0][0] %>
+        <% end %>
+      </i>
+    </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Doglan Senesi</label>
+    <div class="col-sm-8">
+      <i><%= @student.birthDate.strftime("%d-%m-%Y") %> &nbsp;
+         <% @age = Date.today.year-@student.birthDate.year %>
+         <% @age -= 1 if Date.today < @student.birthDate + @age.years %>
+        (Ýaşy : <%= @age %> )
+      </i>
+    </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Mobil Belgisi</label>
+  <div class="col-sm-8"><i><%= @student.mobilePhone %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">SMS Belgisi</label>
+    <div class="col-sm-8"><i><%= @student.smsMobilePhone %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Öý Belgisi</label>
+  <div class="col-sm-8"><i><%= @student.homePhone %></i></div>
+</div>
+
+<br><br><br>
+
+<h3>Salgysy</h3>
+<br>
+
+<div><label class="col-sm-4 control-label">Şäheri</label>
+  <% if @student.city_id %>
+    <div class="col-sm-8"><i><%= @student.city.cityName %></i></div>
+  <% end %>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Doly Salgysy</label>
+    <div class="col-sm-8"><i><%= @student.addressBody %></i></div>
+</div>
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Bellikler</label>
+  <div class="col-sm-8"><i><%= @student.notes %></i></div>
+</div>
+<br><br><br>
+
+<!-- #########################################  ŞAHSY MAGLUMATLARY (IŞGÄR) PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+<div class="ibox collapsed">
+<div class="ibox-title" style="border-color: orange">
+  <h5>IŞGÄR MAGLUMATLARY</h5>
+  <div class="ibox-tools">
+    <a class="collapse-link">
+      <i class="fa fa-chevron-up" style="color: orange"></i>
+    </a>
+  </div>
+</div>
+
+<div class="ibox-content" style="border-color: orange">
+
+<!-- #########################################  ŞAHSY MAGLUMATLARY (IŞGÄR) PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+<!-- #########################################  ŞAHSY MAGLUMATLARY (IŞGÄR) - START ############################# -->
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Işgärmi ?</label>
+    <div class="col-sm-8">
+    <i>
+        <% if (@student.isWorker) %>
+            Hawa
+        <% else %>
+            Ýok
+        <% end %>
+    </i>
+    </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Iş Ýeri</label>
+    <div class="col-sm-8"><i><%= @student.workPlace %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Wezipesi</label>
+    <div class="col-sm-8"><i><%= @student.occupation %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Iş Telefon Belgisi</label>
+    <div class="col-sm-8"><i><%= @student.officePhone %></i></div>
+</div>
+
+<br><br><br>
+
+
+</div>
+</div>
+<!-- #########################################  ŞAHSY MAGLUMATLARY (IŞGÄR) - END ############################# -->
+
+
+<!-- #########################################  ŞAHSY MAGLUMATLARY (TALYP) PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+<div class="ibox collapsed">
+  <div class="ibox-title" style="border-color: green">
+    <h5>TALYP MAGLUMATLARY</h5>
+    <div class="ibox-tools">
+      <a class="collapse-link">
+        <i class="fa fa-chevron-up" style="color: green"></i>
+      </a>
+    </div>
+  </div>
+
+<div class="ibox-content" style="border-color: green">
+
+<!-- #########################################  ŞAHSY MAGLUMATLARY (TALYP) PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+<!-- #########################################  ŞAHSY MAGLUMATLARY (TALYP) - START ############################# -->
+
+<div><label class="col-sm-4 control-label">Talypmy ?</label>
+  <div class="col-sm-8">
+    <i>
+      <% if (@student.isStudent) %>
+          Hawa
+      <% else %>
+          Ýok
+      <% end %>
+    </i>
+  </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">ÝOJ Ady</label>
+  <% if @student.high_school_id %>
+    <div class="col-sm-8"><i><%= @student.high_school.highSchoolName %></i></div>
+  <% end %>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">ÝOM Ady</label>
+  <% if @student.special_school_id %>
+      <div class="col-sm-8"><i><%= @student.special_school.specialSchoolName %></i></div>
+  <% end %>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Başga ÝOJ</label>
+    <div class="col-sm-8"><i><%= @student.highSpecialSchoolOther %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Okuw Ýyly</label>
+    <div class="col-sm-8"><i><%= @student.highSpecialSchoolYear %></i></div>
+</div>
+
+<br><br><br>
+
+</div>
+</div>
+<!-- #########################################  ŞAHSY MAGLUMATLARY (TALYP) - END ############################# -->
+
+<!-- #########################################  ŞAHSY MAGLUMATLARY (OKUWÇY) PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+<div class="ibox collapsed">
+  <div class="ibox-title" style="border-color: blue">
+    <h5>OKUWÇY MAGLUMATLARY</h5>
+    <div class="ibox-tools">
+      <a class="collapse-link">
+        <i class="fa fa-chevron-up" style="color: blue"></i>
+      </a>
+    </div>
+  </div>
+
+<div class="ibox-content" style="border-color: blue">
+
+<!-- #########################################  ŞAHSY MAGLUMATLARY (OKUWÇY) PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+<!-- #########################################  ŞAHSY MAGLUMATLARY (OKUWÇY) - START ############################# -->
+
+<div><label class="col-sm-4 control-label">Okuwçymy ?</label>
+  <div class="col-sm-8">
+    <i>
+      <% if (@student.isPupil) %>
+          Hawa
+      <% else %>
+          Ýok
+      <% end %>
+    </i>
+  </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Mekdep Şäheri</label>
+  <% if @student.school_city_id %>
+    <div class="col-sm-8"><i><%= @student.school_city.cityName %></i></div>
+  <% end %>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Mekdep Belgisi</label>
+  <div class="col-sm-8"><i><%= @student.schoolNo %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Mekdebiniň Ady</label>
+  <div class="col-sm-8"><i><%= @student.schoolName %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Mekdep Synpy</label>
+  <div class="col-sm-8"><i><%= @student.schoolYear %></i></div>
+</div>
+
+<br><br><br>
+
+  </div>
+</div>
+<!-- #########################################  ŞAHSY MAGLUMATLARY (OKUWÇY) - END ############################# -->
+
+
+<!-- #########################################  KAKASYNYŇ MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+<div class="ibox collapsed">
+  <div class="ibox-title" style="border-color: indigo">
+    <h5>KAKASYNYŇ MAGLUMATLARY</h5>
+    <div class="ibox-tools">
+      <a class="collapse-link">
+        <i class="fa fa-chevron-up" style="color: indigo"></i>
+      </a>
+    </div>
+  </div>
+
+
+
+
+
+<div class="ibox-content" style="border-color: indigo">
+
+<!-- #########################################  KAKASYNYŇ MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+<!-- #########################################  KAKASYNYŇ MAGLUMATLARY - START ############################# -->
+
+<div><label class="col-sm-4 control-label">Kakasynyň Ady</label>
+    <div class="col-sm-8"><i><%= @student.faFName %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Kakasynyň Familiýasy</label>
+    <div class="col-sm-8"><i><%= @student.faLName %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Kakasynyň Iş Ýeri</label>
+    <div class="col-sm-8"><i><%= @student.faWorkPlace %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Kakasynyň Wezipesi</label>
+    <div class="col-sm-8"><i><%= @student.faOccupation %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Kakasynyň Iş Telefon Belgisi</label>
+    <div class="col-sm-8"><i><%= @student.faOfficePhone %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Kakasynyň Mobil Telefon Belgisi</label>
+    <div class="col-sm-8"><i><%= @student.faMobilePhone %></i></div>
+</div>
+
+<br><br><br>
+
+</div>
+</div>
+<!-- #########################################  KAKASYNYŇ MAGLUMATLARY - END ############################# -->
+
+
+<!-- #########################################  EJESINIŇ MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+<div class="ibox collapsed">
+  <div class="ibox-title" style="border-color: violet">
+    <h5>EJESINIŇ MAGLUMATLARY</h5>
+    <div class="ibox-tools">
+      <a class="collapse-link">
+        <i class="fa fa-chevron-up" style="color: violet"></i>
+      </a>
+    </div>
+  </div>
+
+
+
+
+
+<div class="ibox-content" style="border-color: violet">
+
+<!-- #########################################  EJESINIŇ MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+<!-- #########################################  EJESINIŇ MAGLUMATLARY - START ############################# -->
+
+<div><label class="col-sm-4 control-label">Ejesiniň Ady</label>
+    <div class="col-sm-8"><i><%= @student.maFName %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Ejesiniň Familiýasy</label>
+    <div class="col-sm-8"><i><%= @student.maLName %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Ejesiniň Iş Ýeri</label>
+    <div class="col-sm-8"><i><%= @student.maWorkPlace %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Ejesiniň Wezipesi</label>
+    <div class="col-sm-8"><i><%= @student.maOccupation %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Ejesiniň Iş Telefon Belgisi</label>
+    <div class="col-sm-8"><i><%= @student.maOfficePhone %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Ejesiniň Mobil Telefon Belgisi</label>
+    <div class="col-sm-8"><i><%= @student.maMobilePhone %></i></div>
+</div>
+
+<br><br><br>
+
+</div>
+</div>
+
+<!-- #########################################  EJESINIŇ MAGLUMATLARY - END ############################# -->
+
+
+<!-- #########################################  SAGLYK BELLIKLERI PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+<div class="ibox collapsed">
+  <div class="ibox-title" style="border-color: lightblue">
+    <h5>SAGLYK BELLIKLERI</h5>
+    <div class="ibox-tools">
+      <a class="collapse-link">
+        <i class="fa fa-chevron-up" style="color: lightblue"></i>
+      </a>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="ibox-content" style="border-color: lightblue">
+
+    <!-- #########################################  SAGLYK BELLIKLERI PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+    <!-- #########################################  SAGLYK BELLIKLERI - START ############################# -->
+
+    <div><label class="col-sm-4 control-label">Saglyk bellikleri</label>
+      <div class="col-sm-8"><i><%= @student.diseaseNotes %></i></div>
+    </div>
+
+
+  </div>
+</div>
+
+<!-- #########################################  SAGLYK BELLIKLERI - END ############################# -->
+
+<br><br><br>
+
+<% if (check_restrictions(controller_name, 'edit')) %>
+    <%= link_to 'Üýtget', edit_student_path(@student), :class => "btn btn-warning"  %> &nbsp;
+<% end %>
+<% if (check_restrictions(controller_name, 'destroy')) %>
+    <%= link_to 'Boz', student_path(@student), :method => :delete, data: {confirm: "Are you sure ?"}, :class => "btn btn-w-s btn-danger" %> &nbsp;
+<% end %>
+<% if (check_restrictions(controller_name, 'info_list')) %>
+    <%= link_to 'Print', '/students/'.to_s+@student.id.to_s+'/info_list', :class => "btn btn-outline btn-success", :target => "_blank"%> &nbsp;
+<% end %>
+<% if (check_restrictions('contracts', 'new')) %>
+    <%= link_to 'Täze Şertnama', new_contract_path(:student_id => @student.id), :class => "btn btn-outline btn-primary" %>
+<% end %>
+
+    </div>
+
+  </div>
+</div>
+<div class="col-lg-6">
+<div class="contact-box">
+  <% if !@student.imageUrl.blank? %>
+    <%= image_tag "/uploads/images/"+@student.imageUrl, width: 350 %>
+  <% else %>
+    <%= image_tag "/uploads/images/no_photo_6.png", width: 350 %>
+  <% end %>
+</div>
+
+
+<!-- #########################################  OKUW TARYHY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+<div class="ibox  float-e-margins">
+  <div class="ibox-title" style="border-color: orange">
+    <h5>OKUW TARYHY </h5>
+    <div class="ibox-tools">
+      <a class="collapse-link">
+        <i class="fa fa-chevron-up" style="color: orange"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="ibox-content" style="border-color: orange">
+
+    <!-- #########################################  OKUW TARYHY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+    <!-- #########################################  OKUW TARYHY - START ############################# -->
+
+    <!-- <h3>Okuw Taryhy</h3> -->
+
+
+    <div class="col-sm-2"><u><b>Tapgyry</b></u></div>
+    <% if (current_user.role.name != "teacher") %> <div class="col-sm-3"><u><b>Şertnama №</b></u></div> <% end %>
+    <div class="col-sm-2"><u><b>Topary</b></u></div>
+    <div class="col-sm-3"><u><b>Mugallymy</b></u></div>
+    <div class="col-sm-2"><u><b>Gatnaşyk</b></u></div>
+    <br><br>
+
+    <% if (Contract.where(:student_id => @student.id).count > 0) %>
+        <% Contract.where(:student_id => @student.id).order(:season_id).each do |contr| %>
+            <div>
+                <div class="col-sm-2"><i><%= Season.find_by_id(contr.season_id).seasonNo %></i></div>
+
+              <% if (current_user.role.name != "teacher") %>
+                <div class="col-sm-3"><i>
+                  <% if (contr.payment_type.paymentTypeName == "BANK AMALY" || contr.payment_type.paymentTypeName == "KART AMALY") %>
+                    <% @contr_title = contr.otherContractNo %>
+                  <% else %>
+                    <% @contr_title = contr.seasonContractNo  %>
+                  <% end %>
+
+                  <% if (check_restrictions('contracts', 'show')) %>
+                      <%= link_to ((contr.isMoneyReturned) ? ("<font color='red'>".html_safe+@contr_title.to_s+"</font>".html_safe) : @contr_title), contr %> <%= ((contr.isMoneyReturned) ? "(<font color='red'>x</font>)".html_safe : "") %>
+                  <% else %>
+                      <%= ((contr.isMoneyReturned) ? ("<font color='red'>".html_safe+@contr_title.to_s+"</font>".html_safe) : @contr_title) %> <%= ((contr.isMoneyReturned) ? "(<font color='red'>x</font>)".html_safe : "") %>
+                  <% end %>
+                      <%= (contr.payment_type.paymentTypeName=="BANK AMALY") ? ("(BANK)") : ""%>
+                      <%= (contr.payment_type.paymentTypeName=="KART AMALY") ? ("(KART)") : ""%>
+                      <%= (contr.isReserve==true) ? ("(REZ)") : ""%>
+                </i></div>
+              <% end %>
+
+                <div class="col-sm-2">
+                  <i>
+                      <% if (contr.group) %>
+                        <% if (current_user.role.name == "teacher") %>
+                            <%= ((contr.group.isClosed) ? "<font color='red'>".html_safe+contr.group.groupTitle+"</font>".html_safe : contr.group.groupTitle) %> <%= ((contr.group.isClosed) ? "(<font color='red'>x</font>)".html_safe : "") %>
+                        <% else %>
+                            <%= link_to ((contr.group.isClosed) ? "<font color='red'>".html_safe+contr.group.groupTitle+"</font>".html_safe : contr.group.groupTitle), contr.group %> <%= ((contr.group.isClosed) ? "(<font color='red'>x</font>)".html_safe : "") %>
+                        <% end %>
+                      <% end %>
+                  </i>
+                </div>
+                <div class="col-sm-3"><i>
+                  <% if (contr.group && contr.group.teacher)  %>
+                      <% if (current_user.role.name == "teacher") %>
+                          <%= contr.group.teacher.teacherFName+" "+contr.group.teacher.teacherLName.first+"." %>
+                      <% else %>
+                          <%= link_to contr.group.teacher.teacherFName+" "+contr.group.teacher.teacherLName.first+".", contr.group.teacher %>
+                      <% end %>
+                  <% end %>
+                </i></div>
+
+              <div class="col-sm-2">
+                <i>
+                    <%= link_to "Gatn.", root_url+"/contracts/"+contr.id.to_s+'/att_report', :target => "_blank" %>
+                </i>
+              </div>
+
+                <br><br>
+            </div>
+        <% end %>
+    <% end %>
+  </div>
+</div>
+
+<!-- #########################################  OKUW TARYHY - END ############################# -->
+
+
+
+
+  <!-- #########################################  RESMINAMALAR PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+  <div class="ibox  float-e-margins">
+    <div class="ibox-title" style="border-color: lightblue">
+      <h5>RESMINAMALAR </h5>
+      <div class="ibox-tools">
+        <a href="/documents/new?student_id=<%= @student.id %>" target="_blank">
+          <i class="fa fa-plus"></i>
+        </a>
+        <a class="collapse-link">
+          <i class="fa fa-chevron-up" style="color: lightblue"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="ibox-content" style="border-color: lightblue">
+
+      <!-- #########################################  RESMINAMALAR PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+      <!-- #########################################  RESMINAMALAR - START ############################# -->
+
+      <!-- <h3>Okuw Taryhy</h3> -->
+
+
+      <div class="col-sm-4"><u><b>T/b</b></u></div>
+      <div class="col-sm-4"><u><b>Salgysy</b></u></div>
+      <div class="col-sm-4"><u><b>Amallar</b></u></div>
+      <br><br>
+      <% @counter = 0 %>
+      <% @student.documents.order(:id).each do |doc| %>
+        <% @counter = @counter + 1 %>
+        <div>
+          <div class="col-sm-4"><i><%= @counter %></i></div>
+          <div class="col-sm-4"><i><%= doc.doc_url %></i></div>
+          <div class="col-sm-4">
+            <a href="/documents/<%= doc.id %>" target="_blank"><i class="fa fa-search-plus"></i></a>
+            <a href="/documents/<%= doc.id %>/edit?student_id=<%= @student.id %>" target="_blank"><i class="fa fa-edit" style="color:green"></i></a>
+            <a href="/documents/<%= doc.id %>" target="_blank"><i class="fa fa-times" style="color:red"></i></a>
+          </div>
+        </div><br>
+      <% end %>
+
+      <% if (@counter == 0) %>
+        <h4>Dinleyjinin berkidilen resminamasy yok !</h4>
+      <% end %>
+
+    </div>
+  </div>
+
+  <!-- #########################################  RESMINAMALAR - END ############################# -->
+  <div class="new-document"></div>
+  <div id="document-modal" class="modal fade"></div>
+
+</div>
+
+</div>
+</div>

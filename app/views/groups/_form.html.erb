@@ -1,0 +1,95 @@
+<%= form_for(@group) do |f| %>
+  <% if @group.errors.any? %>
+    <div id="error_explanation">
+      <div class="alert alert-danger">
+        <h2><%= @group.errors.count %> ýalňyş sebäpli maglumatlar kabul edilmedi...</h2>
+
+        <ul>
+          <% @group.errors.each do |attr, message| %>
+              <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Dersi</label>
+    <div class="col-sm-8">
+      <%= f.collection_select(:subject_id, @subjects, :id, :subjectFullName, :include_blank => t("Please_select"), :class => "form-control" ) %>
+    </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Tapgyry</label>
+    <div class="col-sm-8">
+      <%= f.collection_select(:season_id, @seasons, :id, :seasonTitle, :include_blank => t("Please_select"), :class => "form-control" ) %>
+    </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Wagty</label>
+    <div class="col-sm-8">
+      <%= f.collection_select(:lesson_time_id, @lessonTimes, :id, :lessonTimeTitle, :include_blank => t("Please_select"), :class => "form-control" ) %>
+    </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Mugallymy</label>
+    <div class="col-sm-8">
+      <%= f.collection_select(:teacher_id, @teachers, :id, :full_name, :include_blank => t("Please_select"), :class => "form-control" ) %>
+    </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Görnüşi</label>
+    <div class="col-sm-8">
+      <%= f.collection_select(:group_gender_id, @groupGenders, :id, :groupGender_complete_name, :include_blank => t("Please_select"), :class => "form-control" ) %>
+    </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Dili</label>
+    <div class="col-sm-8">
+      <%= f.collection_select(:group_language_id, @groupLanguages, :id, :groupLanguageShortName, :include_blank => t("Please_select"), :class => "form-control" ) %>
+    </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Belgisi</label>
+    <div class="col-sm-8"><%= f.text_field :groupTitle, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Ýapyldy</label>
+  <div class="col-sm-8"><%= f.check_box :isClosed, :type => "checkbox", :class => "checkbox checkbox-primary", :id => "checkboxProjector" %></div>
+  <!-- <label for="checkboxProjector"> </label> -->
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Çäklendirme</label>
+    <div class="col-sm-8"><%= f.text_field :groupLimit, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Bellikler</label>
+    <div class="col-sm-8"><%= f.text_area :notes, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div class="actions">
+    <%= f.submit "Kabul Et", :class => "btn btn-success" %>
+</div>
+
+<% end %>

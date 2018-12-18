@@ -1,0 +1,76 @@
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>GN HASABA ALYŞ ULGAMY | Login</title>
+
+  <link href="<%= asset_path('styles/bootstrap.min.css') %>" rel="stylesheet">
+  <link href="<%= asset_path('font-awesome/css/font-awesome.css') %>" rel="stylesheet">
+
+  <link href="<%= asset_path('styles/animate.css') %>" rel="stylesheet">
+  <link href="<%= asset_path('styles/style.css') %>" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg"><script language="javascript" charset="UTF-8" type="text/javascript"></script>
+
+<%= form_for(@user_session) do |f| %>
+
+<div class="middle-box text-center loginscreen animated fadeInDown">
+  <div>
+    <div>
+
+      <!-- <h1 class="logo-name">IN+</h1> -->
+      <% if @user_session.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@user_session.errors.count, "näsazlyk") %> sebäpli ulgama girip bolmady:</h2>
+
+            <ul>
+              <% @user_session.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
+
+      <br><br><br>
+      <img src="images/gn_logo.png" width="200">
+      <br><br><br>
+
+    </div>
+    <h3>GN Ulgamyna Hoş Geldiňiz !</h3>
+    <p>"Gujurly Nesil" H.K. Administratory tarapyndan berlen ýörite Ulanyjy Adyňyzy we Gizlin Sözüňizi giriziň.
+      <!--Continually expanded and constantly improved Inspinia Admin Them (IN+)-->
+    </p>
+
+    <form class="m-t" role="form" action="http://webapplayers.com/inspinia_admin-v2.4/index.html">
+
+      <div class="form-group">
+        <div class="col-sm-16"><%= f.text_field :userLogin, :type => "text", :class => "form-control", :placeholder => "Ulanyjy Ady" %></div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-16"><%= f.password_field :password, :type => "password", :class => "form-control", :placeholder => "Gizlin Sözi" %></div>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Giriş", :class => "btn btn-success block full-width m-b", :style => "background-color: #3e4095 " %>
+      </div>
+
+    </form>
+    <p class="m-t"> <small>"Gujurly Nesil" Kompýuter we Dil Merkezi &copy; 2014</small> </p>
+  </div>
+</div>
+
+<!-- Mainly scripts -->
+<script src="<%= asset_path('scripts/jquery-2.1.1.js') %>"></script>
+<script src="<%= asset_path('scripts/bootstrap.min.js') %>"></script>
+
+<% end %>
+
+</body>
+
+</html>

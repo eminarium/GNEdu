@@ -1,0 +1,38 @@
+<%= form_for(@city) do |f| %>
+  <% if @city.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@city.errors.count, "error") %> prohibited this city from being saved:</h2>
+
+      <ul>
+      <% @city.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<div><label class="col-sm-4 control-label">Şäheriň Ady</label>
+  <div class="col-sm-8"><%= f.text_field :cityName, :type => "text", :class => "form-control" %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Welaýaty</label>
+  <div class="col-sm-8">
+    <%= f.collection_select(:state_id, @states, :id, :stateName, :include_blank => t("Please_select"), :class => "form-control" ) %>
+  </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Bellikler</label>
+  <div class="col-sm-8"><%= f.text_area :notes, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div class="actions">
+  <%= f.submit "Kabul Et", :class => "btn btn-success" %>
+</div>
+
+<% end %>

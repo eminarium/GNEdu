@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  bookContestName: MyString
+  season_id: 
+  notes: MyText
+
+two:
+  bookContestName: MyString
+  season_id: 
+  notes: MyText

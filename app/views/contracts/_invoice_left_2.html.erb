@@ -1,0 +1,309 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-12">
+
+
+
+
+
+<p id="notice"><%= notice %></p>
+
+<div class="invoice" style="font-size: 9pt; height: 350px">
+<table style="float: left; border: 1px solid #000; " id="Order">
+  <tr>
+    <td colspan="4" style="text-align: center; padding-top: 10px; word-spacing: 5px">"Gujurly Nesil" HK Bilim Bölümi</td>
+  </tr>
+  <tr>
+    <td colspan="4" style="text-align: center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="4" style="text-align: center; word-spacing: 5px; padding-left: 10px; padding-right: 10px">Magtymguly şaýoly 73 Tel. 94-28-00, 94-27-55, 94-29-07</td>
+  </tr>
+  <tr>
+    <td colspan="4" style="text-align: center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="4" style="text-align: center">Girdeji Orderi № : <%= @contract.seasonContractNo %></td>
+  </tr>
+  <tr>
+    <td colspan="4" style="text-align: center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="text-align: center"></td>
+    <td style="text-align: center; border: 1px solid #000">Güni </td>
+    <td style="text-align: center; border: 1px solid #000">Aýy</td>
+    <td style="text-align: center"><%= Date.today.year %>ý.</td>
+  </tr>
+  <tr>
+    <td style="text-align: center"></td>
+    <td style="text-align: center; border: 1px solid #000"><%= Date.today.day %></td>
+    <td style="text-align: center; border: 1px solid #000"><%= Contract::MONTH_NAMES_TM[Date.today.month-1] %></td>
+    <td style="text-align: center"></td>
+  </tr>
+  <tr>
+    <td colspan="4" style="text-align: center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="text-align: center"></td>
+    <td style="text-align: center; border: 1px solid #000; padding: 0px 3px 0px 3px">Pul Möçberi</td>
+    <td style="text-align: center; border: 1px solid #000"><%= @contract.amountPaid %></td>
+    <td style="text-align: center"></td>
+  </tr>
+  <tr>
+    <td colspan="4" style="text-align: center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="text-align: left; padding-left: 10px">Kimden alnan:</td>
+    <td style="text-align: left">raýat</td>
+    <td style="text-align: center; padding-right: 5px" colspan="2"><%= @contract.student.fName %>&nbsp;<%= @contract.student.lName %>'dan</td>
+  </tr>
+  <tr>
+    <td colspan="4" style="text-align: center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="text-align: left; padding-left: 10px">Esas:</td>
+    <td style="text-align: center; padding-right: 5px" colspan="3"><%= @contract.group.subject.subjectFullName %> (<%= @contract.group.groupTitle %>) kursynda okamaklyk üçin</td>
+  </tr>
+  <tr>
+    <td style="text-align: left; padding-left: 10px" colspan="3">
+      <u>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </u>
+    </td>
+    <td style="text-align: center">DTM</td>
+  </tr>
+  <tr>
+    <td style="text-align: left; padding-left: 10px">Goşulma</td>
+    <td style="text-align: left" colspan="3">
+      <u>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </u>
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: left; padding-left: 10px" colspan="4">
+      <u>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </u>
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: left; padding-left: 10px">Aldym</td>
+    <td colspan="3"></td>
+  </tr>
+  <tr>
+    <td style="text-align: left; padding: 0px 0px 5px 10px">Esasy Hünärmen &nbsp;</td>
+    <td style="text-align: left" colspan="3">
+      <u>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </u>
+    </td>
+  </tr>
+
+</table>
+
+<table style="float: left" id="boshluk_1">
+  <tr>
+    <td style="width: 25px">&nbsp;</td>
+  </tr>
+</table>
+
+<table style="float: left; border: 1px solid #000;" id="kwitansiya">
+<tr>
+  <td colspan="4" style="text-align: center; padding-top: 10px; word-spacing: 5px">"Gujurly Nesil" HK Bilim Bölümi</td>
+</tr>
+<tr>
+    <td colspan="4" style="text-align: center">&nbsp;</td>
+</tr>
+<tr>
+  <td colspan="4" style="text-align: center; word-spacing: 5px; padding-left: 10px; padding-right: 10px">Magtymguly şaýoly 73 Tel. 94-28-00, 94-27-55, 94-29-07</td>
+</tr>
+<tr>
+    <td colspan="4" style="text-align: center">&nbsp;</td>
+</tr>
+<tr>
+  <td colspan="4" style="text-align: center">Girdeji Orderi</td>
+</tr>
+<tr>
+  <td style="text-align: center" colspan="4">KWITANSIÝASY № : <%= @contract.seasonContractNo %> </td>
+</tr>
+<tr>
+    <td colspan="4" style="text-align: center">&nbsp;</td>
+</tr>
+<tr>
+  <td style="text-align: left; padding-left: 10px">Kimden alnan:</td>
+  <td style="text-align: left">raýat</td>
+  <td style="text-align: center; padding-right: 5px" colspan="2"><%= @contract.student.fName %>&nbsp;<%= @contract.student.lName %>'dan</td>
+</tr>
+<tr>
+    <td colspan="4" style="text-align: center">&nbsp;</td>
+</tr>
+<tr>
+  <td style="text-align: left; padding-left: 10px">Esas:</td>
+  <td style="text-align: center; padding-right: 5px" colspan="3"><%= @contract.group.subject.subjectFullName %> (<%= @contract.group.groupTitle %>) kursynda okamaklyk üçin</td>
+</tr>
+<tr>
+  <td style="text-align: left; padding-left: 10px" colspan="4">
+    <u>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </u>
+  </td>
+</tr>
+<tr>
+  <td style="text-align: left; padding-left: 10px" colspan="4">
+    <u>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </u>
+  </td>
+</tr>
+<tr>
+  <td style="text-align: left; padding-left: 10px" colspan="4">
+    <u>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </u>
+  </td>
+</tr>
+<tr>
+  <td style="text-align: right" colspan="2">"<%= Date.today.day %>"</td>
+  <td style="text-align: center"><%= Contract::MONTH_NAMES_TM[Date.today.month-1] %></td>
+  <td style="text-align: left"><%= Date.today.year %>ý.</td>
+</tr>
+<tr>
+    <td colspan="4" style="text-align: center">&nbsp;</td>
+</tr>
+<tr>
+    <td colspan="4" style="text-align: center">&nbsp;</td>
+</tr>
+<tr>
+  <td colspan="4" style="text-align: left; padding-left: 10px">M.Ý.</td>
+</tr>
+<tr>
+    <td colspan="4"style="text-align: center">&nbsp;</td>
+</tr>
+<tr>
+  <td style="text-align: left; padding: 0px 0px 5px 10px">Esasy Hünärmen &nbsp;</td>
+  <td style="text-align: left" colspan="3">
+    <u>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </u>
+  </td>
+</tr>
+
+</table>
+
+<table style="float: left" id="boshluk_2">
+    <tr>
+        <td style="width: 25px">&nbsp;</td>
+    </tr>
+</table>
+
+
+
+<table style="float: left; border: 1px solid #000;" id="meyilnama">
+  <tr>
+    <td style="text-decoration: underline; text-align: center; padding: 5px 5px 0px 5px; word-spacing: 5px;">Sapak Günleri we Tertibi</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="text-align: center">
+      <% @contractGroupTimetable.each do |cgt| %>
+            <i><%= cgt.weekday %>&nbsp;&nbsp; </i>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="text-decoration: underline; text-align: center; word-spacing: 5px">Synp Otaglary</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="text-align: center">
+      <% @contractGroupTimetable.each do |cgt| %>
+          <i><%= cgt.room.roomShortTitle %>&nbsp;&nbsp; </i>
+      <% end %>
+
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="text-decoration: underline; text-align: center; word-spacing: 5px">Wagty</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="text-align: center"><%= @contract.group.lesson_time.lessonTimeTitle+" "+@contract.group.lesson_time.lessonTimeFrom.strftime("%H:%M")+"-"+@contract.group.lesson_time.lessonTimeTo.strftime("%H:%M") %></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="text-decoration: underline; text-align: center; word-spacing: 5px">Mugallymyň Ady</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="text-align: center"><%= @contract.group.teacher.teacherFName+" "+@contract.group.teacher.teacherLName %> </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="text-decoration: underline; text-align: center; word-spacing: 5px">Kursyň Başlanýan Wagty</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="text-align: center; padding: 0px 0px 5px 0px"><%= @current_season.seasonFromDate.strftime("%d-%m-%Y") %></td>
+  </tr>
+</table>
+
+</div>
+    </div>
+
+  </div>
+</div>
+
+
+<style>
+
+    @page {
+        size: A4 landscape;
+    }
+
+    @media print {
+
+        body {
+            visibility: hidden;
+        }
+
+        .invoice, .invoice * {
+            visibility: visible;
+            margin: 0px;
+        }
+        .invoice {
+            position: absolute;
+            left: 10px;
+            top: -100px;
+        }
+        .invoice:last-child {
+            page-break-after: auto;
+        }
+        .footer {
+            position: absolute;
+            top: -100px
+        }
+    }
+
+
+</style>

@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  seasonContractNo: 1
+  season_id: 
+  group_id: 
+  student_id: 
+  discount_id: 
+  registrationDate: 2016-04-11 17:29:49
+  isBookGiven: false
+  amountPaid: 1.5
+  isMoneyReturned: false
+  notes: MyText
+
+two:
+  seasonContractNo: 1
+  season_id: 
+  group_id: 
+  student_id: 
+  discount_id: 
+  registrationDate: 2016-04-11 17:29:49
+  isBookGiven: false
+  amountPaid: 1.5
+  isMoneyReturned: false
+  notes: MyText

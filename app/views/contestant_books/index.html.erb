@@ -1,0 +1,55 @@
+
+
+<h1>Okama Ýaryşy Kitaplary Sanawy</h1>
+
+<%= link_to "<i class='fa fa-plus'></i>&nbsp; Täze Ýaryş Kitaby".html_safe, new_contestant_book_path, :class => "btn btn-primary"  %>
+
+<br><br><br>
+
+<% if (notice) %>
+    <div class="alert alert-success fade in">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <p id="notice"><%= notice %></p>
+    </div>
+<% end %>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Kitap</th>
+    <th>Awtory</th>
+    <th>Kitap Ýaryşy</th>
+    <th>Bellikler</th>
+    <th colspan="3"></th>
+    <th></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @contestant_books.each do |contestant_book| %>
+      <tr>
+        <td><%= link_to contestant_book.book.bookName, contestant_book %></td>
+        <td>
+          <% @authors = Author.where(:id => AuthorsBook.where(:book_id => contestant_book.book.id).select(:author_id) ) %>
+          <% if (@authors.count>0)%>
+              <% @authors.each do |au| %>
+                  <%= link_to (au.authorFName.first(1)+". "+au.authorLName+" / "), au %>
+              <% end %>
+          <% else %>
+              Näbelli
+          <% end %>
+          <%#= link_to contestant_book.book.authors_book, contestant_book %>
+        </td>
+        <td><%= link_to contestant_book.book_contest.bookContestName, contestant_book.book_contest %></td>
+        <td><%= contestant_book.notes %></td>
+        <td><div style="float: right">
+          <%= link_to "Giňişleýin", contestant_book, :class => "btn btn-success" %>
+          <%= link_to "Üýtget", edit_contestant_book_path(contestant_book), :class => "btn btn-warning" %>
+          <% link_to "Boz", contestant_book, method: :delete, data: { confirm: "Are you sure ?" }, :class => "btn btn-danger" %>
+        </div></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>

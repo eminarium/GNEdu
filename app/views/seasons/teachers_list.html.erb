@@ -1,0 +1,60 @@
+<html>
+<body>
+
+<% @teacher_count = 0 %>
+<% @group_count = 0 %>
+
+<table>
+  <thead>
+  <tr>
+    <th style="border-width:1; border-style: groove" colspan="3">TAPGYR BOÝUNÇA MUGALLYM-TOPAR SANAWY</th>
+  </tr>
+  <tr>
+    <tr>
+        <th style="border-width:1; border-style: groove" rowspan="2"><%= @season.seasonTitle %> (<%= @season.seasonNo %> T)</th>
+        <th style="border-width:1; border-style: groove" colspan="2">Seneler</th>
+    </tr>
+    <tr>
+        <th style="border-width:1; border-style: groove"><%= @season.seasonFromDate.strftime("%d-%m-%Y") %></th>
+        <th style="border-width:1; border-style: groove"><%= @season.seasonToDate.strftime("%d-%m-%Y") %></th>
+    </tr>
+  </tr>
+  </thead>
+  <tbody>
+
+      <% Teacher.where(:id => Group.where(:season_id => @season.id, :isClosed => false).select(:teacher_id)).order(:teacherFName).order(:teacherLName).each do |teacher| %>
+      <tr>
+        <td style="border-width:1; border-style: groove"> <%= teacher.full_name  %> </td> <% @teacher_count = @teacher_count + 1 %>
+        <td style="border-width:1; border-style: groove" colspan="2">
+                  <% Group.where(:season_id => @season.id, :teacher_id => teacher.id, :isClosed => false).each do |grp| %>
+                      <%= grp.groupTitle %> <% @group_count = @group_count + 1 %>/
+                  <% end %>
+        </td>
+      </tr>
+      <% end %>
+
+      <tr>
+        <td style="border-width:2; border-style: double; background: #d7d4f0;"> <b><i> Jemi Mug : <%= @teacher_count %> (ER-<%= @active_teachers.where(:gender => true).count %> / ZN-<%= @active_teachers.where(:gender => false).count %>)</td>
+        <td style="border-width:2; border-style: double; background: #d7d4f0;" colspan="2"> <b><i> Jemi Topar : <%= @group_count %></td>
+      </tr>
+
+  </tbody>
+</table>
+
+<style>
+
+    @page {
+        size: A4 portrait;
+    }
+
+    @media print {
+        html, body{margin: 0 0 0 0; padding: 0 7 0 7;}
+        .invoice{box-sizing: border-box; height: 100%; width: 100%; border: 1px solid transparent; page-break-after: always;}
+        .invoice-middle{height: 100%; width: 100%; display: table;}
+        .invoice-middle-inner{height: 100%; width: 100%; display: table-cell; vertical-align: middle;}
+    }
+
+</style>
+
+</body>
+</html>

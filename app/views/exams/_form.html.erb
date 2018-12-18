@@ -1,0 +1,87 @@
+<%= form_for(@exam) do |f| %>
+  <% if @exam.errors.any? %>
+    <div id="error_explanation">
+      <div class="alert alert-danger">
+        <h2><%= @exam.errors.count %> ýalňyş sebäpli maglumatlar kabul edilmedi...</h2>
+
+      <ul>
+      <% @exam.errors.each do |attr, message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+      </div>
+    </div>
+  <% end %>
+
+<div><label class="col-sm-4 control-label">Suraty </label>
+  <div class="col-sm-8"><%= f.file_field :persona_url, :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Ady</label>
+  <div class="col-sm-8"><%= f.text_field :fName, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Familiýasy</label>
+  <div class="col-sm-8"><%= f.text_field :lName, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Atasynyň Ady</label>
+  <div class="col-sm-8"><%= f.text_field :patronymic, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div class="hidden"><label class="col-sm-4 control-label">Tapgyry</label>
+  <div class="col-sm-8"><%= f.text_field :season_id, :value => session[:active_season_id], :type => "text", :class => "form-control"  %></div>
+</div>
+
+<div><label class="col-sm-4 control-label">Dersi</label>
+    <div class="col-sm-8">
+      <%= f.collection_select(:subject_id, @subjects, :id, :subjectFullName, {include_blank: "Please_select"}, {class: "form-control"}) %>
+    </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Senesi</label>
+    <div class="col-sm-8"><%= f.datetime_select :examDate %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Bahasy</label>
+    <div class="col-sm-8"><%= f.text_field :examResult, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Resminama Seriýasy</label>
+  <div class="col-sm-8"><%= f.text_field :doc_serial, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Resminama Belgisi (No)</label>
+  <div class="col-sm-8"><%= f.text_field :doc_no, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+
+<div><label class="col-sm-4 control-label">Bellikler</label>
+    <div class="col-sm-8"><%= f.text_area :notes, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+    <div class="actions">
+      <%= f.submit "Kabul Et", :class => "btn btn-success" %>
+    </div>
+
+<% end %>

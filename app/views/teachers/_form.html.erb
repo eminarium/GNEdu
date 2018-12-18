@@ -1,0 +1,60 @@
+<%= form_for(@teacher) do |f| %>
+  <% if @teacher.errors.any? %>
+    <div id="error_explanation">
+      <div class="alert alert-danger">
+        <h2><%= @teacher.errors.count %> ýalňyş sebäpli maglumatlar kabul edilmedi...</h2>
+
+        <ul>
+          <% @teacher.errors.each do |attr, message| %>
+              <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+
+<div><label class="col-sm-4 control-label">Ady</label>
+    <div class="col-sm-8"><%= f.text_field :teacherFName, :type => "text", :class => "form-control" %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Familiýasy</label>
+    <div class="col-sm-8"><%= f.text_field :teacherLName, :type => "text", :class => "form-control" %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Atasynyň Ady</label>
+    <div class="col-sm-8"><%= f.text_field :teacherPatronymic, :type => "text", :class => "form-control" %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Jynsy</label>
+  <div class="col-sm-8">
+    <%= f.select :gender, Student::GENDER_TYPES, :selected => Student::GENDER_TYPES[(@teacher.gender ? 1 : 0)], class: 'form-control' %>
+
+  </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Ulanyjysy</label>
+  <div class="col-sm-8">
+    <%= f.collection_select(:user_id, @users, :id, :full_name, :include_blank => t("Please_select"), :class => "form-control" ) %>
+  </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Bellikler</label>
+    <div class="col-sm-8"><%= f.text_area :notes, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<div class="actions">
+    <%= f.submit "Kabul Et", :class => "btn btn-success" %>
+</div>
+
+<% end %>

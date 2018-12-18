@@ -1,0 +1,101 @@
+<%= render 'edit_privileges_breadcrumb' %>
+<br>
+
+
+<%# @mod_objects.each do |mo| %>
+    <%#= mo %>
+<%# end %>
+
+<%= form_tag roles_path(:role_id => params[:role_id]), :method => 'post'  do %>
+
+<%#= submit_tag "Kabul Et ".html_safe,  class: "btn btn-success" %><br>
+
+    <% @i=0 %>
+
+    <div class="tabs-container">
+      <div class="tabs-left">
+        <ul class="nav nav-tabs">
+          <% @mod_objects.each do |mo| %>
+              <% @i=@i+1 %>
+              <li class="<% if (@i==1)%> active <% end %>"><a data-toggle="tab" href="#tab-<%= @i %>"><%= ModObject.where(:id=>mo).first().modObjectTranslation %></a></li>
+          <% end %>     <% @i=0 %>
+        </ul>
+        <div class="tab-content">
+          <% @mod_objects.each do |mo| %>
+              <% @i=@i+1 %>
+              <div id="tab-<%= @i %>" class="tab-pane <% if (@i==1)%> active <% end %>">
+                <div class="panel-body">
+                  <strong><%= ModObject.where(:id=>mo).first().description %></strong>
+                  <br><br><br><br>
+
+
+                  <div class="col-sm-5"><u><b>Ugur</b></u></div>
+                  <div class="col-sm-2"><u><b>Ygtyýar</b></u></div>
+                  <div class="col-sm-3"><u><b>Audit (Gözegçilik)</b></u></div>
+                  <div class="col-sm-2"><u><b>Amal</b></u></div>
+
+                  <hr style="border-top:1px solid orange;">
+
+                  <% @mod_actions.where(:mod_object_id => mo).order(:modActionName).each do |ma| %>
+                      <%#= link_to ma.modActionName, ma %>
+                      <div class="col-sm-5"><%= ma.modActionName %> <i>(<%= ma.description %>)</i></div>
+                      <% @temp_privilege = ModActionsRole.where(:mod_action_id => ma.id, :role_id => params[:role_id]).first() %>
+                      <% if (@temp_privilege.nil?) %>
+                      <div class="col-sm-2">
+                        <%#= text_field_tag 'privileges['+ma.id.to_s+'][allowAccess]', value='0', onkeyup: "($(this).val() == '1') ? $(this).val('1') : $(this).val('0')", :width => 3  %>
+                        <%#= check_box_tag 'privileges['+ma.id.to_s+'][allowAccess]', :disabled => 'disabled' %>
+                        <i class="fa fa-times" style="color: red"></i>
+                      </div>
+                      <div class="col-sm-3">
+                        <%#= text_field_tag 'privileges['+ma.id.to_s+'][auditTrack]', value='0', onkeyup: "($(this).val() == '1') ? $(this).val('1') : $(this).val('0')"  %>
+                        <%#= check_box_tag 'privileges['+ma.id.to_s+'][auditTrack]', :disabled => 'disabled' %>
+                        <i class="fa fa-times" style="color: red"></i>
+                      </div>
+                      <div class="col-sm-2">
+                        <%= link_to "Goş", new_mod_actions_role_path(:role_id => params[:role_id], :mod_action_id => ma.id, :allowAccess => 'TRUE', :auditTrack => 'TRUE'), :target => "_blank" %>
+                      </div>
+                          <!-- <div class="col-sm-3"><%#= check_box_tag 'privileges['+ma.id.to_s+'][allowAccess]' %></div> -->
+                          <!-- <div class="col-sm-3"><%#= check_box_tag 'privileges['+ma.id.to_s+'][auditTrack]' %></div> -->
+                      <% else %>
+                          <!-- <div class="col-sm-3"> -->
+                            <%#= check_box_tag  'privileges['+ma.id.to_s+'][allowAccess]', @temp_privilege.allowAccess, @temp_privilege.allowAccess %>
+                            <%#= hidden_field_tag  'privileges['+ma.id.to_s+'][allowAccess]', (@temp_privilege.allowAccess ? 'true' : 'false') %>
+                          <!--</div> -->
+                          <!--<div class="col-sm-3"> -->
+                            <%#= hidden_field_tag  'privileges['+ma.id.to_s+'][auditTrack]', (@temp_privilege.auditTrack ? 'true' : 'false') %>
+                            <%#= check_box_tag  'privileges['+ma.id.to_s+'][auditTrack]', @temp_privilege.auditTrack, @temp_privilege.auditTrack %>
+                          <!--</div> -->
+                          <div class="col-sm-2">
+                            <%#= text_field_tag 'privileges['+ma.id.to_s+'][allowAccess]', value=(@temp_privilege.allowAccess) ? '1' : '0' , onkeyup: "($(this).val() == '1') ? $(this).val('1') : $(this).val('0')"  %>
+                            <%#= check_box_tag  'privileges['+ma.id.to_s+'][allowAccess]', @temp_privilege.allowAccess, @temp_privilege.allowAccess, :disabled => 'disabled' %>
+                            <% if (@temp_privilege.allowAccess) %>
+                                <i class="fa fa-check" style="color: lawngreen"></i>
+                            <% else %>
+                                <i class="fa fa-times" style="color: red"></i>
+                            <% end %>
+                          </div>
+                          <div class="col-sm-3">
+                            <%#= text_field_tag 'privileges['+ma.id.to_s+'][auditTrack]', value=(@temp_privilege.auditTrack) ? '1' : '0', onkeyup: "($(this).val() == '1') ? $(this).val('1') : $(this).val('0')"  %>
+                            <%#= check_box_tag  'privileges['+ma.id.to_s+'][auditTrack]', @temp_privilege.auditTrack, @temp_privilege.auditTrack, :disabled => 'disabled' %>
+                            <% if (@temp_privilege.auditTrack) %>
+                                <i class="fa fa-check" style="color: lawngreen"></i>
+                            <% else %>
+                                <i class="fa fa-times" style="color: red"></i>
+                            <% end %>
+                          </div>
+                          <div class="col-sm-2">
+                            <%#= link_to "Üýtget", edit_mod_actions_role_path(:role_id => params[:role_id], :modAction_id => ma.id, :allowAccess => (@temp_privilege.allowAccess ? 'TRUE' : 'FALSE'), :auditTrack => (@temp_privilege.auditTrack ? 'TRUE' : 'FALSE')) %>
+                            <%= link_to "Üýtget", edit_mod_actions_role_path(ModActionsRole.find_by_role_id_and_mod_action_id(params[:role_id], ma.id), :role_id => params[:role_id], :mod_action_id => ma.id, :allowAccess => (@temp_privilege.allowAccess ? 'TRUE' : 'FALSE'), :auditTrack => (@temp_privilege.auditTrack ? 'TRUE' : 'FALSE')), :target => "_blank" %>
+                            <%#= link_to "Üýtget", edit_mod_actions_role_path(Role.find_by_id(params[:role_id])) %>
+                          </div>
+
+                      <% end %> <br><br>
+                  <% end %>
+                </div>
+              </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <br>
+<% end %>

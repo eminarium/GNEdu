@@ -1,0 +1,214 @@
+<h1>Mugallymlaryň Sanawy</h1>
+<%= link_to "<i class='fa fa-plus'></i>&nbsp; Täze Mugallym".html_safe, new_teacher_path, :class => "btn btn-primary"  %>
+
+<% if (notice) %>
+    <div class="alert alert-success fade in">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <p id="notice"><%= notice %></p>
+    </div>
+<% end %>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+<div class="row">
+<div class="col-lg-12">
+<div class="ibox float-e-margins">
+<div class="ibox-title">
+  <h5>Mugallymlar Sanawy</h5>
+  <div class="ibox-tools">
+    <a class="collapse-link">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+      <i class="fa fa-wrench"></i>
+    </a>
+    <ul class="dropdown-menu dropdown-user">
+      <li><a href="#">Config option 1</a>
+      </li>
+      <li><a href="#">Config option 2</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="ibox-content">
+
+
+  <div class="tabs-container">
+    <ul class="nav nav-tabs">
+      <li class="active">
+        <a data-toggle="tab" href="#tab-active-teachers"> Şu tapgyrda OKADÝAN mugallymlar  </a>
+      </li>
+      <li class="">
+        <a data-toggle="tab" href="#tab-inactive-teachers"> Şu tapgyrda OKATMAÝAN mugallymlar </a>
+      </li>
+    </ul>
+
+
+    <div class="tab-content">
+
+      <div id="tab-active-teachers" class="tab-pane active">
+
+        <div class="panel-body">
+
+
+<div class="table-responsive">
+
+<table class="table table-striped table-bordered table-hover dataTables-example">
+  <thead>
+  <tr>
+    <th>Ady</th>
+    <th>Familiýasy</th>
+    <th>Atasynyň Ady</th>
+    <th>ER-ZN</th>
+    <th>Ulanyjysy</th>
+    <th>Last S/I</th>
+    <th>Ulanyjy Role</th>
+    <th>Bellikler</th>
+    <th>Amallar</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @active_teachers.each do |teacher| %>
+      <tr>
+        <td><%= link_to teacher.teacherFName, teacher %></td>
+        <td><%= link_to teacher.teacherLName, teacher %></td>
+        <td><%= link_to teacher.teacherPatronymic, teacher %></td>
+        <td>
+          <% if (teacher.gender)  %>
+              <%= Student::GENDER_TYPES[1][0] %>
+          <% else %>
+              <%= Student::GENDER_TYPES[0][0] %>
+          <% end %>
+        </td>
+        <td><%= ((teacher.user) ? teacher.user.userLogin : "") %></td>
+        <td>
+          <%  if (teacher.user) %>
+                <% (@last_signed_in = Audit.where(:user_id => teacher.user.id, :mod_action_id => ModAction.where(:modActionName => "create", :mod_object_id => ModObject.find_by_modObjectName("user_sessions").id).first().id).order(:interactionDate).last()) %>
+                <%= ((@last_signed_in) ? @last_signed_in.interactionDate.strftime("%d-%m-%Y / %H:%m") : "") %>
+          <% end %>
+        </td>
+        <td><%= ((teacher.user) ? teacher.user.role.name : "") %></td>
+        <td><%= teacher.notes %></td>
+        <td><div style="float: right">
+          <% if (check_restrictions(controller_name, 'show')) %>
+              <%= link_to "Giňişleýin", teacher, :class => "btn btn-success" %>
+          <% end %>
+          <% if (check_restrictions(controller_name, 'edit')) %>
+              <%= link_to "Üýtget", edit_teacher_path(teacher), :class => "btn btn-warning" %>
+          <% end %>
+          <% if (check_restrictions(controller_name, 'groups_list')) %>
+              <%= link_to "Toparlary", groups_list_teachers_path(:id => teacher.id), :class => "btn btn-primary", :target => :blank %>
+          <% end %>
+          <% if (check_restrictions(controller_name, 'destroy')) %>
+              <%= link_to "Boz", teacher, method: :delete, data: { confirm: "Are you sure ?" }, :class => "btn btn-danger" %>
+          <% end %>
+        </div></td>
+      </tr>
+  <% end %>
+  </tbody>
+
+<tfoot>
+    <tr>
+      <th>Ady</th>
+      <th>Familiýasy</th>
+      <th>Atasynyň Ady</th>
+      <th>ER / ZN</th>
+      <th>Ulanyjysy</th>
+      <th>Last S/I</th>
+      <th>Ulanyjy Role</th>
+      <th>Bellikler</th>
+      <th>Amallar</th>
+    </tr>
+</tfoot>
+
+</table>
+
+
+        </div>
+      </div>
+</div>
+
+
+      <div id="tab-inactive-teachers" class="tab-pane">
+
+        <div class="panel-body">
+
+
+          <div class="table-responsive">
+
+            <table class="table table-striped table-bordered table-hover dataTables-example">
+              <thead>
+              <tr>
+                <th>Ady</th>
+                <th>Familiýasy</th>
+                <th>Atasynyň Ady</th>
+                <th>ER-ZN</th>
+                <th>Ulanyjy Role</th>
+                <th>Bellikler</th>
+                <th>Amallar</th>
+              </tr>
+              </thead>
+
+              <tbody>
+              <% @inactive_teachers.each do |teacher| %>
+                  <tr>
+                    <td><%= link_to teacher.teacherFName, teacher %></td>
+                    <td><%= link_to teacher.teacherLName, teacher %></td>
+                    <td><%= link_to teacher.teacherPatronymic, teacher %></td>
+                    <td>
+                      <% if (teacher.gender)  %>
+                          <%= Student::GENDER_TYPES[1][0] %>
+                      <% else %>
+                          <%= Student::GENDER_TYPES[0][0] %>
+                      <% end %>
+                    </td>
+                    <td><%= ((teacher.user) ? teacher.user.role.name : "") %></td>
+                    <td><%= teacher.notes %></td>
+                    <td><div style="float: right">
+                      <% if (check_restrictions(controller_name, 'show')) %>
+                          <%= link_to "Giňişleýin", teacher, :class => "btn btn-success" %>
+                      <% end %>
+                      <% if (check_restrictions(controller_name, 'edit')) %>
+                          <%= link_to "Üýtget", edit_teacher_path(teacher), :class => "btn btn-warning" %>
+                      <% end %>
+                      <% if (check_restrictions(controller_name, 'groups_list')) %>
+                          <%= link_to "Toparlary", groups_list_teachers_path(:id => teacher.id), :class => "btn btn-primary", :target => :blank %>
+                      <% end %>
+                      <% if (check_restrictions(controller_name, 'destroy')) %>
+                          <%= link_to "Boz", teacher, method: :delete, data: { confirm: "Are you sure ?" }, :class => "btn btn-danger" %>
+                      <% end %>
+                    </div></td>
+                  </tr>
+              <% end %>
+              </tbody>
+
+              <tfoot>
+              <tr>
+                <th>Ady</th>
+                <th>Familiýasy</th>
+                <th>Atasynyň Ady</th>
+                <th>ER-ZN</th>
+                <th>Ulanyjy Role</th>
+                <th>Bellikler</th>
+                <th>Amallar</th>
+              </tr>
+              </tfoot>
+
+            </table>
+
+
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>

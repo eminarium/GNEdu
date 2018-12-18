@@ -1,0 +1,108 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Gaýtalanýan Şertnamalar Sanawy</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="ibox-content">
+
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover dataTables-example" >
+              <thead>
+              <tr>
+                <th>ID</th>
+                <th>Diňleýjiniň maglumatlary</th>
+                <th>Topary</th>
+                <th>Gaýtalanýan sany</th>
+              </tr>
+              </thead>
+
+              <tbody>
+              <% @duplicate_contracts.each do |dc| %>
+                  <tr class="gradeA">
+                    <td>
+                      <% Contract.where(:student_id => dc.student_id, :group_id => dc.group_id).each do |cc|  %>
+                          <%= link_to cc.id, cc %> (<%= cc.seasonContractNo %>) /
+                      <% end %>
+                    </td>
+                    <td><%= dc.student.fName+" "+dc.student.lName+" "+dc.student.patronymic %> (<%= link_to dc.student.id, dc.student %> )</td>
+                    <td>
+                      <% if dc.group %>
+                          <%= dc.group.groupTitle %>
+                      <% end %>
+                    </td>
+                    <td><%= dc.count %></td>
+                  </tr>
+              <% end %>
+              </tbody>
+              <tfoot>
+              <tr>
+                <th>ID</th>
+                <th>Diňleýjiniň maglumatlary</th>
+                <th>Topary</th>
+                <th>Gaýtalanýan sany</th>
+              </tr>
+              </tfoot>
+            </table>
+          </div>
+
+          <h1>Toparsyz Şertnamalar</h1>
+
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover dataTables-example" >
+              <thead>
+              <tr>
+                <th>ID</th>
+                <th>Şertnama №</th>
+                <th>Diňleýjiniň maglumatlary</th>
+                <th>Topary</th>
+              </tr>
+              </thead>
+
+              <tbody>
+              <% @groupless_contracts.each do |gc| %>
+                  <tr class="gradeA">
+                    <td>
+                        <%= link_to gc.id, gc %> (<%= gc.seasonContractNo %>) /
+                    </td>
+                    <td><%= gc.student.fName+" "+gc.student.lName+" "+gc.student.patronymic %> (<%= link_to gc.student.id, gc.student %> )</td>
+                    <td>
+                      <% if gc.group %>
+                          <%= gc.group.groupTitle %>
+                      <% end %>
+                    </td>
+                  </tr>
+              <% end %>
+              </tbody>
+              <tfoot>
+              <tr>
+                <th>ID</th>
+                <th>Şertnama №</th>
+                <th>Diňleýjiniň maglumatlary</th>
+                <th>Topary</th>
+              </tr>
+              </tfoot>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

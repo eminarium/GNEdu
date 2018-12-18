@@ -1,0 +1,98 @@
+<h1>Çäreleriň Sanawy</h1>
+<%= link_to "<i class='fa fa-plus'></i>&nbsp; Täze Çäre".html_safe, new_event_path, :class => "btn btn-primary"  %>
+
+<% if (notice) %>
+    <div class="alert alert-success fade in">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <p id="notice"><%= notice %></p>
+    </div>
+<% end %>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Çäreleriň Sanawy</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="ibox-content">
+
+          <div class="table-responsive">
+
+
+            <table class="table table-striped table-bordered table-hover dataTables-example">
+              <thead>
+              <tr>
+                <th>Çäräniň Ady</th>
+                <th>Görnüşi</th>
+                <th>Başlangyç Senesi</th>
+                <th>Tamamlanýan Senesi</th>
+                <th>Hepdelik Gaýtalanýar</th>
+                <th>Bellikler</th>
+                <th>Amallar</th>
+              </tr>
+              </thead>
+
+              <tbody>
+              <% @events.each do |event| %>
+                  <tr>
+                    <td><%= link_to event.event_title, event %></td>
+                    <td>
+                      <% if (event.event_type) %>
+                        <%= link_to event.event_type.event_type_title, event.event_type %>
+                      <% end %>
+                    </td>
+                    <td><%= event.event_from_datetime.strftime("%d-%m-%Y / %H-%M") %></td>
+                    <td><%= event.event_to_datetime.strftime("%d-%m-%Y / %H-%M") %></td>
+                    <td>
+                      <% if (event.is_weekly)  %>
+                          Hawa
+                      <% else %>
+                          Ýok
+                      <% end %>
+                    </td>
+                    <td><%= event.notes %></td>
+                    <td><div style="float: right">
+                      <%= link_to "Giňişleýin", event, :class => "btn btn-success" %>
+                      <%= link_to "Üýtget", edit_event_path(event), :class => "btn btn-warning" %>
+                      <% link_to "Boz", event, method: :delete, data: { confirm: "Are you sure ?" }, :class => "btn btn-danger" %>
+                    </div></td>
+                  </tr>
+              <% end %>
+              </tbody>
+
+              <tfoot>
+              <tr>
+                <th>Çäräniň Ady</th>
+                <th>Görnüşi</th>
+                <th>Başlangyç Senesi</th>
+                <th>Tamamlanýan Senesi</th>
+                <th>Hepdelik Gaýtalanýar</th>
+                <th>Bellikler</th>
+                <th>Amallar</th>
+              </tr>
+              </tfoot>
+
+            </table>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

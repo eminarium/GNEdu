@@ -1,0 +1,339 @@
+<div class="row">
+
+<div class="col-lg-5">
+
+   <!-- ###################### TAPGYR SYNAGLARY - START #################################### -->
+  <div class="ibox float-e-margins">
+
+    <div class="ibox-title">
+      <h5>Tapgyr Synaglary</h5>
+      <div class="ibox-tools">
+        <a class="collapse-link">
+          <i class="fa fa-chevron-up"></i>
+        </a>
+        <a class="close-link">
+          <i class="fa fa-times"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="ibox-content">
+      <table class="table table-hover no-margins">
+        <thead>
+        <tr>
+          <th>Senesi</th>
+          <th>Synag</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <% @season_tests.each do |st| %>
+            <tr>
+              <% if (((st.seasonTestDate - Date.today) >= 0) && ((st.seasonTestDate - Date.today) <= 3)) %>
+                  <td>
+                    <span class="label label-danger" style="font-size: 11pt"> <%= st.seasonTestDate.strftime("%d.%m.%y - %A") %> </span>
+                  </td>
+                  <td style="color: red; font-weight: bolder"><%= st.seasonTestTitle %></td>
+              <% elsif (((st.seasonTestDate - Date.today) <= 7) && ((st.seasonTestDate - Date.today) > 3) ) %>
+                  <td>
+                    <span class="label label-warning" style="font-size: 11pt"> <%= st.seasonTestDate.strftime("%d.%m.%y - %A") %>  </span>
+                  </td>
+                  <td style="color: orange; font-weight: bolder"><%= st.seasonTestTitle %></td>
+              <% else %>
+                  <td <% if (st.isFinal) %> style='font-weight: bolder' <% end %> >
+                    <%= st.seasonTestDate.strftime("%d.%m.%y - %A") %>
+                  </td>
+                  <td <% if (st.isFinal) %> style='font-weight: bolder' <% end %>><%= st.seasonTestTitle %></td>
+              <% end %>
+            </tr>
+        <% end %>
+
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+  <!-- ###################### TAPGYR SYNAGLARY - END #################################### -->
+
+
+  <!-- ###################### DERS WAGTLARY - START #################################### -->
+  <div class="ibox float-e-margins">
+
+    <div class="ibox-title">
+      <h5>Ders Wagtlary</h5>
+      <div class="ibox-tools">
+        <a class="collapse-link">
+          <i class="fa fa-chevron-up"></i>
+        </a>
+        <a class="close-link">
+          <i class="fa fa-times"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="ibox-content">
+      <table class="table table-hover no-margins">
+        <thead>
+        <tr>
+          <th>Wagty</th>
+          <th>Sagatlary</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <% @lesson_times.each do |lt| %>
+            <tr>
+              <td><%= lt.lessonTimeTitle %></td>
+              <td><%= lt.lessonTimeFrom.strftime("%H : %M") %> - <%= lt.lessonTimeTo.strftime("%H : %M") %></td>
+            </tr>
+        <% end %>
+
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+  <!-- ###################### DERS WAGTLARY - END #################################### -->
+
+</div>
+
+
+
+<div class="col-lg-7">
+  <div class="ibox float-e-margins">
+
+    <!-- ################################### SENENAMA - START ##################################### -->
+
+    <div class="ibox-title">
+      <h5>Senenama</h5>
+      <div class="ibox-tools">
+        <a class="collapse-link">
+          <i class="fa fa-chevron-up"></i>
+        </a>
+        <a class="close-link">
+          <i class="fa fa-times"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="ibox-content">
+      <div id="calendar"></div>
+    </div>
+
+  </div>
+  <!-- ################################### SENENAMA - END ##################################### -->
+
+
+  <!-- ################################### ANNOUNCEMENTS - START ##################################### -->
+
+  <div class="ibox float-e-margins">
+
+    <div class="ibox-title">
+      <h5>Bildirişler</h5>
+      <div class="ibox-tools">
+        <a class="collapse-link">
+          <i class="fa fa-chevron-up"></i>
+        </a>
+        <a class="close-link">
+          <i class="fa fa-times"></i>
+        </a>
+      </div>
+    </div>
+
+    <% @views = AnnouncementsUser.where(:user_id => current_user.id, :announcement_id => Season.find_by_id(session[:active_season_id]).announcements.select(:id)).count %>
+    <% @quantity = Season.find_by_id(session[:active_season_id]).announcements.count - @views %>
+
+    <% if (@quantity > 0) %>
+        <div class="ibox-content ibox-heading">
+          <h3 style="color: dodgerblue"><i class="fa fa-envelope-o"></i> Täze Duýduryşlar (<%= (@quantity > 0) ? (@quantity) : "" %>)</h3>
+          <!-- <small  style="color: dodgerblue"><i class="fa fa-tim"></i> Gözden geçirilmeli täze habarlar bar ...</small> -->
+        </div>
+    <% end %>
+
+    <div class="ibox-content">
+      <div class="feed-activity-list">
+        <% @count = 0 %>
+        <% Season.find_by_id(session[:active_season_id]).announcements.order(:created_at).limit(3).each do |ann| %>
+            <% @count = @count + 1 %>
+            <div class="feed-element">
+              <div>
+                <small class="pull-right text-navy">
+                  <a href="<%= 'http://192.168.1.200:3000/announcements/'+ann.id.to_s %>" target="_blank">
+                    Giňişleýin...
+                  </a>
+                </small>
+                <strong>
+                  <% if (!AnnouncementsUser.find_by_user_id(current_user.id))%>
+                      <div style="color: orangered">
+                        <%= ann.announcementSubject.upcase %>
+                      </div>
+                  <% else %>
+                      <%= ann.announcementSubject.upcase %>
+                  <% end %>
+                </strong>
+                <div>
+                  <i>
+                    <%= ann.announcementBody %>
+                  </i>
+                </div>
+                <small class="text-muted"> "Gujurly Nesil" Administrasiýa</small>
+                <span class="pull-right text-muted small"><%= ann.created_at.strftime("%d / %m / %y") %></span>
+              </div>
+            </div>
+
+        <% end %>
+
+        <% if (@count == 0) %>
+            Bu tapgyrda şu wagta çenli hiç Bildiriş ýerleşdirilmedi.
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+  <!-- ################################### ANNOUNCEMENTS - END ##################################### -->
+
+</div>
+
+
+</div>
+
+
+<script>
+
+    $(document).ready(function() {
+
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green'
+        });
+
+        /* initialize the external events
+         -----------------------------------------------------------------*/
+
+
+        $('#external-events div.external-event').each(function() {
+
+// store data so the calendar knows to render an event upon drop
+            $(this).data('event', {
+                title: $.trim($(this).text()), // use the element's text as the event title
+                stick: true // maintain when user navigates (see docs on the renderEvent method)
+            });
+
+// make the event draggable using jQuery UI
+            $(this).draggable({
+                zIndex: 1111999,
+                revert: true, // will cause the event to go back to its
+                revertDuration: 0 // original position after the drag
+            });
+
+        });
+
+
+        /* initialize the calendar
+         -----------------------------------------------------------------*/
+        var date = new Date();
+        var d = date.getDate();
+        var m = date.getMonth();
+        var y = date.getFullYear();
+
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,listMonth'
+                //right: 'month,agendaWeek,listMonth,listWeek'
+            },
+            views: {
+                listDay: {buttonText: 'list day'},
+                listWeek: {buttonText: 'list week'},
+                listMonth: {buttonText: 'list month'}
+            },
+            //editable: true,
+            eventLimit: false,
+            firstDay: 1,
+            timeFormat: 'H:mm',
+            navLinks: true, // can click day/week names to navigate views.
+            weekNumbers: true,
+            droppable: true, // this allows things to be dropped onto the calendar
+            drop: function() {
+// is the "remove after drop" checkbox checked?
+                if ($('#drop-remove').is(':checked')) {
+// if so, remove the element from the "Draggable Events" list
+                    $(this).remove();
+                }
+            },
+            events: [
+                <% @season_tests.each do |st| %>
+                {
+                    title: '<%= st.seasonTestTitle %>',
+                    start: new Date(<%= st.seasonTestDate.year %>, <%= st.seasonTestDate.month-1 %>, <%= st.seasonTestDate.day %>),
+                    color: '#FF0000',
+                    allDay: true
+                },
+                <% end %>
+
+                <% @events.each do |evt| %>
+                {
+                    title: '<%= evt.event_title %>',
+                    <% if ((evt.event_from_datetime.hour == evt.event_to_datetime.hour) && (evt.event_from_datetime.min == evt.event_to_datetime.min)) %>
+                    start: new Date(<%= evt.event_from_datetime.year %>, <%= evt.event_from_datetime.month-1 %>, <%= evt.event_from_datetime.day %>),
+                    allDay: true,
+                    <% else %>
+                    start: new Date(<%= evt.event_from_datetime.year %>, <%= evt.event_from_datetime.month-1 %>, <%= evt.event_from_datetime.day %>, <%= evt.event_from_datetime.hour %>, <%= evt.event_from_datetime.min %>),
+                    end: new Date(<%= evt.event_to_datetime.year %>, <%= evt.event_to_datetime.month-1 %>, <%= evt.event_to_datetime.day %>, <%= evt.event_to_datetime.hour %>, <%= evt.event_to_datetime.min %>),
+                    <% end %>
+                    color: '<%= evt.event_type.event_type_color_code %>'
+                },
+                <% end %>
+
+                //{
+                //title: 'All Day Event',
+                //start: new Date(y, m, 1)
+                //},
+                //{
+                //title: 'Long Event',
+                //start: new Date(y, m, d-5),
+                //end: new Date(y, m, d-2)
+                //},
+                //{
+                //id: 999,
+                //title: 'Repeating Event',
+                //start: new Date(y, m, d-3, 16, 0),
+                //allDay: false
+                //},
+                //{
+                //id: 999,
+                //title: 'Repeating Event',
+                //start: new Date(y, m, d+4, 16, 0),
+                //allDay: false
+                //},
+                //{
+                //title: 'Meeting',
+                //start: new Date(y, m, d, 10, 30),
+                //allDay: false
+                //},
+                //{
+                //title: 'Lunch',
+                //start: new Date(y, m, d, 12, 0),
+                //end: new Date(y, m, d, 14, 0),
+                //allDay: false
+                //},
+                //{
+                //title: 'Birthday Party',
+                //start: new Date(y, m, d+1, 19, 0),
+                //end: new Date(y, m, d+1, 22, 30),
+                //allDay: false
+                //},
+                //{
+                //title: 'Click for Google',
+                //start: new Date(y, m, 28),
+                //end: new Date(y, m, 29),
+                //url: 'http://google.com/'
+                //},
+            ]
+        });
+
+
+    });
+
+</script>

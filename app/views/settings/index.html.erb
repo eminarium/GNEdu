@@ -1,0 +1,39 @@
+<h1>Sazlamalaryň Sanawy</h1>
+
+<%= link_to "<i class='fa fa-plus'></i>&nbsp; Täze Sazlama".html_safe, new_setting_path, :class => "btn btn-primary"  %>
+
+<% if (notice) %>
+    <div class="alert alert-success fade in">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <p id="notice"><%= notice %></p>
+    </div>
+<% end %>
+
+<table  class="table table-striped">
+  <thead>
+    <tr>
+      <th>Sazlamanyň Ady</th>
+      <th>Sazlamanyň Bahasy</th>
+      <th>Bellikler</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @settings.each do |setting| %>
+      <tr>
+        <td><%= setting.settingName %></td>
+        <td><%= setting.settingValue %></td>
+        <td><%= setting.notes %></td>
+        <td><div style="float: right">
+          <%= link_to "Giňişleýin", setting, :class => "btn btn-success" %>
+          <%= link_to "Üýtget", edit_setting_path(setting), :class => "btn btn-warning" %>
+          <% link_to "Boz", setting, method: :delete, data: { confirm: "Are you sure ?" }, :class => "btn btn-danger" %>
+        </div></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+

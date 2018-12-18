@@ -1,0 +1,29 @@
+<h1>Listing audits</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Modaction</th>
+      <th>Interactiondate</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @audits.each do |audit| %>
+      <tr>
+        <td><%= audit.user %></td>
+        <td><%= audit.mod_action %></td>
+        <td><%= audit.interactionDate %></td>
+        <td><%= link_to 'Show', audit %></td>
+        <td><%= link_to 'Edit', edit_audit_path(audit) %></td>
+        <td><%= link_to 'Destroy', audit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Audit', new_audit_path %>

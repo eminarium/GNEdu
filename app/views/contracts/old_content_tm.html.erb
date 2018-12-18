@@ -1,0 +1,246 @@
+<html>
+<body>
+
+<div class="contract"><div class="contract-middle"><div class="contract-middle-inner">
+
+<table style="float: left; border: 1px solid #000;letter-spacing: -0.008em; font-size: 0.8em" id="Order">
+  <tr>
+    <td colspan="5" style="text-align: center; padding-top: 10px">ŞERTNAMA № : <%= @contract.seasonContractNo %></td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="text-align: left; padding-left: 5px">F.A.A.</td>
+    <td colspan="3" style="text-align: left;"><%= @contract.student.fName+" "+@contract.student.lName+" "+@contract.student.patronymic %></td>
+  </tr>
+  <tr>
+    <td colspan="2" style="text-align: left; padding-left: 5px">Doglan senesi (Güni, aýy, ýyly)</td>
+    <td colspan="3" style="text-align: left;"><%= @contract.student.birthDate.day.to_s+" "+Contract::MONTH_NAMES_TM[@contract.student.birthDate.month-1].to_s+" "+@contract.student.birthDate.year.to_s %></td>
+  </tr>
+  <tr>
+    <td colspan="2" style="text-align: left; padding-left: 5px">Adres we Telefonlar</td>
+    <td colspan="3" style="text-align: left;">
+      <%= @contract.student.addressBody %>
+      <% if (!@contract.student.mobilePhone.blank?) %>
+          | <%= @contract.student.mobilePhone %>
+      <% end %>
+      <% if (!@contract.student.smsMobilePhone.blank?) %>
+          | <%= @contract.student.smsMobilePhone %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" style="text-align: left; padding-left: 5px">Milleti</td>
+    <td colspan="3" style="text-align: left;"><%= @contract.student.nationality.nationalityName %></td>
+  </tr>
+  <tr>
+    <td colspan="2" style="text-align: left; padding-left: 5px">Okaýan Ýeri (Mekdep №, Uniwersitet, Institut)</td>
+    <td colspan="3" style="text-align: left;">
+      <% if @contract.student.isPupil %>
+        <%= @contract.student.schoolNo ? @contract.student.schoolNo : @contract.student.schoolName %>
+      <% elsif @contract.student.isStudent %>
+        <%= @contract.student.high_school ? @contract.student.high_school.highSchoolName : (@contract.student.special_school ? @contract.student.special_school.specialSchoolName : @contract.student.highSpecialSchoolOther) %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: left; padding-left: 5px">Işleýän Ýeri</td>
+    <td colspan="4" style="text-align: left;"><%= @contract.student.workPlace %></td>
+  </tr>
+  <tr>
+    <td style="text-align: left; padding-left: 5px">Wezipesi</td>
+    <td style="text-align: left;"><%= @contract.student.occupation %></td>
+    <td style="text-align: left; padding-left: 5px">Iş Telefony</td>
+    <td colspan="2" style="text-align: left;"><%= @contract.student.officePhone %></td>
+  </tr>
+  <tr>
+    <td style="text-align: left; padding-left: 5px">Kursy</td>
+    <td style="text-align: left;"><%= @contract.group.subject.subjectFullName %></td>
+    <td style="text-align: left; padding-left: 5px">Wagty</td>
+    <td style="text-align: left;"><%= @contract.group.lesson_time.lessonTimeTitle %></td>
+    <td style="text-align: left;">Tölegi : <%= (@contract.amountPaid!=0)? @contract.amountPaid : "-" %> DTM </td>
+  </tr>
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="text-align: left; padding-left: 5px">Nobatdaky tapgyryň başlangyç we gutaryş senesi</td>
+    <td colspan="3" style="text-align: left;"><%= (Season.active_season.seasonFromDate.strftime("%d-%m-%Y")+" / "+Season.active_season.seasonToDate.strftime("%d-%m-%Y")) %></td>
+  </tr>
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="text-align: center; padding-left: 5px; border: 1px solid #000;">Ene-Atasy</td>
+    <td style="text-align: center; border: 1px solid #000;">Ady</td>
+    <td style="text-align: center; border: 1px solid #000;">Işleýän Ýeri</td>
+    <td style="text-align: center; border: 1px solid #000;">Wezipesi</td>
+    <td style="text-align: center; border: 1px solid #000;">Iş Telefony</td>
+  </tr>
+  <tr>
+    <td style="text-align: left; padding-left: 5px; border: 1px solid #000;">Kakasy</td>
+    <td style="text-align: left; padding-left: 5px; border: 1px solid #000;"><%= @contract.student.faFName+" "+@contract.student.faLName %></td>
+    <td style="text-align: left; padding-left: 5px; border: 1px solid #000;"><%= @contract.student.faWorkPlace %></td>
+    <td style="text-align: left; padding-left: 5px; border: 1px solid #000;"><%= @contract.student.faOccupation %></td>
+    <td style="text-align: left; padding-left: 5px; border: 1px solid #000;"><%= @contract.student.faOfficePhone %></td>
+  </tr>
+  <tr>
+    <td style="text-align: left; padding-left: 5px; border: 1px solid #000;">Ejesi</td>
+    <td style="text-align: left; padding-left: 5px; border: 1px solid #000;"><%= @contract.student.maFName+" "+@contract.student.maLName %></td>
+    <td style="text-align: left; padding-left: 5px; border: 1px solid #000;"><%= @contract.student.maWorkPlace %></td>
+    <td style="text-align: left; padding-left: 5px; border: 1px solid #000;"><%= @contract.student.maOccupation %></td>
+    <td style="text-align: left; padding-left: 5px; border: 1px solid #000;"><%= @contract.student.maOfficePhone %></td>
+  </tr>
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: center;text-decoration: underline; font-weight: bold">"Gujurly Nesil" HK bilim bölüminde</td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: center;text-decoration: underline; font-weight: bold">okaýan diňleýjileriň tertip-düzgünnamalary</td>
+  </tr>
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: left; padding-left: 5px">
+      1. Kursumyza dowam etmek islemeýän diňleýjileriň tölegi kursyň başlan senesinden 5 (bäş) iş güniň dowamynda yzyna gaýtarylyp biliner. (Soňky güni: 19/12/2016)
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: left; padding-left: 5px">
+      2. Tapgyr gutardyş synaglaryna girmäge hukuk gazanmak üçin, okuw döwründäki synaglaryň ortaça bahasy azyndan 50 bal bolmalydyr.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: left; padding-left: 5px">
+      3. Tapgyr gutardyşyň  netijesinde 50 we 50 - den ýokary ballar alan diňleýjiler, şahadatnama almaga hukuk gazanarlar.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: left; padding-left: 5px">
+      4. Sapaklaryna dowamly gatnaşmaýan diňleýjilere we final synaglardan 50 - den pes bal alan diňleýjilere kurs tamamlanandan soň şahadatnama berilmeýär.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: left; padding-left: 5px">
+      5. Gerekli halatlarda diňleýjiler administrasiýa duýduran ýagdaýynda bir synaga girmezlik hukugy bardyr.Diňleýjiler iki synaga sebäpsiz girmedik ýagdaýynda final synagyna göýberiljek däldir!
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: left; padding-left: 5px">
+      6. Ders sagatlarynda we synag döwründe diňleýjileriň jübi telefonlary  ýapyk bolmalydyr. Diňleýjiler jübi telefonyny öçürmän ýagdaýynda Administrasiýa tarapyndan DUÝDURUŞ beriljekdir.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: left; padding-left: 5px">
+      7.  Sapakda özüni tertipsiz alyp barýan diňleýji, mugallymyň we administrasiýanyň üç duýduruşyndan soň kursdan çykarylýar.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: left; padding-left: 5px">
+      8.  Iki hepdeden artyk sapaklaryna sebäpsiz gelmedik diňleýji, synaga göýberiljek däldir!
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: left; padding-left: 5px">
+      9. Sapaklaryna sebäpsiz gijä galýan diňleýjä duýduryş berilýär. Administrasiýanyň  üç duýduruşyndan soň kursdan çykarlar.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: center;">
+      10. «GUJURLY NESIL» HK BILIM BÖLÜMINDE BERK GADAGAN EDILÝÄR:
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: left; padding-left: 5px">
+      a. Türkmenistanyň çäginde hereket edýän kanunlara laýyklykda çilim çekmek, alkogolly içgileri içmek, dürli neşe serişdeleri ulanmak,
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: left; padding-left: 5px">
+      b. kursyň emlägine zeper ýetirmek.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: left; padding-left: 5px">
+      11. «Gujurly Nesil» HK bilim bölüminde zeper ýeten emlägiň öwezini günäkar okuwçy doldurýar.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: left; padding-left: 5px; text-decoration: underline; font-weight: bold">
+      12. «Gujurly Nesil» HK bilim bölüminde okaýan diňleýjileriň egin-eşikleri bilim edarasynyň talaplaryna laýyk gelmelidir. (Köýnekler ýeňli, ýubkalaryň uzynlygy dyzdan aşak bolmalydyr.)
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: left; padding-left: 5px">
+      13.  Ene-atalar diňleýjiniň ýetişikligi we her ara synaglarynyň netijesi barada mugallymyndan sorap gyzyklanmalydyrlar. Mugallym diňleýjiniň ýetişigi barada ene-atasyna habar etmäge mejbur däldir!
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="text-align: left; padding-left: 5px">
+      Bu şertnama «Gujurly Nesil» HK bilim bölümi bilen (Familiýa) :
+    </td>
+    <td colspan="3" style="text-align: left;">
+      <%= @contract.student.lName+" "+@contract.student.fName[0,1]+"." %>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: left; padding-left: 5px">
+      arasynda   baglanyşyldy.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="text-align: left; padding-left: 5px;">&nbsp;</td>
+    <td colspan="2" style="text-align: right;">Goly ........................................</td>
+    <td colspan="2" style="text-align: right; padding-right: 10px">Kitaby Aldym : .................................</td>
+  </tr>
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="3" style="text-align: left; padding-left: 5px;">&nbsp;</td>
+    <td colspan="2" style="text-align: right; padding-right: 10px">Senesi : <%= @contract.registrationDate.strftime("%d / %m / %Y") %></td>
+  </tr>
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2">&nbsp;</td>
+    <td colspan="2" style="text-align: right;">Esasy Hünärmen : N. Öwezberdiýewa </td>
+    <td style="text-align: left; padding-left: 5px;">..........................</td>
+  </tr>
+
+</table>
+
+</div></div></div>
+
+
+<style>
+
+    @page {
+        size: A4 portrait;
+    }
+
+    @media print {
+        html, body{margin: 0 0 0 0; padding: 0 7 0 7;}
+        .contract{box-sizing: border-box; height: 100%; width: 100%; border: 1px solid transparent; page-break-after: always;}
+        .contract-middle{height: 100%; width: 100%; display: table;}
+        .contract-middle-inner{height: 100%; width: 100%; display: table-cell; vertical-align: middle;}
+    }
+
+</style>
+
+</body>
+</html>

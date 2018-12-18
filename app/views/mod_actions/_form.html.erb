@@ -1,0 +1,38 @@
+<%= form_for(@mod_action) do |f| %>
+    <% if @mod_action.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@mod_action.errors.count, "error") %> prohibited this nationality from being saved:</h2>
+
+          <ul>
+            <% @mod_action.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+
+    <div><label class="col-sm-4 control-label">Model(Obýekt) Amalynyň Ady</label>
+      <div class="col-sm-8"><%= f.text_field :modActionName, :type => "text", :class => "form-control" %></div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Degişli Model(Obýekt) Ady</label>
+      <div class="col-sm-8"><%= f.collection_select(:mod_object_id, @mod_objects, :id, :modObjectName, :include_blank => t("Please_select"), :class => "form-control" ) %></div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Bellikler</label>
+      <div class="col-sm-8"><%= f.text_area :description, :type => "text", :class => "form-control"  %></div>
+    </div>
+
+    <br><br><br>
+
+    <div class="actions">
+      <%= f.submit "Kabul Et", :class => "btn btn-success" %>
+    </div>
+
+<% end %>
+<br>

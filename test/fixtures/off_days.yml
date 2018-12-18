@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  off_day_title: MyString
+  off_day_date: 2017-07-18
+  is_annual: false
+  notes: MyText
+
+two:
+  off_day_title: MyString
+  off_day_date: 2017-07-18
+  is_annual: false
+  notes: MyText

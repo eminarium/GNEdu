@@ -1,0 +1,107 @@
+<h1>Berlen Kitaplaryň Sanawy</h1>
+<%= link_to "<i class='fa fa-plus'></i>&nbsp; Okuwça Kitap Berme".html_safe, new_book_lend_path, :class => "btn btn-primary"  %>
+
+<% if (notice) %>
+    <div class="alert alert-success fade in">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <p id="notice"><%= notice %></p>
+    </div>
+<% end %>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Okuwçylara Berlen Kitaplaryň Sanawy</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="ibox-content">
+
+          <div class="table-responsive">
+
+            <table class="table table-striped table-bordered table-hover dataTables-example">
+              <thead>
+              <tr>
+                <th>Kitap</th>
+                <th>Okuwçy</th>
+                <th>Berlen Wagty</th>
+                <th>Gaýtarylan</th>
+                <th>Gaýtarylan Wagty</th>
+                <th>Zeper Ýetirilen</th>
+                <th>Bellikler</th>
+                <th>Amallar</th>
+              </tr>
+              </thead>
+
+              <tbody>
+              <% @book_lends.each do |book_lend| %>
+                  <tr>
+                    <td><%= link_to book_lend.book.bookName, book_lend.book %></td>
+                    <td><%= link_to book_lend.student.first_and_last_name, book_lend.student %></td>
+                    <td><%= book_lend.lendDateTime.strftime("%d/%m/%y") %></td>
+
+                    <td>
+                          <% if (book_lend.isReturned) %>
+                            <i class="fa fa-check" style="color: lawngreen"></i>
+                        <% else %>
+                            <i class="fa fa-times" style="color: red"></i>
+                        <% end %>
+                    </td>
+
+                    <td><%= book_lend.returnDateTime.strftime("%d/%m/%y") %></td>
+
+                    <td>
+                      <% if (book_lend.isDamaged) %>
+                          <i class="fa fa-check" style="color: lawngreen"></i>
+                      <% else %>
+                          <i class="fa fa-times" style="color: red"></i>
+                      <% end %>
+                    </td>
+
+                    <td><%= book_lend.notes %></td>
+
+                    <td><div style="float: right">
+                      <%= link_to "Giňişleýin", book_lend, :class => "btn btn-success" %>
+                      <%= link_to "Üýtget", edit_book_lend_path(book_lend), :class => "btn btn-warning" %>
+                      <% link_to "Boz", book_lend, method: :delete, data: { confirm: "Are you sure ?" }, :class => "btn btn-danger" %>
+                    </div></td>
+                  </tr>
+              <% end %>
+              </tbody>
+
+              <tfoot>
+              <tr>
+                <th>Kitap</th>
+                <th>Okuwçy</th>
+                <th>Berlen Wagty</th>
+                <th>Gaýtarylan</th>
+                <th>Gaýtarylan Wagty</th>
+                <th>Zeper Ýetirilen</th>
+                <th>Bellikler</th>
+                <th>Amallar</th>
+              </tr>
+              </tfoot>
+
+            </table>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

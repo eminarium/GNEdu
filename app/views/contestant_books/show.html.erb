@@ -1,0 +1,86 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-6">
+
+
+
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Okama Ýaryşy Kitaby Maglumatlary</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+            <a class="close-link">
+              <i class="fa fa-times"></i>
+            </a>
+          </div>
+        </div>
+
+
+
+
+
+        <div class="ibox-content">
+          <h3>
+            Okama Ýaryşy Kitaby Maglumatlary
+          </h3>
+          <br>
+
+          <p id="notice"><%= notice %></p>
+
+          <div><label class="col-sm-4 control-label">Kitabyň Ady</label>
+            <div class="col-sm-8"><i><%= link_to @contestant_book.book.bookName, @contestant_book.book %></i></div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-4 control-label">Awtory</label>
+            <div class="col-sm-8">
+              <i>
+                <% @authors = Author.where(:id => AuthorsBook.where(:book_id => @contestant_book.book.id).select(:author_id) ) %>
+                <% if (@authors.count>0)%>
+                    <% @authors.each do |au| %>
+                        <%= link_to (au.authorFName.first(1)+". "+au.authorLName+" / "), au %>
+                    <% end %>
+                <% else %>
+                    Näbelli
+                <% end %>
+              </i>
+            </div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-4 control-label">Ýaryş</label>
+            <div class="col-sm-8"><i><%= link_to @contestant_book.book_contest.bookContestName, @contestant_book.book_contest %> </i></div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-4 control-label">Bellikler</label>
+            <div class="col-sm-8"><i><%= @contestant_book.notes %></i></div>
+          </div>
+
+          <br><br><br>
+
+          <%= link_to 'Üýtget', edit_contestant_book_path(@contestant_book), :class => "btn btn-warning"  %>
+          <%= link_to 'Yza', contestant_books_path, :class => "btn btn-outline btn-success" %>
+
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

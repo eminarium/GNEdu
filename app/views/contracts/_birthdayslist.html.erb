@@ -1,0 +1,98 @@
+<h1>Doglan Günler Sanawy</h1>
+
+<% if (notice) %>
+    <div class="alert alert-success fade in">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <p id="notice"><%= notice %></p>
+    </div>
+<% end %>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+<div class="row">
+<div class="col-lg-12">
+<div class="ibox float-e-margins">
+<div class="ibox-title">
+  <h5>Doglan Günler Sanawy</h5>
+  <div class="ibox-tools">
+    <a class="collapse-link">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+      <i class="fa fa-wrench"></i>
+    </a>
+    <ul class="dropdown-menu dropdown-user">
+      <li><a href="#">Config option 1</a>
+      </li>
+      <li><a href="#">Config option 2</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="ibox-content">
+
+    <div class="table-responsive">
+
+      <table class="table table-striped table-bordered table-hover dataTables-example" >
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Diňleýji</th>
+          <th>Doglan senesi</th>
+          <th>Topar</th>
+        </tr>
+        </thead>
+                    <% @i = 0 %>
+        <tbody>
+        <% @current_season_students.each do |student| %>
+            <% if ((student.birthDate.month == @month) && (student.birthDate.day == @day)) %>
+                <tr class="gradeA">
+                  <td>
+                    <%= @i = @i + 1 %>
+                  </td>
+                  <td>
+                    <%= link_to student.fName, student %>
+                    <%= link_to student.lName, student %>
+                    <%= link_to student.patronymic, student %>
+                  </td>
+                  <td>
+                    <%= student.birthDate.strftime("%d - %m - %Y") %>
+                  </td>
+                  <% @student_contracts = Contract.where(:season_id => @current_season_id, :isMoneyReturned => false, :student_id => student.id).includes(:season, :group, :student) %>
+                  <td>
+                    <% @student_contracts.each do |contract| %>
+                        <% if contract.group %>
+                            <%= link_to  contract.group.groupTitle, contract.group %> -
+                        <% end %>
+                        <% if contract.group %>
+                            <%= contract.group.lesson_time.lessonTimeTitle %> -
+                        <% end %>
+                        <% if contract.group %>
+                            <%= contract.group.teacher.full_name %> /
+                        <% end %>
+                        <br>
+                    <% end %>
+                  </td>
+                </tr>
+            <% end %>
+        <% end %>
+        </tbody>
+        <tfoot>
+        <tr>
+          <th>#</th>
+          <th>Diňleýji</th>
+          <th>Doglan senesi</th>
+          <th>Topar</th>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+</div>
+</div>
+</div>
+
+<br>
+

@@ -1,0 +1,1222 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-6">
+
+
+
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Topar Maglumatlary</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+
+
+
+<div class="ibox-content">
+
+<p id="notice"><%= notice %></p>
+
+<div><label class="col-sm-4 control-label">Dersi</label>
+    <div class="col-sm-8"><i><%= @group.subject.subjectFullName %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Tapgyry</label>
+    <div class="col-sm-8">
+      <i>
+        <% if (check_restrictions('seasons', 'show')) %>
+            <%= link_to @group.season.seasonTitle, @group.season %>
+        <% else %>
+            <%= @group.season.seasonTitle %>
+        <% end %>
+      </i>
+    </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Wagty</label>
+    <div class="col-sm-8"><i><%= @group.lesson_time.lessonTimeTitle %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Mugallymy</label>
+    <div class="col-sm-8"><i>
+      <% if @group.teacher %>
+        <%= link_to @group.teacher.teacherFName+" "+@group.teacher.teacherLName, @group.teacher %>
+      <% end %>
+    </i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Görnüşi</label>
+<div class="col-sm-8"><i><%= @group.group_gender.groupGenderShortName %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Dili</label>
+    <div class="col-sm-8"><i><% if (@group.group_language) %> <%= @group.group_language.groupLanguageShortName %> <% end %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Belgisi</label>
+    <div class="col-sm-8"><i><%= @group.groupTitle %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Diňleýji sany</label>
+    <div class="col-sm-8"><i><%= @current_group_contracts.count %> &nbsp; ( E: <%= @male.count  %> &nbsp; | &nbsp Z: <%= @female.count %> ) </i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Ýapylan</label>
+    <div class="col-sm-8">
+      <% if (@group.isClosed) %>
+          <i class="fa fa-check" style="color: lawngreen"></i>
+      <% else %>
+          <i class="fa fa-times" style="color: red"></i>
+      <% end %>
+
+    </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Çäklendirme</label>
+    <div class="col-sm-8"><i><%= @group.groupLimit %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Bellikler</label>
+    <div class="col-sm-8"><i><%= @group.notes %></i></div>
+</div>
+
+<br><br><br>
+
+<% if (check_restrictions('groups', 'edit')) %>
+    <%= link_to 'Üýtget', edit_group_path(@group), :class => "btn btn-warning"  %>
+<% end %>
+<% if (check_restrictions('groups', 'index')) %>
+    <%= link_to 'Yza', groups_path, :class => "btn btn-outline btn-success" %>
+<% end %>
+<% if (check_restrictions('groups', 'new')) %>
+  <%= link_to 'Täze Ders Güni', new_timetable_path(:group_id => @group.id), :class => "btn btn-outline btn-primary", :target => "_blank" %>
+<% end %>
+
+</div>
+
+      </div>
+
+
+
+      <div class="ibox float-e-margins">
+        <div class="ibox-title"  style="border-color: red">
+          <h5>Topar Synag Maglumatlary</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"  style="color: red"></i>
+            </a>
+          </div>
+        </div>
+
+
+
+
+
+        <div class="ibox-content"  style="border-color: red">
+
+          <div class="col-sm-3"><u><b>Synag</b></u></div>
+          <div class="col-sm-3"><u><b>Ortaça</b></u></div>
+          <div class="col-sm-3"><u><b>Rugsatly</b></u></div>
+          <div class="col-sm-3"><u><b>Geçen/Geçmedik</b></u></div>
+
+          <% @midterms_all = Midterm.where(:contract_id => Contract.where(:student_id => @id_array, :season_id => @group.season_id, :group_id => @group.id)) %>
+          <% @midterms_1 = Midterm.where(:contract_id => Contract.where(:student_id => @id_array, :season_id => @group.season_id, :group_id => @group.id), :midtermOrderNo => 1) %>
+          <% @midterms_2 = Midterm.where(:contract_id => Contract.where(:student_id => @id_array, :season_id => @group.season_id, :group_id => @group.id), :midtermOrderNo => 2) %>
+          <% @midterms_3 = Midterm.where(:contract_id => Contract.where(:student_id => @id_array, :season_id => @group.season_id, :group_id => @group.id), :midtermOrderNo => 3) %>
+          <% @midterms_4 = Midterm.where(:contract_id => Contract.where(:student_id => @id_array, :season_id => @group.season_id, :group_id => @group.id), :midtermOrderNo => 4) %>
+
+
+
+          <br><br>
+          <% @rugsatly_1 = @midterms_1.where(:isReleasedFrom => true) %>
+          <% @passers = @midterms_1.where("\"midtermPoints\" >= ?", 50) %>
+          <% @failers = @midterms_1.count - @passers.count %>
+
+          <% if @midterms_1.count > 0 %>
+              <div>
+                <div class="col-sm-3"><i>Arasynag-I</i></div>
+                <div class="col-sm-3"><i> &nbsp;&nbsp;&nbsp; <%= @midterms_1.average(:midtermPoints).round(2) %></i></div>
+                <div class="col-sm-3"><i> &nbsp;&nbsp;&nbsp; <%= @rugsatly_1.count %> </i></div>
+                <div class="col-sm-3"><i> <%= @passers.count %> / <%= @failers %></i></div>
+              </div>
+          <% end %>
+
+          <br><br>
+          <% @rugsatly_2 = @midterms_2.where(:isReleasedFrom => true) %>
+          <% @passers = @midterms_2.where("\"midtermPoints\" >= ?", 50) %>
+          <% @failers = @midterms_2.count - @passers.count %>
+
+          <% if @midterms_2.count > 0 %>
+              <div>
+                <div class="col-sm-3"><i>Arasynag-II</i></div>
+                <div class="col-sm-3"><i> &nbsp;&nbsp;&nbsp; <%= @midterms_2.average(:midtermPoints).round(2) %></i></div>
+                <div class="col-sm-3"><i> &nbsp;&nbsp;&nbsp;  <%= @rugsatly_2.count %> </i></div>
+                <div class="col-sm-3"><i> <%= @passers.count %> / <%= @failers %></i></div>
+              </div>
+          <% end %>
+
+          <br><br>
+          <% @rugsatly_3 = @midterms_3.where(:isReleasedFrom => true) %>
+          <% @passers = @midterms_3.where("\"midtermPoints\" >= ?", 50) %>
+          <% @failers = @midterms_3.count - @passers.count %>
+
+          <% if @midterms_3.count > 0 %>
+              <div>
+                <div class="col-sm-3"><i>Arasynag-III</i></div>
+                <div class="col-sm-3"><i> &nbsp;&nbsp;&nbsp; <%= @midterms_3.average(:midtermPoints).round(2) %></i></div>
+                <div class="col-sm-3"><i> &nbsp;&nbsp;&nbsp; <%= @rugsatly_3.count %> </i></div>
+                <div class="col-sm-3"><i> <%= @passers.count %> / <%= @failers %></i></div>
+              </div>
+          <% end %>
+
+          <br><br>
+          <% @rugsatly_4 = @midterms_4.where(:isReleasedFrom => true) %>
+          <% @passers = @midterms_4.where("\"midtermPoints\" >= ?", 50) %>
+          <% @failers = @midterms_4.count - @passers.count %>
+
+          <% if @midterms_4.count > 0 %>
+              <div>
+                <div class="col-sm-3"><i>Arasynag-VI</i></div>
+                <div class="col-sm-3"><i> &nbsp;&nbsp;&nbsp; <%= (@midterms_4.average(:midtermPoints)) ? @midterms_4.average(:midtermPoints).round(2) : "" %></i></div>
+                <div class="col-sm-3"><i> &nbsp;&nbsp;&nbsp; <%= @rugsatly_4.count %> </i></div>
+                <div class="col-sm-3"><i> <%= @passers.count %> / <%= @failers %></i></div>
+              </div>
+          <% end %>
+
+          <br><br>
+          <% @final_ex = Final.where(:contract_id => Contract.where(:student_id => @id_array, :season_id => @group.season_id, :group_id => @group.id)) %>
+          <% @passers = @final_ex.where("\"finalPoints\" >= ?", 50) %>
+          <% @failers = @final_ex.count - @passers.count %>
+
+          <% if @final_ex.count > 0 %>
+          <div>
+            <div class="col-sm-3"><i>Final</i></div>
+            <div class="col-sm-3"><i> &nbsp;&nbsp;&nbsp; <%= @final_ex.average(:finalPoints).round(2) %></i></div>
+            <div class="col-sm-3"><i> &nbsp;&nbsp;&nbsp;  </i></div>
+            <div class="col-sm-3"><i> <%= @passers.count %> / <%= @failers %></i></div>
+            <br><br>
+          </div>
+          <% end %>
+
+          <br><br><br>
+
+
+        </div>
+
+      </div>
+
+
+
+
+
+    </div>
+
+<!-- #########################################  DERS GÜNLERI MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+<div class="col-lg-5">
+
+<div class="ibox  float-e-margins">
+  <div class="ibox-title" style="border-color: green">
+    <h5>DERS GÜNLERI </h5>
+    <div class="ibox-tools">
+      <a class="collapse-link">
+        <i class="fa fa-chevron-up" style="color: green"></i>
+      </a>
+    </div>
+  </div>
+
+<div class="ibox-content" style="border-color: green">
+
+<!-- #########################################  DERS GÜNLERI MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+<!-- #########################################  DERS GÜNLERI MAGLUMATLARY - START ############################# -->
+
+<!-- <h3>Ders Günleri</h3> -->
+
+
+<div class="col-sm-4"><u><b>Otagy</b></u></div>
+<div class="col-sm-4"><u><b>Hepdäniň güni</b></u></div>
+<div class="col-sm-4"><u><b>Wagty</b></u></div>
+<br><br>
+
+<% @groupTimetable.order(:weekday).each do |gt| %>
+  <div>
+  <div class="col-sm-4">
+    <i>
+      <% if (check_restrictions('rooms', 'show') && gt.room) %>
+        <%= link_to gt.room.roomFullTitle, gt.room %>
+      <% else %>
+        <%= gt.room.roomFullTitle %>
+      <% end %>
+    </i>
+  </div>
+  <div class="col-sm-4"><i> &nbsp;&nbsp;&nbsp; <%= gt.weekday %></i></div>
+  <div class="col-sm-4"><i><%= @group.lesson_time.lessonTimeTitle %></i></div>
+  <br><br>
+  </div>
+<% end %>
+
+  </div>
+</div>
+</div>
+
+<!-- #########################################  DERS GÜNLERI MAGLUMATLARY - END ############################# -->
+
+
+
+<!-- #########################################  STATISTIKI MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+<div class="col-lg-5">
+
+  <div class="ibox  float-e-margins">
+    <div class="ibox-title" style="border-color: orange">
+      <h5>TOPAR BARADA STATISTIKA </h5>
+      <div class="ibox-tools">
+        <a class="collapse-link">
+          <i class="fa fa-chevron-up" style="color: orange"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="ibox-content" style="border-color: orange">
+
+      <!-- #########################################  STATISTIKI MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+      <!-- #########################################  STATISTIKI MAGLUMATLARY - START ############################# -->
+
+      <!-- <h3>STATISTIKA</h3> -->
+      <div>
+      <div class="col-sm-8"><i>Diňleýji sany :</i></div>
+      <div class="col-sm-4"><i><%= @current_group_contracts.count %></i></div>
+      <br><br>
+      <div class="col-sm-8"><i>Erkek :</i></div>
+      <div class="col-sm-4"><i><%= @male.count  %></i></div>
+      <br><br>
+      <div class="col-sm-8"><i>Zenan :</i></div>
+      <div class="col-sm-4"><i><%= @female.count  %></i></div>
+      <br>
+      <hr>
+      <div class="col-sm-8"><i>Umumy Ýaş Ort :</i></div>
+      <div class="col-sm-4"><i><%= @general_age_average.inspect  %></i></div>
+      <br><br>
+      <div class="col-sm-8"><i>Erkek Ýaş Ort :</i></div>
+      <div class="col-sm-4"><i><%= @male_age_average.inspect  %></i></div>
+      <br><br>
+      <div class="col-sm-8"><i>Zenan Ýaş Ort :</i></div>
+      <div class="col-sm-4"><i><%= @female_age_average.inspect  %></i></div>
+      <br>
+      <hr>
+
+    <% if (@prev_contracts_list) %>
+        <div class="col-sm-8"><i>Geçen Tapgyrdan Dowam Edenler :</i></div>
+        <div class="col-sm-4"><i><%= @prev_contracts_list.count  %></i></div>
+        <br><br>
+        <div class="col-sm-8"><i>Täze Ýazylanlar :</i></div>
+        <div class="col-sm-4"><i><%= (@current_group_contracts.count-@prev_contracts_list.count)  %></i></div>
+        <br><hr>
+    <% end %>
+
+    <% if (@continuing_contracts_list) %>
+        <div class="col-sm-8"><i>Indiki Tapgyra Dowam Edenler :</i></div>
+        <div class="col-sm-4"><i><%= @continuing_contracts_list.count  %></i></div>
+        <br><br>
+        <div class="col-sm-8"><i>Indiki Tapgyra Dowam Etmedikler :</i></div>
+        <div class="col-sm-4"><i><%= (@current_group_contracts.count-@continuing_contracts_list.count)  %></i></div>
+        <br>
+    <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- #########################################  STATISTIKI MAGLUMATLARY - END ############################# -->
+
+
+
+
+    <!-- #########################################  SANAWLAR PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+    <div class="col-lg-5">
+
+      <div class="ibox  float-e-margins">
+        <div class="ibox-title" style="border-color: navy">
+          <h5>SANAWLAR </h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up" style="color: navy"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="ibox-content" style="border-color: navy">
+
+          <!-- #########################################  SANAWLAR PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+          <!-- #########################################  SANAWLAR - START ############################# -->
+
+          <!-- <h3>STATISTIKA</h3> -->
+          <%= link_to 'Maglumat', @group.id.to_s+'/info_list', :class => "btn btn-outline btn-primary", :target => "_blank" %>
+          <%= link_to 'Gatnaşyk Sanawy', @group.id.to_s+'/attendance_list', :class => "btn btn-outline btn-primary", :target => "_blank" %>
+
+          <!--  Diňe şu wagtky tapgyr bolsa we bu topar mugallymyň öz topary bolsa gatnaşyk hasaba alyp bilýär. -->
+          <% if (@group.teacher) %>
+              <% if ((@group.season_id == session[:active_season_id]) && (@group.teacher.user) && (@group.teacher.user.id == current_user.id) || (current_user.role.name == "admin")) %>
+                <%= link_to 'Gatnaşygy Hasaba Al', new_attendance_sheet_path(:group_id => @group.id), :class => "btn btn-outline btn-primary", :target => "_blank" %>
+                <%= link_to 'Gatnaşyk Jetweli', @group.id.to_s+'/attendance_report', :class => "btn btn-outline btn-primary", :target => "_blank" %>
+                <%= link_to 'Kitap Ýaryşy', '/book_contest_participants/book_contest_register?gid='+@group.id.to_s, :class => "btn btn-outline btn-primary", :target => "_blank" %>
+              <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- #########################################  SANAWLAR - END ############################# -->
+
+
+
+
+    <!-- #########################################  DIŇLEÝJILER PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+    <div class="col-lg-12">
+
+      <div class="ibox collapsed">
+        <div class="ibox-title" style="border-color: #87cefa">
+          <h5>Diňleýjiler Sanawy</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up" style="color: #87cefa"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="ibox-content" style="border-color: #87cefa">
+
+          <!-- #########################################  DIŇLEÝJILER PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+          <!-- #########################################  DIŇLEÝJILER - START ############################# -->
+
+
+          <div class="tabs-container">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                  <a data-toggle="tab" href="#tab-students"> Diňleýjiler  </a>
+                </li>
+              <li class="">
+                <a data-toggle="tab" href="#tab-students-list"> Maglumat  </a>
+              </li>
+
+            </ul>
+            <div class="tab-content">
+
+
+                  <div id="tab-students" class="tab-pane active">
+
+                    <div class="panel-body">
+
+                      <!-- <h3>DIŇLEÝJILER</h3> -->
+
+                      <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example" >
+                          <thead>
+                          <tr>
+                            <th>Suraty</th>
+                            <th>Ady</th>
+                            <th>Familiýasy</th>
+                            <th>Atasynyň Ady</th>
+                            <th><i class="fa fa-ambulance"></i></th>
+                            <th>Milleti</th>
+                            <th>Arasynaglary</th>
+                            <th>Doglan Senesi</th>
+                            <th>Ýaşy</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+
+                          <% @male.each do |student| %>
+                              <tr class="gradeA">
+
+                                <td>
+                                  <% if !student.imageUrl.blank? %>
+                                      <%= image_tag "/uploads/images/"+student.imageUrl, :width => 100, :'data-toggle' => "modal", :'data-target' => "#myModal"+student.id.to_s %>
+                                  <% else %>
+                                      <%= image_tag "/uploads/images/no_photo_6.png", width: 100 %>
+                                  <% end %>
+
+                                  <!-- Modal Window   -->
+
+                                  <div class="modal inmodal" id="myModal<%= student.id.to_s %>" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                      <div class="modal-content animated fadeInDown">
+                                        <div class="modal-header">
+                                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+                                          <h4 class="modal-title"><%= student.fName.to_s+" "+student.lName.to_s+" "+student.patronymic.to_s %></h4>
+
+                                        </div>
+                                        <div class="modal-body">
+                                          <% if !student.imageUrl.blank? %>
+                                              <%= image_tag "/uploads/images/"+student.imageUrl, :width => 500 %>
+                                          <% else %>
+                                              <%= image_tag "/uploads/images/no_photo_6.png", width: 100 %>
+                                          <% end %>
+
+                                        </div>
+                                        <!--
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                                          <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                          -->
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                </td>
+                                <td><%= link_to student.fName, student %></td>
+                                <td><%= link_to student.lName, student %></td>
+                                <td><%= link_to student.patronymic, student %></td>
+                                <td>
+                                  <% if (student.diseaseNotes.blank?) %>
+                                      <i class="fa fa-times" style="color: red"></i>
+                                  <% else %>
+                                      <i class="fa fa-check" style="color: lawngreen"></i>
+                                  <% end %>
+                                </td>
+                                <td><%= student.nationality.nationalityName %></td>
+                                <td>
+                                  <% @midterms = Midterm.where(:contract_id => Contract.where(:student_id => student.id, :season_id => @group.season_id, :group_id => @group.id)).order(:midtermOrderNo) %>
+                                  <% if @midterms.count %>
+                                      <% @midterms.each do |mdtrm| %>
+                                          <%= link_to mdtrm.midtermOrderNo.to_s+") "+((mdtrm.isReleasedFrom) ? "" : mdtrm.midtermPoints.to_s)+" "+((mdtrm.midtermNotes.blank?) ? "" : "("+mdtrm.midtermNotes.to_s+") -")+" (Rugs. : "+(mdtrm.isReleasedFrom ? "Hawa)" : "Ýok)"), mdtrm %>                                        <br>
+                                      <% end %>
+                                  <% end %>
+                                  <% @final_ex = Final.where(:contract_id => Contract.where(:student_id => student.id, :season_id => @group.season_id, :group_id => @group.id)).first() %>
+                                  <% if @final_ex %>
+                                      <% if (@final_ex.finalPoints >= 50) %>
+                                          <%= link_to "Final :"+@final_ex.finalPoints.to_s+" "+((@final_ex.finalNotes.blank?) ? "" : "("+@final_ex.finalNotes.to_s+") - "), @final_ex %>
+                                          <font color="#ff8c00"> Geçdi </font> <br>
+                                      <% else %>
+                                          <%= link_to "Final :"+@final_ex.finalPoints.to_s+" "+((@final_ex.finalNotes.blank?) ? "" : "("+@final_ex.finalNotes.to_s+") - "), @final_ex %>
+                                          <font color="red"> Geçmedi </font> <br>
+                                      <% end %>
+                                  <% else %>
+                                      Jemleýji Synaga Girmedi<br>
+                                  <% end %>
+                                  <%# if (student.gender)  %>
+                                      <%#= Student::GENDER_TYPES[1][0] %>
+                                  <%# else %>
+                                      <%#= Student::GENDER_TYPES[0][0] %>
+                                  <%# end %>
+                                </td>
+                                <td><%= student.birthDate.strftime("%d-%m-%Y") %></td>
+                                <td>
+                                  <% @age = Date.today.year-student.birthDate.year %>
+                                  <% @age -= 1 if Date.today < student.birthDate + @age.years %>
+                                  <%= @age %>
+                                </td>
+                                <!--<td><div style="float: right">
+                                  <% link_to "Giňişleýin", student, :class => "btn btn-success" %>
+                                  <% link_to "Üýtget", edit_student_path(student), :class => "btn btn-warning" %>
+                                  <% link_to "Boz", student, method: :delete, data: { confirm: "Are you sure ?" }, :class => "btn btn-danger" %>
+                                </div></td> -->
+
+                              </tr>
+                          <% end %>
+
+                          <% @female.each do |student| %>
+                              <tr class="gradeA">
+
+                                <td>
+
+                                  <% if !student.imageUrl.blank? %>
+                                      <%= image_tag "/uploads/images/"+student.imageUrl, :width => 100, :'data-toggle' => "modal", :'data-target' => "#myModal"+student.id.to_s %>
+                                  <% else %>
+                                      <%= image_tag "/uploads/images/no_photo_6.png", width: 100 %>
+                                  <% end %>
+
+                                  <!-- Modal Window   -->
+
+                                  <div class="modal inmodal" id="myModal<%= student.id.to_s %>" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                      <div class="modal-content animated fadeInDown">
+                                        <div class="modal-header">
+                                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+                                          <h4 class="modal-title"><%= student.fName.to_s+" "+student.lName.to_s+" "+student.patronymic.to_s %></h4>
+
+                                        </div>
+                                        <div class="modal-body">
+                                          <% if !student.imageUrl.blank? %>
+                                              <%= image_tag "/uploads/images/"+student.imageUrl, :width => 500 %>
+                                          <% else %>
+                                              <%= image_tag "/uploads/images/no_photo_6.png", width: 100 %>
+                                          <% end %>
+
+                                        </div>
+                                        <!--
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                                          <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                          -->
+                                      </div>
+                                    </div>
+                                  </div>
+                                </td>
+
+                                <td><%= link_to student.fName, student %></td>
+                                <td><%= link_to student.lName, student %></td>
+                                <td><%= link_to student.patronymic, student %></td>
+                                <td>
+                                  <% if (student.diseaseNotes.blank?) %>
+                                      <i class="fa fa-times" style="color: red"></i>
+                                  <% else %>
+                                      <i class="fa fa-check" style="color: lawngreen"></i>
+                                  <% end %>
+                                </td>
+                                <td><%= student.nationality.nationalityName %></td>
+                                <td>
+                                  <% @midterms = Midterm.where(:contract_id => Contract.where(:student_id => student.id, :season_id => @group.season_id, :group_id => @group.id)).order(:midtermOrderNo) %>
+                                  <% if @midterms.count %>
+                                      <% @midterms.each do |mdtrm| %>
+                                          <%= link_to mdtrm.midtermOrderNo.to_s+") "+((mdtrm.isReleasedFrom) ? "" : mdtrm.midtermPoints.to_s)+" "+((mdtrm.midtermNotes.blank?) ? "" : "("+mdtrm.midtermNotes.to_s+") -")+" (Rugs. : "+(mdtrm.isReleasedFrom ? "Hawa)" : "Ýok)"), mdtrm %>                                        <br>
+                                      <% end %>
+                                  <% end %>
+                                  <% @final_ex = Final.where(:contract_id => Contract.where(:student_id => student.id, :season_id => @group.season_id, :group_id => @group.id)).first() %>
+                                  <% if @final_ex %>
+                                      <% if (@final_ex.finalPoints >= 50) %>
+                                        <%= link_to "Final :"+@final_ex.finalPoints.to_s+" "+((@final_ex.finalNotes.blank?) ? "" : "("+@final_ex.finalNotes.to_s+") - "), @final_ex %>
+                                        <font color="#ff8c00"> Geçdi </font> <br>
+                                      <% else %>
+                                          <%= link_to "Final :"+@final_ex.finalPoints.to_s+" "+((@final_ex.finalNotes.blank?) ? "" : "("+@final_ex.finalNotes.to_s+") - "), @final_ex %>
+                                          <font color="red"> Geçmedi </font> <br>
+                                      <% end %>
+                                  <% else %>
+                                      Jemleýji Synaga Girmedi<br>
+                                  <% end %>
+                                  <%# if (student.gender)  %>
+                                  <%#= Student::GENDER_TYPES[1][0] %>
+                                  <%# else %>
+                                  <%#= Student::GENDER_TYPES[0][0] %>
+                                  <%# end %>
+                                </td>
+                                <td><%= student.birthDate.strftime("%d-%m-%Y") %></td>
+                                <td>
+                                  <% @age = Date.today.year-student.birthDate.year %>
+                                  <% @age -= 1 if Date.today < student.birthDate + @age.years %>
+                                  <%= @age %>
+                                </td>
+                                <!-- <td><div style="float: right">
+                                  <%= link_to "Giňişleýin", student, :class => "btn btn-success" %>
+                                  <%= link_to "Üýtget", edit_student_path(student), :class => "btn btn-warning" %>
+                                  <% link_to "Boz", student, method: :delete, data: { confirm: "Are you sure ?" }, :class => "btn btn-danger" %>
+                                </div></td> -->
+
+                              </tr>
+                          <% end %>
+
+                          </tbody>
+                          <tfoot>
+                          <tr>
+                            <th>Suraty</th>
+                            <th>Ady</th>
+                            <th>Familiýasy</th>
+                            <th>Atasynyň Ady</th>
+                            <th><i class="fa fa-ambulance"></i></th>
+                            <th>Milleti</th>
+                            <th>Arasynaglary</th>
+                            <th>Doglan Senesi</th>
+                            <th>Ýaşy</th>
+                          </tr>
+                          </tfoot>
+                        </table>
+                      </div>
+
+                    </div>
+                  </div>
+
+
+                  <div id="tab-students-list" class="tab-pane">
+
+                    <div class="panel-body">
+
+                      <!-- <h3>SANAW</h3> -->
+
+                      <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example" >
+                          <thead>
+                          <tr>
+                            <th>T/b</th>
+                            <th>Ady</th>
+                            <th>Familiýasy</th>
+                            <th>Atasynyň Ady</th>
+                            <th>Mobil Belgisi</th>
+                            <th>Goşmaça Belgisi</th>
+                            <th>Öý Belgisi</th>
+                          </tr>
+
+
+
+                          </thead>
+                          <tbody>
+
+
+                          <% @num = 0 %>
+                          <% @group_students.each do |student| %>
+                              <tr class="gradeA">
+
+                                <td><%= @num = @num+1 %></td>
+                                <td><%= student.fName %></td>
+                                <td><%= student.lName %></td>
+                                <td><%= student.patronymic %></td>
+                                <td><%= student.mobilePhone %></td>
+                                <td><%= student.smsMobilePhone %></td>
+                                <td><%= student.homePhone %></td>
+                              </tr>
+                          <% end %>
+
+                          </tbody>
+                          <tfoot>
+                          <tr>
+                            <th>T/b</th>
+                            <th>Ady</th>
+                            <th>Familiýasy</th>
+                            <th>Atasynyň Ady</th>
+                            <th>Mobil Belgisi</th>
+                            <th>Goşmaça Belgisi</th>
+                            <th>Öý Belgisi</th>
+                          </tr>
+                          </tfoot>
+                        </table>
+                      </div>
+
+                    </div>
+                  </div>
+
+
+            </div>
+
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+    <!-- #########################################  DIŇLEÝJILER - END ############################# -->
+
+
+    <!-- #########################################  INDIKI TAPGYRA DOWAM EDÝÄN DIŇLEÝJILER PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+    <div class="col-lg-12">
+
+    <div class="ibox collapsed">
+    <div class="ibox-title" style="border-color: #87cefa">
+      <h5>Indiki Tapgyra Dowam Edýän Diňleýjiler </h5>
+      <div class="ibox-tools">
+        <a class="collapse-link">
+          <i class="fa fa-chevron-up" style="color: #87cefa"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="ibox-content" style="border-color: #87cefa">
+
+    <!-- #########################################  INDIKI TAPGYRA DOWAM EDÝÄN DIŇLEÝJILER PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+    <!-- #########################################  INDIKI TAPGYRA DOWAM EDÝÄN DIŇLEÝJILER - START ############################# -->
+
+    <% if (@continuing_contracts_list) %>
+
+    <div class="tabs-container">
+    <ul class="nav nav-tabs">
+      <li class="active">
+        <a data-toggle="tab" href="#tab-cont-students"> Diňleýjiler  </a>
+      </li>
+      <li class="">
+        <a data-toggle="tab" href="#tab-cont-students-list"> Maglumat  </a>
+      </li>
+
+    </ul>
+    <div class="tab-content">
+
+
+    <div id="tab-cont-students" class="tab-pane active">
+
+      <div class="panel-body">
+
+        <!-- <h3>DIŇLEÝJILER</h3> -->
+
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered table-hover dataTables-example" >
+            <thead>
+            <tr>
+              <th>Suraty</th>
+              <th>Ady</th>
+              <th>Familiýasy</th>
+              <th>Atasynyň Ady</th>
+              <th><i class="fa fa-ambulance"></i></th>
+              <th>Topary</th>
+              <th>Mugallymy</th>
+              <th>Wagty</th>
+            </tr>
+            </thead>
+            <tbody>
+
+
+            <% @continuing_contracts_list.each do |contr| %>
+                <tr class="gradeA">
+
+                  <td>
+                    <% if !contr.student.imageUrl.blank? %>
+                        <%= image_tag "/uploads/images/"+contr.student.imageUrl, :width => 100, :'data-toggle' => "modal", :'data-target' => "#myModal"+contr.student.id.to_s %>
+                    <% else %>
+                        <%= image_tag "/uploads/images/no_photo_6.png", width: 100 %>
+                    <% end %>
+
+                    <!-- Modal Window   -->
+
+                    <div class="modal inmodal" id="myModal<%= contr.student.id.to_s %>" tabindex="-1" role="dialog" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content animated fadeInDown">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+                            <h4 class="modal-title"><%= contr.student.fName.to_s+" "+contr.student.lName.to_s+" "+contr.student.patronymic.to_s %></h4>
+
+                          </div>
+                          <div class="modal-body">
+                            <% if !contr.student.imageUrl.blank? %>
+                                <%= image_tag "/uploads/images/"+contr.student.imageUrl, :width => 500 %>
+                            <% else %>
+                                <%= image_tag "/uploads/images/no_photo_6.png", width: 100 %>
+                            <% end %>
+
+                          </div>
+                          <!--
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                          </div>
+                            -->
+                        </div>
+                      </div>
+                    </div>
+
+                  </td>
+                  <td><%= link_to contr.student.fName, contr.student %></td>
+                  <td><%= link_to contr.student.lName, contr.student %></td>
+                  <td><%= link_to contr.student.patronymic, contr.student %></td>
+                  <td>
+                    <% if (contr.student.diseaseNotes.blank?) %>
+                        <i class="fa fa-times" style="color: red"></i>
+                    <% else %>
+                        <i class="fa fa-check" style="color: lawngreen"></i>
+                    <% end %>
+                  </td>
+                  <td>
+                    <% if (current_user.role.name == "teacher") %>
+                        <%= contr.group.groupTitle %>
+                    <% else %>
+                        <%= link_to contr.group.groupTitle, contr.group %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <% if (current_user.role.name == "teacher") %>
+                        <% if !(contr.group.teacher.blank?) %>
+                            <%= contr.group.teacher.teacherFName+" "+contr.group.teacher.teacherLName.first+"." %>
+                        <% end %>
+                    <% else %>
+                        <% if !(contr.group.teacher.blank?) %>
+                            <%= link_to contr.group.teacher.teacherFName+" "+contr.group.teacher.teacherLName.first+".", contr.group.teacher %>
+                        <% end %>
+                    <% end %>
+                  </td>
+                  <td><%= contr.group.lesson_time.lessonTimeTitle %></td>
+                  <!-- <td><div style="float: right">
+                    <%= link_to "Giňişleýin", contr.student, :class => "btn btn-success" %>
+                    <%= link_to "Üýtget", edit_student_path(contr.student), :class => "btn btn-warning" %>
+                    <% link_to "Boz", contr.student, method: :delete, data: { confirm: "Are you sure ?" }, :class => "btn btn-danger" %>
+                  </div></td> -->
+
+                </tr>
+            <% end %>
+
+            </tbody>
+            <tfoot>
+            <tr>
+              <th>Suraty</th>
+              <th>Ady</th>
+              <th>Familiýasy</th>
+              <th>Atasynyň Ady</th>
+              <th><i class="fa fa-ambulance"></i></th>
+              <th>Topary</th>
+              <th>Mugallymy</th>
+              <th>Wagty</th>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div id="tab-cont-students-list" class="tab-pane">
+
+      <div class="panel-body">
+
+        <!-- <h3>SANAW</h3> -->
+
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered table-hover dataTables-example" >
+            <thead>
+            <tr>
+              <th>T/b</th>
+              <th>Ady</th>
+              <th>Familiýasy</th>
+              <th>Atasynyň Ady</th>
+              <th>Topary</th>
+              <th>Mugallymy</th>
+              <th>Wagty</th>
+            </tr>
+
+
+
+            </thead>
+            <tbody>
+
+
+            <% @num = 0 %>
+
+            <% @continuing_contracts_list.each do |contr| %>
+                <tr class="gradeA">
+
+                  <td><%= @num = @num+1 %></td>
+                  <td><%= contr.student.fName %></td>
+                  <td><%= contr.student.lName %></td>
+                  <td><%= contr.student.patronymic %></td>
+                  <td><%= contr.group.groupTitle %></td>
+                  <td>
+                    <% if (contr.group.teacher) %>
+                        <%= contr.group.teacher.teacherFName+" "+contr.group.teacher.teacherFName.first+"." %>
+                    <% end %>
+                  </td>
+                  <td><%= contr.group.lesson_time.lessonTimeTitle %></td>
+                </tr>
+            <% end %>
+
+            </tbody>
+            <tfoot>
+            <tr>
+              <th>T/b</th>
+              <th>Ady</th>
+              <th>Familiýasy</th>
+              <th>Atasynyň Ady</th>
+              <th>Topary</th>
+              <th>Mugallymy</th>
+              <th>Wagty</th>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+
+    </div>
+
+    </div>
+
+    <% else %>
+      Bu Topardan Indiki Tapgyra Dowam Edýän Diňleýji Ýok ...
+    <% end %>
+
+
+    </div>
+    </div>
+
+
+    </div>
+
+    <!-- #########################################  INDIKI TAPGYRA DOWAM EDÝÄN DIŇLEÝJILER DIŇLEÝJILER - END ############################# -->
+
+
+
+
+    <!-- #########################################  GEÇEN TAPGYRDAN DOWAM EDÝÄN DIŇLEÝJILER PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+    <div class="col-lg-12">
+
+    <div class="ibox collapsed">
+      <div class="ibox-title" style="border-color: #87cefa">
+        <h5>Geçen Tapgyrdan Dowam Edýän Diňleýjiler </h5>
+        <div class="ibox-tools">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up" style="color: #87cefa"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="ibox-content" style="border-color: #87cefa">
+
+        <!-- #########################################  GEÇEN TAPGYRDAN DOWAM EDÝÄN DIŇLEÝJILER PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+        <!-- #########################################  GEÇEN TAPGYRDAN DOWAM EDÝÄN DIŇLEÝJILER - START ############################# -->
+
+        <% if (@prev_contracts_list) %>
+
+            <div class="tabs-container">
+              <ul class="nav nav-tabs">
+                <li class="active">
+                  <a data-toggle="tab" href="#tab-from-prev-students"> Diňleýjiler  </a>
+                </li>
+                <li class="">
+                  <a data-toggle="tab" href="#tab-from-prev-students-list"> Maglumat  </a>
+                </li>
+
+              </ul>
+              <div class="tab-content">
+
+
+                <div id="tab-from-prev-students" class="tab-pane active">
+
+                  <div class="panel-body">
+
+                    <!-- <h3>DIŇLEÝJILER</h3> -->
+
+                    <div class="table-responsive">
+                      <table class="table table-striped table-bordered table-hover dataTables-example" >
+                        <thead>
+                        <tr>
+                          <th>Suraty</th>
+                          <th>Ady</th>
+                          <th>Familiýasy</th>
+                          <th>Atasynyň Ady</th>
+                          <th><i class="fa fa-ambulance"></i></th>
+                          <th>Topary</th>
+                          <th>Mugallymy</th>
+                          <th>Wagty</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+
+                        <% @prev_contracts_list.each do |contr| %>
+                            <tr class="gradeA">
+
+                              <td>
+                                <% if !contr.student.imageUrl.blank? %>
+                                    <%= image_tag "/uploads/images/"+contr.student.imageUrl, :width => 100, :'data-toggle' => "modal", :'data-target' => "#myModal"+contr.student.id.to_s %>
+                                <% else %>
+                                    <%= image_tag "/uploads/images/no_photo_6.png", width: 100 %>
+                                <% end %>
+
+                                <!-- Modal Window   -->
+
+                                <div class="modal inmodal" id="myModal<%= contr.student.id.to_s %>" tabindex="-1" role="dialog" aria-hidden="true">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content animated fadeInDown">
+                                      <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+                                        <h4 class="modal-title"><%= contr.student.fName.to_s+" "+contr.student.lName.to_s+" "+contr.student.patronymic.to_s %></h4>
+
+                                      </div>
+                                      <div class="modal-body">
+                                        <% if !contr.student.imageUrl.blank? %>
+                                            <%= image_tag "/uploads/images/"+contr.student.imageUrl, :width => 500 %>
+                                        <% else %>
+                                            <%= image_tag "/uploads/images/no_photo_6.png", width: 100 %>
+                                        <% end %>
+
+                                      </div>
+                                      <!--
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                      </div>
+                                        -->
+                                    </div>
+                                  </div>
+                                </div>
+
+                              </td>
+                              <td><%= link_to contr.student.fName, contr.student %></td>
+                              <td><%= link_to contr.student.lName, contr.student %></td>
+                              <td><%= link_to contr.student.patronymic, contr.student %></td>
+                              <td>
+                                <% if (contr.student.diseaseNotes.blank?) %>
+                                    <i class="fa fa-times" style="color: red"></i>
+                                <% else %>
+                                    <i class="fa fa-check" style="color: lawngreen"></i>
+                                <% end %>
+                              </td>
+                              <td>
+                                <% if (current_user.role.name == "teacher") %>
+                                    <%= contr.group.groupTitle %>
+                                <% else %>
+                                    <%= link_to contr.group.groupTitle, contr.group %>
+                                <% end %>
+                              </td>
+                              <td>
+                                <% if (current_user.role.name == "teacher") %>
+                                    <% if !(contr.group.teacher.blank?) %>
+                                        <%= contr.group.teacher.teacherFName+" "+contr.group.teacher.teacherLName.first+"." %>
+                                    <% end %>
+                                <% else %>
+                                    <% if !(contr.group.teacher.blank?) %>
+                                        <%= link_to contr.group.teacher.teacherFName+" "+contr.group.teacher.teacherLName.first+".", contr.group.teacher %>
+                                    <% end %>
+                                <% end %>
+                              </td>
+                              <td><%= contr.group.lesson_time.lessonTimeTitle %></td>
+                              <!-- <td><div style="float: right">
+                    <%= link_to "Giňişleýin", contr.student, :class => "btn btn-success" %>
+                    <%= link_to "Üýtget", edit_student_path(contr.student), :class => "btn btn-warning" %>
+                    <% link_to "Boz", contr.student, method: :delete, data: { confirm: "Are you sure ?" }, :class => "btn btn-danger" %>
+                  </div></td> -->
+
+                            </tr>
+                        <% end %>
+
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                          <th>Suraty</th>
+                          <th>Ady</th>
+                          <th>Familiýasy</th>
+                          <th>Atasynyň Ady</th>
+                          <th><i class="fa fa-ambulance"></i></th>
+                          <th>Topary</th>
+                          <th>Mugallymy</th>
+                          <th>Wagty</th>
+                        </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+
+                  </div>
+                </div>
+
+
+                <div id="tab-from-prev-students-list" class="tab-pane">
+
+                  <div class="panel-body">
+
+                    <!-- <h3>SANAW</h3> -->
+
+                    <div class="table-responsive">
+                      <table class="table table-striped table-bordered table-hover dataTables-example" >
+                        <thead>
+                        <tr>
+                          <th>T/b</th>
+                          <th>Ady</th>
+                          <th>Familiýasy</th>
+                          <th>Atasynyň Ady</th>
+                          <th>Topary</th>
+                          <th>Mugallymy</th>
+                          <th>Wagty</th>
+                        </tr>
+
+
+
+                        </thead>
+                        <tbody>
+
+
+                        <% @num = 0 %>
+
+                        <% @prev_contracts_list.each do |contr| %>
+                            <tr class="gradeA">
+
+                              <td><%= @num = @num+1 %></td>
+                              <td><%= contr.student.fName %></td>
+                              <td><%= contr.student.lName %></td>
+                              <td><%= contr.student.patronymic %></td>
+                              <td><%= contr.group.groupTitle %></td>
+                              <td>
+                                <% if !(contr.group.teacher.blank?) %>
+                                  <%= contr.group.teacher.teacherFName+" "+contr.group.teacher.teacherFName.first+"." %>
+                                <% end %>
+                              </td>
+                              <td><%= contr.group.lesson_time.lessonTimeTitle %></td>
+                            </tr>
+                        <% end %>
+
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                          <th>T/b</th>
+                          <th>Ady</th>
+                          <th>Familiýasy</th>
+                          <th>Atasynyň Ady</th>
+                          <th>Topary</th>
+                          <th>Mugallymy</th>
+                          <th>Wagty</th>
+                        </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+
+                  </div>
+                </div>
+
+
+              </div>
+
+            </div>
+
+        <% else %>
+            Bu Toparda Geçen Tapgyrdan Gelen Diňleýji Ýok ...
+        <% end %>
+
+
+      </div>
+    </div>
+
+
+    </div>
+
+    <!-- #########################################  GEÇEN TAPGYRDAN DOWAM EDÝÄN DIŇLEÝJILER - END ############################# -->
+  </div>
+</div>
+
+
+

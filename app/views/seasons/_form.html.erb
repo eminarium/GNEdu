@@ -1,0 +1,54 @@
+<%= form_for(@season) do |f| %>
+  <% if @season.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@season.errors.count, "error") %> prohibited this season from being saved:</h2>
+
+      <ul>
+      <% @season.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<div><label class="col-sm-4 control-label">Tertip Belgisi</label>
+  <div class="col-sm-8"><%= f.text_field :seasonNo, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Atlandyrylyşy</label>
+    <div class="col-sm-8"><%= f.text_field :seasonTitle, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Başlanýan Senesi</label>
+    <div class="col-sm-8"><%= f.date_select :seasonFromDate %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Tamamlanýan Senesi</label>
+    <div class="col-sm-8"><%= f.date_select :seasonToDate %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Soňky Gaýtarma Senesi</label>
+  <div class="col-sm-8"><%= f.date_select :return_deadline %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Bellikler</label>
+    <div class="col-sm-8"><%= f.text_area :notes, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div class="actions">
+    <%= f.submit "Kabul Et", :class => "btn btn-success" %>
+</div>
+
+<% end %>

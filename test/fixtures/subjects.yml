@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  subjectBaseName: MyString
+  subjectFullName: MyString
+  subjectShortName: MyString
+  subjectLevel: 1
+  subjectPrice: 1.5
+  minPassingPoints: 1.5
+  notes: MyText
+
+two:
+  subjectBaseName: MyString
+  subjectFullName: MyString
+  subjectShortName: MyString
+  subjectLevel: 1
+  subjectPrice: 1.5
+  minPassingPoints: 1.5
+  notes: MyText

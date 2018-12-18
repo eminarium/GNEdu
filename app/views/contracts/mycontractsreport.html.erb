@@ -1,0 +1,77 @@
+<html>
+<body>
+
+<div class="contract"><div class="contract-middle"><div class="contract-middle-inner">
+
+  <table style="float: left; border: 1px solid #000;letter-spacing: -0.008em; font-size: 1.3em" id="Order">
+    <tr>
+      <td>Hasaba Alyjy </td>
+      <td>&nbsp; : &nbsp;</td>
+      <td><i><%= current_user.userFName %>&nbsp; <%= current_user.userLName %></i></td>
+    </tr>
+    <tr>
+      <td>Senesi </td>
+      <td>&nbsp; : &nbsp;</td>
+      <td><i><%= params[:date] %></i></td>
+    </tr>
+    <tr>
+      <td>Jemi Täze şertnama Sany </td>
+      <td>&nbsp; : &nbsp;</td>
+      <td><i><%= params[:created_contracts_count] %></i></td>
+    </tr>
+    <tr>
+      <td>Jemi Üýtgedilen şertnama Sany </td>
+      <td>&nbsp; : &nbsp;</td>
+      <td><i><%= params[:updated_contracts_count] %></i></td>
+    </tr>
+    <tr>
+      <td>Gaýtarylan Şertnama Sany </td>
+      <td>&nbsp; : &nbsp;</td>
+      <td><i><%= params[:returned_contracts_count] %></i></td>
+    </tr>
+    <tr>
+      <td>Rezerw Şertnama Sany </td>
+      <td>&nbsp; : &nbsp;</td>
+      <td><i><%= params[:reserved_contracts_count] %></i></td>
+    </tr>
+    <tr>
+      <td>Kart Amally Şertnama Sany </td>
+      <td>&nbsp; : &nbsp;</td>
+      <td><i><%= params[:card_contracts_count] %></i></td>
+    </tr>
+    <tr>
+      <td>Jemi Pul Mukdary </td>
+      <td>&nbsp; : &nbsp;</td>
+      <td><i><%= params[:my_sum] %></i></td>
+    </tr>
+    <tr>
+      <td>Kart Amaly Pul Mukdary </td>
+      <td>&nbsp; : &nbsp;</td>
+      <td><i><%= params[:my_card_sum] %></i></td>
+    </tr>
+
+  </table>
+
+</div></div></div>
+
+
+<style>
+
+    @page {
+        size: A4 portrait;
+    }
+
+    @media print {
+        html, body{margin: 0 0 0 0; padding: 0 7 0 7;}
+        .contract{box-sizing: border-box; height: 100%; width: 100%; border: 1px solid transparent; page-break-after: always;}
+        .contract-middle{height: 100%; width: 100%; display: table;}
+        .contract-middle-inner{height: 100%; width: 100%; display: table-cell; vertical-align: top;}
+    }
+
+</style>
+
+</body>
+</html>
+
+
+

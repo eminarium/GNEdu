@@ -1,0 +1,83 @@
+<%#= render 'student_search_breadcrumb' %>
+
+<div class="wrapper wrapper-content animated fadeInRight ecommerce">
+  <div class="ibox-content m-b-sm border-bottom">
+    <div class="row">
+
+<%= form_tag search_contracts_path, :method => 'get', :id => "contracts_search" do %>
+
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label class="control-label" for="seasonContractNo">Şertnama #</label>
+      <%= text_field_tag :seasonContractNo, params[:seasonContractNo], placeholder:  "Şertnama #", :class => "form-control" %>
+    </div>
+  </div>
+
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label class="control-label" for="group_id">Okuw Topary</label>
+      <%= select_tag( "group_id", options_from_collection_for_select(@groups, "id", "groupTitle", :selected => @group), :prompt =>"Topary Saýlaň", :class => "form-control" ) %>
+    </div>
+  </div>
+
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label class="control-label" for="group_id">Ýörite Topary</label>
+      <%= select_tag( "special_group_id", options_from_collection_for_select(@special_groups, "id", "specialGroupTitle", :selected => @special_group), :prompt =>"Topary Saýlaň", :class => "form-control" ) %>
+    </div>
+  </div>
+
+  <br><br><br><br>
+
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label class="control-label" for="fName">Ady</label>
+      <%= text_field_tag :fName, params[:fName], placeholder:  "Ady", :class => "form-control" %>
+    </div>
+  </div>
+
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label class="control-label" for="lName">Familiýasy</label>
+      <%= text_field_tag :lName, params[:lName], placeholder:  "Familiýasy", :class => "form-control" %>
+    </div>
+  </div>
+
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label class="control-label" for="patronymic">Atasynyň Ady</label>
+      <%= text_field_tag :patronymic, params[:patronymic], placeholder:  "Atasynyň Ady", :class => "form-control" %>
+    </div>
+  </div>
+
+  <div class="col-sm-4">
+    <div class="form-group">
+      <%#= submit_tag "<i class='fa fa-search'></i> Gözle ".html_safe, :name => nil, class: "btn btn-success" %>
+      <%= submit_tag "Gözle ".html_safe, :name => nil, class: "btn btn-success" %>
+    </div>
+  </div>
+
+<% end %>
+
+    </div>
+  </div>
+</div>
+
+
+<div id="ads">
+  <%= render 'contractslist' %>
+</div>
+
+<script>
+    $(function () {
+        // Search form.
+        $('#contracts_search input').keyup(function () {
+            $.get($('#contracts_search').attr('action'), &crarr;
+            $('#contracts_search').serialize(), null, 'script');
+            return false;
+        });
+    });
+
+
+    $('#ads').html('<%= escape_javascript(render 'contractslist') %>');
+</script>

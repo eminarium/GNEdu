@@ -1,0 +1,107 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+
+    <div class="col-lg-5">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Awtor Maglumatlary</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+        <div class="ibox-content">
+          <h3>
+            Awtor Maglumatlary
+          </h3>
+          <br>
+
+
+          <p id="notice"><%= notice %></p>
+
+
+          <div><label class="col-sm-4 control-label">Ady</label>
+            <div class="col-sm-8"><i><%= @author.authorFName %></i></div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-4 control-label">Familiýasy</label>
+            <div class="col-sm-8"><i><%= @author.authorLName %></i></div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-4 control-label">Bellikler</label>
+            <div class="col-sm-8"><i><%= @author.notes %></i></div>
+          </div>
+
+          <br><br><br>
+
+          <%= link_to 'Üýtget', edit_author_path(@author), :class => "btn btn-warning" %> &nbsp;
+          <%= link_to 'Back', authors_path, :class => "btn btn-outline btn-success" %>
+
+
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="col-lg-7">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Awtoryň Kitaplary</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="ibox-content">
+
+          <div class="col-sm-8"><u><b>Ady</b></u></div>
+          <div class="col-sm-2"><u><b>Dili</b></u></div>
+          <div class="col-sm-2"><u><b>Mukdary</b></u></div>
+        <br><br>
+
+              <% Book.where(:id => @book_ids).each do |book| %>
+                  <div>
+                    <div class="col-sm-8"><i><%= link_to book.bookName, book %></i></div>
+                    <div class="col-sm-2"><i><%= book.book_language.bookLanguageFullName %></i></div>
+                    <div class="col-sm-2"><i><%= book.totalQuantity %></i></div>
+                    <br><br>
+                  </div>
+              <% end %>
+
+
+
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>

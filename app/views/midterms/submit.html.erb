@@ -1,0 +1,82 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-6">
+
+
+
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Täze Arasynag</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+            <a class="close-link">
+              <i class="fa fa-times"></i>
+            </a>
+          </div>
+        </div>
+
+
+
+
+
+        <div class="ibox-content">
+          <h3>
+            Täze Arasynag Maglumatlary
+          </h3>
+          <br>
+
+
+              <%= form_tag submitted_midterms_path, :method => 'get' do %>
+
+              <div><label class="col-sm-12 control-label">Bellenen formatda "Microsoft Excel" faýly arkaly Arasynag netijelerini girizmeli.</label>
+              </div>
+
+              <br><br><br>
+
+              <div><label class="col-sm-4 control-label">Faýl</label>
+                <div class="col-sm-8"><i>
+                  <%#= file_field_tag :fileUrl, params[:fileUrl], placeholder:  "Faýl", :class => "form-control" %>
+                  <%= file_field_tag "fileUrl" %>
+                </i></div>
+              </div>
+
+              <br><br><br>
+
+              <div><label class="col-sm-4 control-label">Arasynag Belgisi</label>
+                <div class="col-sm-8"><i>
+                  <%= text_field_tag :midtermOrderNo, params[:midtermOrderNo], placeholder:  "Tertip Belgisi", :class => "form-control" %>
+                </i></div>
+              </div>
+
+              <br><br><br><br>
+
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <%#= submit_tag "<i class='fa fa-search'></i> Gözle ".html_safe, :name => nil, class: "btn btn-success" %>
+                    <%= submit_tag "Kabul Et ".html_safe, :name => nil, class: "btn btn-success" %>
+                  </div>
+                </div>
+
+            <% end %>
+
+
+
+<br><br><br>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

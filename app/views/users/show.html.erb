@@ -1,0 +1,98 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+
+    <div class="col-lg-6">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Ulanyjy Maglumatlary</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+
+
+
+        <div class="ibox-content">
+          <h3>
+            Ulanyjy Maglumatlary
+          </h3>
+          <br>
+
+          <p id="notice"><%= notice %></p>
+
+          <div><label class="col-sm-4 control-label">Ady</label>
+            <div class="col-sm-8"><i><%= @user.userFName %></i></div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-4 control-label">Familiýasy</label>
+            <div class="col-sm-8"><i><%= @user.userLName %></i></div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-4 control-label">Role</label>
+            <div class="col-sm-8"><i><%= link_to @user.role.name, @user.role %></i></div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-4 control-label">Ulanyjy Ady</label>
+            <div class="col-sm-8"><i><%= @user.userLogin %></i></div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-4 control-label">Blocked ?</label>
+            <div class="col-sm-8">
+              <% if (@user.isBlocked) %>
+                  <i class="fa fa-check" style="color: lawngreen"></i>
+              <% else %>
+                  <i class="fa fa-times" style="color: red"></i>
+              <% end %>
+            </div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-4 control-label">Bellikler</label>
+            <div class="col-sm-8"><i><%= @user.notes %></i></div>
+          </div>
+
+          <br><br><br>
+
+          <%= link_to 'Üýtget', edit_user_path(@user), :class => "btn btn-warning"  %> &nbsp;
+          <%= link_to 'Yza', users_path, :class => "btn btn-outline btn-success" %>
+
+
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="contact-box">
+        <% if !@user.avatar_url.blank? %>
+            <%= image_tag "/uploads/avatars/"+@user.avatar_url, width: 350 %>
+        <% else %>
+            <%= image_tag "/uploads/avatars/no_photo_6.png", width: 350 %>
+        <% end %>
+      </div>
+
+</div>
+</div>

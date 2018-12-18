@@ -1,0 +1,104 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-6">
+
+
+
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Berilen Kitap Maglumatlary</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+        <div class="ibox-content">
+          <h3>
+            Berilen Kitap Maglumatlary
+          </h3>
+          <br>
+
+
+          <p id="notice"><%= notice %></p>
+
+          <div><label class="col-sm-4 control-label">Kitap</label>
+            <div class="col-sm-8"><i><%= link_to @book_lend.book.bookName, @book_lend.book %></i></div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-4 control-label">Diňleýji</label>
+            <div class="col-sm-8"><i>
+              <%= link_to @book_lend.student.first_and_last_name, @book_lend.student %>
+            </i></div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-4 control-label">Berlen Wagty</label>
+            <div class="col-sm-8"><i><%= @book_lend.lendDateTime.strftime("%d / %m / %y") %></i></div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-4 control-label">Gaýtardymy ?</label>
+            <div class="col-sm-8">
+              <% if (@book_lend.isReturned) %>
+                  <i class="fa fa-check" style="color: lawngreen"></i>
+              <% else %>
+                  <i class="fa fa-times" style="color: red"></i>
+              <% end %>
+            </div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-4 control-label">Gaýtarylan Wagty</label>
+            <div class="col-sm-8"><i><%= @book_lend.returnDateTime.strftime("%d / %m / %y") %></i></div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-4 control-label">Zeper Ýetenmi ?</label>
+            <div class="col-sm-8">
+              <% if (@book_lend.isDamaged) %>
+                  <i class="fa fa-check" style="color: lawngreen"></i>
+              <% else %>
+                  <i class="fa fa-times" style="color: red"></i>
+              <% end %>
+            </div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-4 control-label">Bellikler</label>
+            <div class="col-sm-8"><i><%= @book_lend.notes %></i></div>
+          </div>
+
+          <br><br><br>
+
+
+          <%= link_to 'Üýtget', edit_book_lend_path(@book_lend), :class => "btn btn-warning"  %>
+          <%= link_to 'Yza', book_lends_path, :class => "btn btn-outline btn-success" %>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </div>
+</div>

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  event_type_id: 
+  event_title: MyString
+  event_from_datetime: 2017-07-18 19:03:42
+  event_to_datetime: 2017-07-18 19:03:42
+  is_weekly: false
+  notes: MyText
+
+two:
+  event_type_id: 
+  event_title: MyString
+  event_from_datetime: 2017-07-18 19:03:42
+  event_to_datetime: 2017-07-18 19:03:42
+  is_weekly: false
+  notes: MyText

@@ -1,0 +1,69 @@
+<%= form_for(@mod_actions_role) do |f| %>
+    <% if @mod_actions_role.errors.any? %>
+        <div id="error_explanation">
+          <div class="alert alert-danger">
+            <h2><%= @mod_actions_role.errors.count %> ýalňyş sebäpli maglumatlar kabul edilmedi...</h2>
+
+            <ul>
+              <% @mod_actions_role.errors.each do |attr, message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+    <% end %>
+
+
+    <div><label class="col-sm-4 control-label">Role</label>
+      <div class="col-sm-8">
+        <% if (params[:role_id]) %>
+            <%= f.collection_select(:role_id, @roles, :id, :name, :selected => params[:role_id], :include_blank => t("Please_select"), :class => "form-control" ) %>
+        <% else %>
+            <%= f.collection_select(:role_id, @roles, :id, :name, :include_blank => t("Please_select"), :class => "form-control" ) %>
+        <% end %>
+      </div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Amal</label>
+      <div class="col-sm-8">
+        <% if (params[:mod_action_id]) %>
+            <%= f.collection_select(:mod_action_id, @mod_actions, :id, :modActionName, :selected => params[:mod_action_id], :include_blank => t("Please_select"), :class => "form-control" ) %>
+        <% else %>
+            <%= f.collection_select(:mod_action_id, @mod_actions, :id, :modActionName, :include_blank => t("Please_select"), :class => "form-control" ) %>
+        <% end %>
+      </div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Ygtyýar :</label>
+      <div class="col-sm-8">
+        <% if (params[:allowAccess]) %>
+            <%= f.check_box :allowAccess, :type => "checkbox", :checked => ((params[:allowAccess] == 'TRUE') ? 'checked' : 'no'), :class => "checkbox checkbox-primary", :id => "checkboxProjector" %>
+        <% else %>
+            <%= f.check_box :allowAccess, :type => "checkbox", :class => "checkbox checkbox-primary", :id => "checkboxProjector" %>
+        <% end %>
+      </div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Gözegçilik :</label>
+      <div class="col-sm-8">
+        <% if (params[:auditTrack]) %>
+            <%= f.check_box :auditTrack, :type => "checkbox", :checked => ((params[:auditTrack] == 'TRUE') ? 'checked' : 'no'),:class => "checkbox checkbox-primary", :id => "checkboxProjector" %>
+        <% else %>
+            <%= f.check_box :auditTrack, :type => "checkbox", :class => "checkbox checkbox-primary", :id => "checkboxProjector" %>
+        <% end %>
+      </div>
+    </div>
+
+    <br><br><br>
+
+    <div class="actions">
+      <%= f.submit "Kabul Et", :class => "btn btn-success" %>
+    </div>
+
+<% end %>

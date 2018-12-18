@@ -1,0 +1,95 @@
+<h1>Amal we Role Gatnaşyklarynyň Sanawy</h1>
+<%= link_to "<i class='fa fa-plus'></i>&nbsp; Täze Role we Amal Gatnaşygy".html_safe, new_mod_actions_role_path, :class => "btn btn-primary"  %>
+
+
+<% if (notice) %>
+    <div class="alert alert-success fade in">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <p id="notice"><%= notice %></p>
+    </div>
+<% end %>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Role we Amal Gatnaşyklarynyň Sanawy</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="ibox-content">
+
+          <div class="table-responsive">
+
+            <table class="table table-striped table-bordered table-hover dataTables-example">
+              <thead>
+              <tr>
+                <th>Role</th>
+                <th>Amal</th>
+                <th>Ygtyýar</th>
+                <th>Gözegçilik</th>
+                <th>Amallar</th>
+              </tr>
+              </thead>
+              <tbody>
+
+
+              <% @mod_actions_roles.each do |mar| %>
+                  <tr>
+                    <td><%= link_to mar.role.name, mar.role %></td>
+                    <td><%= link_to mar.mod_action.modActionName, mar.mod_action %> / <%= link_to mar.mod_action.mod_object.modObjectName, mar.mod_action.mod_object %></td>
+                    <td>
+                      <% if (mar.allowAccess) %>
+                          <i class="fa fa-check" style="color: lawngreen"></i>
+                      <% else %>
+                          <i class="fa fa-times" style="color: red"></i>
+                      <% end %>
+                    </td>
+                    <td>
+                      <% if (mar.auditTrack) %>
+                          <i class="fa fa-check" style="color: lawngreen"></i>
+                      <% else %>
+                          <i class="fa fa-times" style="color: red"></i>
+                      <% end %>
+                    </td>
+                    <td><div style="float: right">
+                      <%= link_to "Giňişleýin", mar, :class => "btn btn-success" %>
+                      <%= link_to "Üýtget", edit_mod_actions_role_path(mar), :class => "btn btn-warning" %>
+                      <% link_to "Boz", mar, method: :delete, data: { confirm: "Are you sure ?" }, :class => "btn btn-danger" %>
+                    </div></td>
+                  </tr>
+              <% end %>
+              </tbody>
+
+              <tfoot>
+              <tr>
+                <th>Role</th>
+                <th>Amal</th>
+                <th>Ygtyýar</th>
+                <th>Gözegçilik</th>
+                <th>Amallar</th>
+              </tr>
+              </tfoot>
+
+            </table>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

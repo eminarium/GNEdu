@@ -1,0 +1,189 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+
+
+    <div class="col-lg-6">
+
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Synp Maglumatlary</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+            <a class="close-link">
+              <i class="fa fa-times"></i>
+            </a>
+          </div>
+        </div>
+
+
+
+
+
+        <div class="ibox-content">
+          <h3>
+            Synp Maglumatlary
+          </h3>
+          <br>
+
+
+<p id="notice"><%= notice %></p>
+
+<div><label class="col-sm-4 control-label">Doly Ady</label>
+    <div class="col-sm-8"><i><%= @room.roomFullTitle %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Gysga Ady</label>
+    <div class="col-sm-8"><i><%= @room.roomShortTitle %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Ýer Sany</label>
+    <div class="col-sm-8"><i><%= @room.roomCapacity %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Proýektor</label>
+    <div class="col-sm-8">
+      <% if (@room.hasProjector) %>
+          <i class="fa fa-check" style="color: lawngreen"></i>
+      <% else %>
+          <i class="fa fa-times" style="color: red"></i>
+      <% end %>
+    </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">E-Tagta</label>
+    <div class="col-sm-8">
+      <% if (@room.hasEboard) %>
+          <i class="fa fa-check" style="color: lawngreen"></i>
+      <% else %>
+          <i class="fa fa-times" style="color: red"></i>
+      <% end %>
+
+    </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Bellikler</label>
+    <div class="col-sm-8"><i><%= @room.notes %></i></div>
+</div>
+
+<br><br><br>
+
+<%= link_to 'Üýtget', edit_room_path(@room), :class => "btn btn-warning"  %> &nbsp;
+<%= link_to 'Yza', rooms_path, :class => "btn btn-outline btn-success" %>
+
+
+
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="col-lg-6">
+
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Synpyň Hepdelik Ders Meýilnamasy</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+
+
+
+        <div class="ibox-content">
+
+          <p id="notice"><%= notice %></p>
+
+          <table>
+              <thead>
+                <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                <th>&nbsp;&nbsp;&nbsp;</th>
+                <th style="color: red">IRDEN</th>
+                <th>&nbsp;&nbsp;&nbsp;</th>
+                <th style="color: red">GÜNORTAN</th>
+                <th>&nbsp;&nbsp;&nbsp;</th>
+                <th style="color: red">ÖÝLÄN</th>
+                <th>&nbsp;&nbsp;&nbsp;</th>
+                <th style="color: red">AGŞAM</th>
+                <%# LessonTime.all.each do |lt| %>
+                    <%#= lt.lessonTimeTitle %>
+                <%# end %>
+              </thead>
+            <tr><td colspan="9"><hr></td></tr>
+              <% (1..6).each do |i| %>
+                <tr>
+                  <td style="color: red"><%= i %></td>
+
+                  <td>|</td>
+
+                  <td>
+                    <% @morning_exists = @room_morning_timetable.where(:weekday => i) %>
+                    <%= (@morning_exists.count > 0) ? Group.find_by_id(@morning_exists.first().group_id).groupTitle : "-"%>
+                  </td>
+
+                  <td>&nbsp;</td>
+
+                  <td>
+                    <% @gunortan_exists = @room_gunortan_timetable.where(:weekday => i) %>
+                    <%= (@gunortan_exists.count > 0) ? Group.find_by_id(@gunortan_exists.first().group_id).groupTitle : "-"%>
+                  </td>
+
+                  <td>&nbsp;</td>
+
+                  <td>
+                    <% @afternoon_exists = @room_afternoon_timetable.where(:weekday => i) %>
+                    <%= (@afternoon_exists.count > 0) ? Group.find_by_id(@afternoon_exists.first().group_id).groupTitle : "-"%>
+                  </td>
+
+                  <td>&nbsp;</td>
+
+                  <td>
+                    <% @evening_exists = @room_evening_timetable.where(:weekday => i) %>
+                    <%= (@evening_exists.count > 0) ? Group.find_by_id(@evening_exists.first().group_id).groupTitle : "-"%>
+                  </td>
+
+                </tr>
+              <% end %>
+          </table>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

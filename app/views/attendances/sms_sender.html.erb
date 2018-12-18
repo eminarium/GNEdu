@@ -1,0 +1,112 @@
+<html>
+<head>
+
+  <script>
+
+      var receivers_array = [];
+      var counter = 0;
+
+      <% @sms_receivers.each do |receiver| %>
+        <% if (receiver.contract) %>
+              var student = {sms_no: "%2B993<%= receiver.contract.student.smsMobilePhone %>", faa:"<%= receiver.contract.student.first_and_last_name %>", lesson_date:"<%= receiver.attendance_sheet.attendanceSheetDate.strftime("%d-%m-%y") %>", lesson_1: "<%= receiver.lesson_1%>", lesson_2: "<%= receiver.lesson_2%>", lesson_3: "<%= receiver.lesson_3%>" };
+              receivers_array[counter] = student;
+              counter = counter+1;
+        <% end %>
+      <% end %>
+
+      function sendSMS(quantity)
+      {
+          var absent_lesson_count = 0;
+          ((receivers_array[quantity].lesson_1=="false")? (absent_lesson_count++) : absent_lesson_count );
+          ((receivers_array[quantity].lesson_2=="false")? (absent_lesson_count++) : absent_lesson_count );
+          ((receivers_array[quantity].lesson_3=="false")? (absent_lesson_count++) : absent_lesson_count );
+
+          var xhttp = new XMLHttpRequest();
+          xhttp.open("POST", "http://localhost:9710/http/send-message", true);
+          xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+          xhttp.send("username=admin&password=hllwrld&to="+receivers_array[quantity].sms_no+"&message-type=sms.automatic&message="+receivers_array[quantity].faa+" "+receivers_array[quantity].lesson_date+" senesinde "+((receivers_array[quantity].lesson_1=="true")?"":"1-nji ")+((receivers_array[quantity].lesson_2=="true")?"":"2-nji ")+((receivers_array[quantity].lesson_3=="true")?"":"3-nji ")+((absent_lesson_count == 1) ? " derse" : " derslere")+" gelmedi. Gujurly Nesil !");
+
+          //var win = window.open("http://localhost:9710/http/send-message?username=admin&password=admin&to="+receivers_array[quantity].sms_no+"&message-type=sms.automatic&message="+receivers_array[quantity].faa+" "+receivers_array[quantity].lesson_date+" senesinde "+((receivers_array[quantity].lesson_1=="true")?"":"1-nji ")+((receivers_array[quantity].lesson_2=="true")?"":"2-nji ")+((receivers_array[quantity].lesson_3=="true")?"":"3-nji ")+((absent_lesson_count == 1) ? " derse" : " derslere")+" gelmedi. Gujurly Nesil !", '_blank');
+
+          setTimeout(function(){
+              //win.close()
+              if ((--quantity)>=0)
+              {
+                  sendSMS(quantity);
+              }
+              //else
+                  //window.close();
+          }, 1000);
+
+      }
+
+      function changeDivContent()
+      {
+                var my_div = document.getElementById("receiver_studs");
+                my_div.innerHTML = receivers_array.length.toString();
+      }
+
+      function sendSMSReports()
+      {
+          var absent_lesson_count = 0;
+
+          var xhttp = new XMLHttpRequest();
+          xhttp.open("POST", "http://localhost:9710/http/send-message", true);
+          xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+          xhttp.send("username=admin&password=hllwrld&to=%2B99365562692&message-type=sms.automatic&message=GN SMS Ulgamy, "+receivers_array.length+" sms sag-aman ugradyldy. Gutlayarys... !");
+
+          var xhttp = new XMLHttpRequest();
+          xhttp.open("POST", "http://localhost:9710/http/send-message", true);
+          xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+          xhttp.send("username=admin&password=hllwrld&to=%2B99365566424&message-type=sms.automatic&message=GN SMS Ulgamy, "+receivers_array.length+" sms sag-aman ugradyldy. Gutlayarys... !");
+
+      }
+
+      sendSMS(receivers_array.length-1);
+      sendSMSReports();
+
+      //if (receivers_array.length)
+      //{
+
+        //var win = window.open("http://localhost:9710/http/send-message?username=admin&password=admin&to=%2B99365562692&message-type=sms.automatic&message=GN SMS Ulgamy, "+receivers_array.length+" sms sag-aman ugradyldy. Gutlayarys... !", '_blank');
+        //setInterval(win.focus,4000);
+        //setInterval(win.close(),4000);
+        //var win = window.open("http://localhost:9710/http/send-message?username=admin&password=admin&to=%2B99365566424&message-type=sms.automatic&message=GN SMS Ulgamy, "+receivers_array.length+" sms sag-aman ugradyldy. Gutlayarys... !", '_blank');
+        //setInterval(win.focus,4000);
+        //setInterval(win.close(),4000);
+
+        // LATELY, PLAN TO CLOSE THIS WINDOW ITSELF...
+      //win.close();
+      //}
+
+  </script>
+
+</head>
+
+<body>
+
+<input type="button" value="Bas" onclick="changeDivContent();">
+
+<div id="receiver_studs" style="background: white">
+  HSLDFDSFKJ
+</div>
+
+<h1 style="color:whitesmoke;">SMS REICEVERS LIST</h1>
+<% @sms_receivers.each do |receiver| %>
+    <% if (receiver.contract) %>
+        <%= receiver.contract.student.first_and_last_name %> - Lesson 1 : <%= receiver.lesson_1%> |  Lesson 2 : <%= receiver.lesson_2%> | Lesson 3 : <%= receiver.lesson_3 %> <br>
+    <% end %>
+<% end %>
+
+<!--
+<form id="msg-form" action="http://localhost:9710" method="POST">
+  <input id="username" type="hidden" name="username" value="admin">
+  <input id="password" type="hidden" name="password" value="admin">
+  <input id="to" type="hidden" name="to" value="%2B99365562692">
+  <input id="message-type" type="hidden" name="sms.automatic" value="sms.automatic">
+  <input id="message" type="hidden" name="message" value="salam dostjan, nirelerde name ishleyan ?">
+</form>
+-->
+<% @sms_receivers.update_all(:is_sent => true) %>
+</body>
+</html>

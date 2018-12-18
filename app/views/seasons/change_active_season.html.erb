@@ -1,0 +1,154 @@
+<br>
+<div class="alert alert-success">
+  <% @active_season = Season.find_by_id(session[:active_season_id]) %>
+  <h3>AKTIW TAPGYRYŇYZ ÜÝTGEDILDI => TAPGYR : <%= @active_season.seasonNo.to_s+" / "+@active_season.seasonTitle+" / ("+@active_season.seasonFromDate.strftime('%d/%m/%Y')+" - "+@active_season.seasonToDate.strftime('%d/%m/%Y')+")" %> </h3>
+</div>
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+
+    <div class="col-lg-6">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Tapgyr Maglumatlary</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+
+
+
+        <div class="ibox-content">
+          <h3>
+            Tapgyr Maglumatlary
+          </h3>
+          <br>
+
+<p id="notice"><%= notice %></p>
+
+<div><label class="col-sm-4 control-label">Tertip Belgisi</label>
+    <div class="col-sm-8"><i><%= @season.seasonNo %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Atlandyrylyşy</label>
+    <div class="col-sm-8"><i><%= @season.seasonTitle %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Başlanýan Senesi</label>
+    <div class="col-sm-8"><i><%= @season.seasonFromDate.strftime("%d-%m-%Y") %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Tamamlanýan Senesi</label>
+    <div class="col-sm-8"><i><%= @season.seasonToDate.strftime("%d-%m-%Y") %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Bellikler</label>
+    <div class="col-sm-8"><i><%= @season.notes %></i></div>
+</div>
+
+<br><br><br>
+
+<%= link_to 'Üýtget', edit_season_path(@season), :class => "btn btn-warning"  %> &nbsp;
+<%= link_to 'Yza', seasons_path, :class => "btn btn-outline btn-success" %>
+
+
+
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="col-lg-6">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Tapgyr Statistikasy</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+
+
+
+        <div class="ibox-content">
+          <br>
+
+          <p id="notice"><%= notice %></p>
+
+          <div><label class="col-sm-8 control-label">Jemi Ýazylyşyk</label>
+            <div class="col-sm-4"><i><%= Contract.where(:season_id => @season.id).count %></i></div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-8 control-label">Gaýtarylanlar</label>
+            <div class="col-sm-4"><i><%= Contract.where(:season_id => @season.id, :isMoneyReturned => true).count %></i></div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-8 control-label">Jemi Okaýanlar (Ýazylyşyk-Gaýtarylan)</label>
+            <div class="col-sm-4"><i><%= (Contract.where(:season_id => @season.id).count-Contract.where(:season_id => @season.id, :isMoneyReturned => true).count) %></i></div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-8 control-label">Rezerwler</label>
+            <div class="col-sm-4"><i><%= Contract.where(:season_id => @season.id, :isReserve => true).count %></i></div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-8 control-label">Okuwçy</label>
+            <div class="col-sm-4"><i>
+              <% if (Contract.where(:season_id => @season.id).count>0) %>
+                <%= Contract.where(:season_id => @season.id, :student_id => Student.where(:isPupil => true)).count %> (<%=  ((Contract.where(:season_id => @season.id, :student_id => Student.where(:isPupil => true)).count.to_f)/(Contract.where(:season_id => @season.id).count.to_f-Contract.where(:season_id => @season.id, :isMoneyReturned => true).count.to_f)*100).to_i %>%)</i>
+              <% end %>
+            </div>
+          </div>
+
+          <br><br><br>
+
+        </div>
+
+      </div>
+    </div>
+
+
+  </div>
+</div>

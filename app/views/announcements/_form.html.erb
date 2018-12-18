@@ -1,0 +1,38 @@
+<%= form_for(@announcement) do |f| %>
+    <% if @announcement.errors.any? %>
+        <div id="error_explanation">
+          <div class="alert alert-danger">
+            <h2><%= @announcement.errors.count %> ýalňyş sebäpli maglumatlar kabul edilmedi...</h2>
+
+            <ul>
+              <% @announcement.errors.each do |attr, message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+    <% end %>
+
+    <div><label class="col-sm-4 control-label">Tapgyry</label>
+      <div class="col-sm-8">
+        <%= f.collection_select(:season_id, @seasons, :id, :seasonTitle, :include_blank => t("Please_select"), :class => "form-control" ) %>
+      </div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Mowzugy</label>
+      <div class="col-sm-8"><%= f.text_field :announcementSubject, :type => "text", :class => "form-control" %></div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Göwresi</label>
+      <div class="col-sm-8"><%= f.text_area :announcementBody, :type => "text", :class => "form-control"  %></div>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Kabul Et", :class => "btn btn-success" %>
+    </div>
+
+<% end %>

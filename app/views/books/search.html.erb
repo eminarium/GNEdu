@@ -1,0 +1,47 @@
+<%= render 'book_search_breadcrumb' %>
+
+<br>
+<!-- <div class="wrapper wrapper-content animated fadeInRight"> -->
+  <div class="ibox-content m-b-sm border-bottom">
+    <div class="row">
+
+<%= form_tag search_books_path, :method => 'get', :id => "books_search" do %>
+
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label class="control-label" for="fName">Kitabyň Ady</label>
+      <%= text_field_tag :bookName, params[:bookName], placeholder:  "Ady", :class => "form-control" %>
+    </div>
+  </div>
+<br>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <%#= submit_tag "<i class='fa fa-search'></i> Gözle ".html_safe, :name => nil, class: "btn btn-success" %>
+      <%= submit_tag "Gözle ".html_safe, :name => nil, class: "btn btn-success" %>
+    </div>
+  </div>
+
+<% end %>
+
+    </div>
+  </div>
+<!-- </div> -->
+
+
+<div id="ads">
+  <%= render 'bookslist' %>
+</div>
+
+<script>
+    $(function () {
+        // Search form.
+        $('#books_search input').keyup(function () {
+            $.get($('#books_search').attr('action'), &crarr;
+            $('#books_search').serialize(), null, 'script');
+            return false;
+        });
+    });
+
+
+    $('#ads').html('<%= escape_javascript(render 'bookslist') %>');
+</script>

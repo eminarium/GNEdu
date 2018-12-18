@@ -1,0 +1,87 @@
+<p id="notice"><%= notice %></p>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-6">
+
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Çäre Maglumatlary</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+            <a class="close-link">
+              <i class="fa fa-times"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="ibox-content">
+          <h3>
+            Çäre Maglumatlary
+          </h3>
+          <br>
+
+          <p id="notice"><%= notice %></p>
+
+          <div><label class="col-sm-4 control-label">Çäräniň Ady</label>
+            <div class="col-sm-8"><i><%= @event.event_title %></i></div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-4 control-label">Çäräniň Görnüşi</label>
+            <div class="col-sm-8"><i><%= link_to @event.event_type.event_type_title, @event.event_type %></i></div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-4 control-label">Başlangyç Senesi</label>
+            <div class="col-sm-8"><i><%= @event.event_from_datetime.strftime("%d-%m-%Y / %H-%M") %></i></div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-4 control-label">Tamamlanýan Senesi</label>
+            <div class="col-sm-8"><i><%= @event.event_to_datetime.strftime("%d-%m-%Y / %H-%M") %></i></div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-4 control-label">Ýyllyk Gaýtalanýarmy: </label>
+            <div class="col-sm-8">
+              <% if (@event.is_weekly) %>
+                  <i class="fa fa-check" style="color: lawngreen"></i>
+              <% else %>
+                  <i class="fa fa-times" style="color: red"></i>
+              <% end %>
+
+            </div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-4 control-label">Bellikler</label>
+            <div class="col-sm-8"><i><%= @event.notes %></i></div>
+          </div>
+
+          <br><br><br>
+
+          <%= link_to 'Üýtget', edit_event_path(@event), :class => "btn btn-warning"  %> &nbsp;
+          <%= link_to 'Yza', events_path, :class => "btn btn-outline btn-success" %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

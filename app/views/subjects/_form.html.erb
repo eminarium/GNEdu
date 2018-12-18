@@ -1,0 +1,67 @@
+<%= form_for(@subject) do |f| %>
+  <% if @subject.errors.any? %>
+    <div id="error_explanation">
+      <div class="alert alert-danger">
+        <h2><%= @subject.errors.count %> ýalňyş sebäpli maglumatlar kabul edilmedi...</h2>
+
+        <ul>
+          <% @subject.errors.each do |attr, message| %>
+              <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+<div><label class="col-sm-4 control-label">Kategoriýasy</label>
+  <div class="col-sm-8">
+    <%= f.collection_select(:subject_category_id, @subjectCategories, :id, :subjectCategoryFullName, :include_blank => t("Please_select"), :class => "form-control" ) %>
+  </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Dersiň Doly Ady</label>
+    <div class="col-sm-8"><%= f.text_field :subjectFullName, :type => "text", :class => "form-control" %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Gysgaça Ady</label>
+    <div class="col-sm-8"><%= f.text_field :subjectShortName, :type => "text", :class => "form-control" %></div>
+</div>
+
+<br><br><br>
+
+
+<div><label class="col-sm-4 control-label">Derejesi</label>
+    <div class="col-sm-8"><%= f.text_field :subjectLevel, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Bahasy</label>
+    <div class="col-sm-8"><%= f.text_field :subjectPrice, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Geçme baly (MIN)</label>
+    <div class="col-sm-8"><%= f.text_field :minPassingPoints, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Bellikler</label>
+    <div class="col-sm-8"><%= f.text_area :notes, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div class="actions">
+    <%= f.submit "Kabul Et", :class => "btn btn-success" %>
+</div>
+
+<% end %>
+
+

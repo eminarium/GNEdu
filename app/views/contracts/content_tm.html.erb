@@ -1,0 +1,201 @@
+<html>
+<body>
+
+<div class="contract"><div class="contract-middle"><div class="contract-middle-inner">
+
+<table style="float: left; border: 1px solid #000;letter-spacing: -0.008em; font-size: 0.8em" id="Order">
+  <tr>
+    <td colspan="5" style="text-align: center; padding-top: 10px">ŞERTNAMA № : <%= ((@contract.payment_type.paymentTypeName == "BANK AMALY") || (@contract.payment_type.paymentTypeName == "KART AMALY")) ? @contract.otherContractNo : @contract.seasonContractNo %></td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="text-align: left; padding-left: 5px">Diňleýjiniň F.A.A.</td>
+    <td colspan="3" style="text-align: left;"><%= @contract.student.fName+" "+@contract.student.lName+" "+@contract.student.patronymic %></td>
+  </tr>
+  <tr>
+    <td colspan="2" style="text-align: left; padding-left: 5px">Doglan senesi (Güni, aýy, ýyly)</td>
+    <td colspan="3" style="text-align: left;"><%= @contract.student.birthDate.day.to_s+" "+Contract::MONTH_NAMES_TM[@contract.student.birthDate.month-1].to_s+" "+@contract.student.birthDate.year.to_s %></td>
+  </tr>
+  <tr>
+    <td colspan="2" style="text-align: left; padding-left: 5px">Adres we Telefonlar</td>
+    <td colspan="3" style="text-align: left;">
+      <%= @contract.student.addressBody %>
+      <% if (!@contract.student.mobilePhone.blank?) %>
+          | <%= @contract.student.mobilePhone %>
+      <% end %>
+      <% if (!@contract.student.smsMobilePhone.blank?) %>
+          | <%= @contract.student.smsMobilePhone %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" style="text-align: left; padding-left: 5px">Milleti</td>
+    <td colspan="3" style="text-align: left;"><%= @contract.student.nationality.nationalityName %></td>
+  </tr>
+  <tr>
+    <td style="text-align: left; padding-left: 5px">Kursy</td>
+    <td style="text-align: left;"><%= @contract.group.subject.subjectFullName %></td>
+    <td style="text-align: left; padding-left: 5px">Wagty</td>
+    <td style="text-align: left;"><%= @contract.group.lesson_time.lessonTimeTitle %></td>
+    <td style="text-align: left;">Ylalaşylan baha : <%= (@contract.amountPaid!=0)? @contract.amountPaid : "-" %> DTM </td>
+  </tr>
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="text-align: left; padding-left: 5px">Nobatdaky tapgyryň başlangyç we gutaryş senesi</td>
+    <td colspan="3" style="text-align: left;"><%= (@contract.season.seasonFromDate.strftime("%d-%m-%Y")+" / "+@contract.season.seasonToDate.strftime("%d-%m-%Y")) %></td>
+  </tr>
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: center;text-decoration: underline; font-weight: bold">Taraplaryň Borçlary</td>
+  </tr>
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: left; padding-left: 5px">
+      1. “Gujurly Nesil” HK-nyň okuw bölümi (mundan beýläk “Ýerine ýetiriji”), bu şertnama laýyklykda okuw meýilnamasynyň esasynda “Diňleýji”-ni okatmagy we oňa talabalaýyk okuw şertlerini döretmegi borçlanýar.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: left; padding-left: 5px">
+      2. “Diňleýji” şu şertnama laýyklykda okuw bölüminiň tassyklan (şu şertnamanyň arkasyndaky goşundyda görkezilen) içerki düzgünlerini ýerine ýetirmegi borçlanýar.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: left; padding-left: 5px">
+      3. Eger dürli sebäplere görä “Diňleýji” okuwy dowam etmek islemeýän ýagdaýynda, “Diňleýji” ýa-da onuň ýerine şu şertnama baglaşan tarapyň ýüz tutmagy esasynda okuw tölegi tapgyryň başlan senesinden, diňe 6 (alty) iş günüň dowamynda yzyna gaýtarylyp biliner. (Soňky güni: <%= @contract.season.return_deadline.strftime("%d-%m-%Y") %>ý.). Tölegi yzyna almak üçin, “Diňleýji”-niň şahadatnamasyny / pasportyny we töleg kwitansiýasyny görkezmegi hökmanydyr.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: left; padding-left: 5px">
+      4. Şu Şertnamanyň 3-nji maddasynda görkezilen möhletden soň (tapgyryň başlan senesinden, diňe 6 (alty) iş günüň dowamynda), eger-de “Diňleýji” öz islegi boýunça derslere gelmegi bes eden, şeýle hem içerki tertip-düzgüni bozanlygy sebäpli okuwdan çykarylan halatynda okuw tölegi yzyna gaýtarylmaýar.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: left; padding-left: 5px">
+      5. Dürli sebäpler zerarly “Diňleýjä” okuw tölegi yzyna gaýtarylanda, şertnama baglaşylan wagtynda berlen okuw kitaplaryna zeper ýeten ýa-da içine ýazylan ýagdaýynda, okuw kitaplarynyň tölegleri yzyna gaýtarylmaýar.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: left; padding-left: 5px">
+      6. “Diňleýji”-den başga bir şahsyň okuw derslerine, onuň ýerine gatnamagyna ýa-da onuň ýerine dowam etmekligine (ýerine ýazylmaklygyna) düýbünden rugsat berilmeýär.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: left; padding-left: 5px">
+      7. “Ýerine ýetiriji” –niň içerki tertipnamasy esasynda tapgyryň dowamynda okadylýan ugurlar boýunça ara synaglar geçirilýär. Şol ara synaglaryň jemi netijesi ortaça 50 (elli) we ýokary bal we derslere gatnaşyklary yzygiderli bolan ýagdaýynda, “Diňleýji” tapgyryň tamamlaýjy synagyna gatnaşmaga hukuk gazanýar.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: left; padding-left: 5px">
+      8. “Diňleýjä”, öz okaýan ugry boýunça, tapgyryň tamamlaýjy synagyndan 50 (elli) we ýokary bal alan ýagdaýynda şahadatnama berilýär.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: left; padding-left: 5px">
+      9. Eger-de “Diňleýji” tamamlaýjy synagdan geçip bilmedik ýagdaýynda, bilim bölümi “Diňleýji”-ni okaýan dersiniň ýokarky derejesine ýazmaga borçlanmaýar, ýagny “Diňleýji” geçip bilmedik tapgyryny täzeden şertnama baglaşmak arkaly gaýtadan okap biler.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: center;text-decoration: underline; font-weight: bold">Taraplaryň jogapkärçilikleri:</td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: left; padding-left: 5px">
+      Taraplar şu şertnamanyň şertleriniň doly ýerine ýetirilmegi bilen bagly borçlary öz üstlerine alýarlar we Türkmenistanda hereket edýän kanunlara laýyklykda jogapkärçilik çekýärler.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: center;text-decoration: underline; font-weight: bold">Jedelleri çözmek:</td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: left; padding-left: 5px">
+      Taraplar şu şertnamanyň hereket edýän döwründe ýüze çykýan jedelleri gepleşikler arkaly çözerler. Taraplaryň arasynda gepleşikler netijesinde ylalaşyk gazanylmadyk ýagdaýynda jedeller hereket edýän kanunlara laýyklykda çözüler.
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: center;text-decoration: underline; font-weight: bold">Beýleki şertler:</td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: left; padding-left: 5px">
+      Şu şertnama deň hukuk güýjine eýe bolan 2 (iki) nusgada düzüldi. Olaryň biri “Diňleýjide”, beýlekisi “Ýerine ýetiriji” –de saklanylýar.
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="5" style="text-align: center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: center;text-decoration: underline; font-weight: bold">Taraplar </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: center">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td colspan="2" style="text-align: left; padding-left: 5px">
+      “Diňleýji” ýa-da wekili :
+    </td>
+    <td></td>
+    <td colspan="2" style="text-align: right; padding-left: 5px">
+      “Ýerine ýetirijiniň”  wekili :
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align: center">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="text-align: left;">
+      <%= @contract.student.lName+" "+@contract.student.fName[0,1]+"." %> __________________
+    </td>
+    <td></td>
+    <td colspan="2" style="text-align: right; padding-left: 5px">
+      Esasy Hünärmen G. Ýamatowa _______________
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="text-align: left; padding-left: 5px;">Kitaby aldym : _______________</td>
+    <td></td>
+    <td colspan="2" style="text-align: right; padding-right: 10px">Senesi : <%= @contract.registrationDate.strftime("%d / %m / %Y") %></td>
+  </tr>
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+
+</table>
+
+</div></div></div>
+
+
+<style>
+
+    @page {
+        size: A4 portrait;
+    }
+
+    @media print {
+        html, body{margin: 0 0 0 0; padding: 0 7 0 7;}
+        .contract{box-sizing: border-box; height: 100%; width: 100%; border: 1px solid transparent; page-break-after: always;}
+        .contract-middle{height: 100%; width: 100%; display: table;}
+        .contract-middle-inner{height: 100%; width: 100%; display: table-cell; vertical-align: middle;}
+    }
+
+</style>
+
+</body>
+</html>

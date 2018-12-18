@@ -1,0 +1,69 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nationality_id: 
+  fName: MyString
+  lName: MyString
+  patronymic: MyString
+  gender: false
+  birthDate: 2016-03-31
+  smsMobilePhone: MyString
+  isPupil: false
+  isStudent: false
+  isWorker: false
+  faFName: MyString
+  faLName: MyString
+  faWorkPlace: MyString
+  faOccupation: MyString
+  faOfficePhone: MyString
+  faMobilePhone: MyString
+  maFName: MyString
+  maLName: MyString
+  maWorkPlace: MyString
+  maOccupation: MyString
+  maOfficePhone: MyString
+  maMobilePhone: MyString
+  workPlace: MyString
+  occupation: MyString
+  officePhone: MyString
+  mobilePhone: MyString
+  higherSchoolName: MyString
+  higherSchoolGrade: 1
+  schoolNo: 1
+  schoolName: MyString
+  schoolGrade: 1
+  notes: MyText
+
+two:
+  nationality_id: 
+  fName: MyString
+  lName: MyString
+  patronymic: MyString
+  gender: false
+  birthDate: 2016-03-31
+  smsMobilePhone: MyString
+  isPupil: false
+  isStudent: false
+  isWorker: false
+  faFName: MyString
+  faLName: MyString
+  faWorkPlace: MyString
+  faOccupation: MyString
+  faOfficePhone: MyString
+  faMobilePhone: MyString
+  maFName: MyString
+  maLName: MyString
+  maWorkPlace: MyString
+  maOccupation: MyString
+  maOfficePhone: MyString
+  maMobilePhone: MyString
+  workPlace: MyString
+  occupation: MyString
+  officePhone: MyString
+  mobilePhone: MyString
+  higherSchoolName: MyString
+  higherSchoolGrade: 1
+  schoolNo: 1
+  schoolName: MyString
+  schoolGrade: 1
+  notes: MyText

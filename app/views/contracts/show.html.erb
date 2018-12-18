@@ -1,0 +1,452 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-6">
+
+    <!-- #########################################  ŞERTNAMA MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Şertnama Maglumatlary</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+        <div class="ibox-content">
+          <h3>
+            Şertnama Maglumatlary
+          </h3>
+          <br>
+
+
+<p id="notice"><%= notice %></p>
+
+<div><label class="col-sm-4 control-label">Şertnama №</label>
+    <div class="col-sm-8"><i>
+      <% if (@contract.payment_type == PaymentType.find_by_paymentTypeName("KART AMALY")  || @contract.payment_type == PaymentType.find_by_paymentTypeName("BANK AMALY")) %>
+        <%= @contract.otherContractNo %>
+      <% else %>
+        <%= (@contract.seasonContractNo > 99) ? @contract.seasonContractNo.to_s : ((@contract.seasonContractNo > 9) ? "0"+@contract.seasonContractNo.to_s : "00"+@contract.seasonContractNo.to_s) %>
+      <% end %>
+    </i></div>
+</div>
+
+<br><br>
+
+<div><label class="col-sm-4 control-label">Tapgyr</label>
+    <div class="col-sm-8"><i><%= @contract.season.seasonTitle %> (<%= @contract.season.seasonNo %>)</i></div>
+</div>
+
+<br><br>
+
+<div><label class="col-sm-4 control-label">Topary</label>
+    <div class="col-sm-8"><i>
+      <% if @contract.group %>
+          <%= link_to @contract.group.groupTitle+" ("+@contract.group.group_language.groupLanguageShortName+")", @contract.group %>
+      <% end %>
+    </i></div>
+</div>
+
+<br><br>
+
+<div><label class="col-sm-4 control-label">Mugallymy</label>
+    <div class="col-sm-8"><i>
+      <% if @contract.group.teacher %>
+          <%= link_to @contract.group.teacher.full_name, @contract.group.teacher %>
+      <% end %>
+    </i></div>
+</div>
+
+<br><br>
+
+<div><label class="col-sm-4 control-label">Diňleýji</label>
+    <div class="col-sm-8"><i><%= link_to @contract.student.lName+" "+@contract.student.fName+" "+@contract.student.patronymic, @contract.student %> </i></div>
+</div>
+
+<br><br>
+
+<div><label class="col-sm-4 control-label">Arzanladyş</label>
+    <div class="col-sm-8">
+        <% if (@contract.discount) %>
+            <!-- <i class="fa fa-check" style="color: lawngreen"></i> -->
+            <font color="#32cd32"><%= @contract.discount.discountName %></font>
+        <% else %>
+            <i class="fa fa-times" style="color: red"></i>
+        <% end %>
+    </div>
+</div>
+
+<% if (@contract.discount) %>
+
+<br><br>
+
+<div><label class="col-sm-4 control-label">Arzanladyş Sebäbi</label>
+    <div class="col-sm-8">
+        <div class="col-sm-8"><i><%= @contract.discountReason %></i></div>
+    </div>
+</div>
+
+<% end %>
+
+<br><br>
+
+<div><label class="col-sm-4 control-label">Senesi</label>
+    <div class="col-sm-8"><i><%= @contract.registrationDate.strftime("%d / %m / %y") %></i></div>
+</div>
+
+<br><br>
+
+<div><label class="col-sm-4 control-label">Kitap</label>
+    <div class="col-sm-8">
+    <% if (@contract.isBookGiven) %>
+      <i class="fa fa-check" style="color: lawngreen"></i>
+    <% else %>
+      <i class="fa fa-times" style="color: red"></i>
+    <% end %>
+
+    </div>
+</div>
+
+<br><br>
+
+<div><label class="col-sm-4 control-label">Tölenen Töleg</label>
+    <div class="col-sm-8"><i><%= @contract.amountPaid %></i></div>
+</div>
+
+<br><br>
+
+<div><label class="col-sm-4 control-label">Töleg Görnüşi</label>
+    <div class="col-sm-8"><i><%= @contract.payment_type ?  @contract.payment_type.paymentTypeName : "" %></i></div>
+</div>
+
+<br><br>
+
+<!--
+
+<div><label class="col-sm-4 control-label">Başga Şertnama №</label>
+    <div class="col-sm-8"><i><%= @contract.otherContractNo %></i></div>
+</div>
+
+<br><br><br>
+-->
+
+<div><label class="col-sm-4 control-label">Kwitansiýa №</label>
+    <div class="col-sm-8"><i><%= @contract.otherReceiptNo  %></i></div>
+</div>
+
+<br><br>
+
+<div><label class="col-sm-4 control-label">Rezerw</label>
+<div class="col-sm-8">
+  <% if (@contract.isReserve) %>
+      <i class="fa fa-check" style="color: lawngreen"></i>
+  <% else %>
+      <i class="fa fa-times" style="color: red"></i>
+  <% end %>
+
+</div>
+</div>
+
+<br><br>
+
+<div><label class="col-sm-4 control-label">Gaýtaryldy</label>
+    <div class="col-sm-8">
+    <% if (@contract.isMoneyReturned) %>
+      <i class="fa fa-check" style="color: lawngreen"></i>
+    <% else %>
+      <i class="fa fa-times" style="color: red"></i>
+    <% end %>
+
+    </div>
+</div>
+
+<% if (@contract.isMoneyReturned) %>
+
+  <br><br>
+
+  <div><label class="col-sm-4 control-label">Gaýtaryş Sebäbi</label>
+    <div class="col-sm-8">
+      <div class="col-sm-8"><i><%= @contract.moneyReturnReason %></i></div>
+    </div>
+  </div>
+
+<% end %>
+
+<br><br>
+
+
+
+<div><label class="col-sm-4 control-label">Bellikler</label>
+    <div class="col-sm-8"><i><%= @contract.notes %></i></div>
+</div>
+
+<br><br>
+
+
+<% if (check_restrictions(controller_name, 'edit')) %>
+    <%= link_to 'Üýtget', edit_contract_path(@contract), :class => "btn btn-warning"  %> &nbsp;
+<% end %>
+<% if (check_restrictions(controller_name, 'return_payment')) %>
+  <%= link_to 'Gaýtar', contract_path(@contract.id), :method => :patch,  :action => :return_payment, data: {confirm: "Gaýtarjakdygyňyzy tassyklaýarsyňyzmy ???"}, :class => "btn btn-w-s btn-info"  %> &nbsp;
+<% end %>
+<% if (check_restrictions(controller_name, 'destroy')) %>
+  <%= link_to 'Boz', contract_path(@contract), :method => :delete, data: {confirm: "Are you sure ?"}, :class => "btn btn-w-s btn-danger" %> &nbsp;
+<% end %>
+<% if (check_restrictions(controller_name, 'invoice')) %>
+    <%= link_to 'Kwitansiýa', @contract.id.to_s+'/invoice', :class => "btn btn-outline btn-primary", :target => "_blank" %>
+<% end %>
+<% if (check_restrictions(controller_name, 'content_tm')) %>
+    <%= link_to 'Şertnama(TM)', @contract.id.to_s+'/content_tm', :class => "btn btn-outline btn-primary", :target => "_blank" %>
+<% end %>
+<% if (check_restrictions(controller_name, 'content_ru')) %>
+    <%= link_to 'Şertnama(RU)', @contract.id.to_s+'/content_ru', :class => "btn btn-outline btn-primary", :target => "_blank" %>
+<% end %>
+
+        </div>
+
+      </div>
+
+      <!-- #########################################  ŞERTNAMA MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+
+      <!-- #########################################  AMALLAR PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Amallar Sanawy</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+        <div class="ibox-content">
+          <h3>
+            Amallar Sanawy
+          </h3>
+          <br>
+
+          <div class="col-sm-6"><u><b>Ulanyjy</b></u></div>
+          <div class="col-sm-3"><u><b>Amaly</b></u></div>
+          <div class="col-sm-3"><u><b>Senesi</b></u></div>
+          <br><br>
+
+          <% if (!(@audits.nil?)) %>
+              <% @audits.each do |audit| %>
+
+                  <div class="col-sm-6"><i> <%= audit.user.full_name %> </i></div>
+                  <div class="col-sm-3"><i> <%= audit.mod_action.modActionName %> </i></div>
+                  <div class="col-sm-3"><i> <%= audit.interactionDate.strftime("%d-%m-%Y") %> </i></div>
+
+
+              <% end %>
+          <% end %>
+
+          <br><br>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- #########################################  AMALLAR PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+
+
+    </div>
+
+
+    <div class="col-lg-5">
+      <div class="contact-box">
+        <% if !@contract.student.imageUrl.blank? %>
+            <%= image_tag "/uploads/images/"+@contract.student.imageUrl, width: 350 %>
+        <% else %>
+            <%= image_tag "/uploads/images/no_photo_6.png", width: 350 %>
+        <% end %>
+      </div>
+    </div>
+
+
+
+    <!-- #########################################  DERS GÜNLERI MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+    <div class="col-lg-5">
+
+      <div class="ibox  float-e-margins">
+        <div class="ibox-title" style="border-color: green">
+          <h5>DERS GÜNLERI </h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up" style="color: green"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="ibox-content" style="border-color: green">
+
+          <!-- #########################################  DERS GÜNLERI MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+          <!-- #########################################  DERS GÜNLERI MAGLUMATLARY - START ############################# -->
+
+          <!-- <h3>Ders Günleri</h3> -->
+
+
+          <div class="col-sm-4"><u><b>Otagy</b></u></div>
+          <div class="col-sm-4"><u><b>Hepdäniň güni</b></u></div>
+          <div class="col-sm-4"><u><b>Wagty</b></u></div>
+          <br><br><br>
+
+
+
+          <% @contractGroupTimetable.each do |cgt| %>
+              <div>
+                <div class="col-sm-4"><i> <%= cgt.room.roomFullTitle %></i></div>
+                <div class="col-sm-4"><i> <%= cgt.weekday %></i></div>
+                <div class="col-sm-4"><i> <%= @contract.group.lesson_time.lessonTimeTitle %></i></div>
+                <br><br>
+              </div>
+          <% end %>
+
+
+
+
+
+
+
+
+          <br><br><br>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- #########################################  DERS GÜNLERI MAGLUMATLARY - END ############################# -->
+
+
+
+
+
+    <!-- #########################################  ARASYNAGLARY  MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+    <div class="col-lg-5">
+
+      <div class="ibox  float-e-margins">
+        <div class="ibox-title" style="border-color: orange">
+          <h5> ARASYNAGLARY </h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up" style="color: orange"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="ibox-content" style="border-color: green">
+
+          <!-- #########################################  ARASYNAGLARY  MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+          <!-- #########################################  ARASYNAGLARY  MAGLUMATLARY - START ############################# -->
+
+          <!-- <h3>Ders Günleri</h3> -->
+
+
+          <div class="col-sm-2"><u><b>T/b</b></u></div>
+          <div class="col-sm-3"><u><b>Netijesi</b></u></div>
+          <div class="col-sm-3"><u><b>Rugsatlymy</b></u></div>
+          <div class="col-sm-4"><u><b>Teswiri</b></u></div>
+          <br><br><br>
+
+          <% @midterms =  Midterm.where(:contract_id => @contract.id) %>
+          <% if (@midterms.count != 0) %>
+              <% @midterms.order(:midtermOrderNo).each do |mdt| %>
+                  <div>
+                    <div class="col-sm-2"><i> <%= link_to mdt.midtermOrderNo, mdt %></i></div>
+                    <div class="col-sm-3"><i> <% if (mdt.midtermPoints) %> <%= mdt.midtermPoints.round(3) %> <% end %></i></div>
+                    <div class="col-sm-3">
+                      <i>
+                        <% if (mdt.isReleasedFrom) %>
+                            <i class="fa fa-check" style="color: lawngreen"></i>
+                        <% else %>
+                            <i class="fa fa-times" style="color: red"></i>
+                        <% end %>
+                      </i>
+                    </div>
+                    <div class="col-sm-4"><i> <%= mdt.midtermNotes %></i></div>
+                    <br><br>
+                  </div>
+              <% end %>
+          <% else %>
+              <div class="col-sm-12"><i>Diňleýjiniň giren arasynaglary ýok !</i></div>
+          <% end %>
+          <br>
+
+          <hr>
+
+          <div class="col-sm-8"><i>Ortaça Bahasy:</i></div>
+          <% @average = @midterms.average(:midtermPoints) %>
+          <% if (@average && @average >=50) %>
+            <div class="col-sm-4" style="color: darkorange"><i><% if (@average) %> <%= @average.round(3) %> <% end %> </i></div>
+          <% else %>
+              <div class="col-sm-4" style="color: red"><i><% if (@average) %> <%= @average.round(3) %> <% end %></i></div>
+          <% end %>
+
+          <br>
+          <hr>
+
+          <div class="col-sm-4"><u><b>Final Synagy Bahasy</b></u></div>
+          <div class="col-sm-4"><u><b>Teswiri</b></u></div>
+          <div class="col-sm-4"><u><b>Netijesi</b></u></div>
+          <br><br><br>
+
+          <% @final_ex = Final.where(:contract_id => @contract.id) %>
+          <% if (@final_ex.count != 0) %>
+              <% @final_ex = @final_ex.first %>
+              <div>
+                <div class="col-sm-4"><i> <%= link_to @final_ex.finalPoints, @final_ex %></i></div>
+                <div class="col-sm-4"><i> <%= link_to @final_ex.finalNotes, @final_ex  %></i></div>
+                <% if (@final_ex.finalPoints >= 50) %>
+                    <div class="col-sm-4" style="color: darkorange"><i> Geçdi</i></div>
+                <% else %>
+                    <div class="col-sm-4" style="color: red"><i> Geçmedi</i></div>
+                <% end %>
+                <br><br>
+              </div>
+          <% else %>
+              <div class="col-sm-12"><i>Diňleýjiniň giren finaly ýok !</i></div>
+          <% end %>
+          <br><br><br>
+
+
+
+        </div>
+      </div>
+    </div>
+
+    <!-- #########################################  ARASYNAGLARY MAGLUMATLARY - END ############################# -->
+  </div>
+</div>

@@ -1,0 +1,225 @@
+<html>
+<body>
+
+<% @teacher_count = 0 %>
+<% @group_count = 0 %>
+
+<table>
+  <thead>
+  <tr>
+    <th style="border-width:1; border-style: groove" colspan="3"> TAPGYR BOÝUNÇA STATISTIKA</th>
+  </tr>
+  <tr>
+    <tr>
+        <th style="border-width:1; border-style: groove" rowspan="2"><%= @season.seasonTitle %> (<%= @season.seasonNo %> T)</th>
+        <th style="border-width:1; border-style: groove" colspan="2">Seneler</th>
+    </tr>
+    <tr>
+        <th style="border-width:1; border-style: groove"><%= @season.seasonFromDate.strftime("%d-%m-%Y") %></th>
+        <th style="border-width:1; border-style: groove"><%= @season.seasonToDate.strftime("%d-%m-%Y") %></th>
+    </tr>
+  </tr>
+  </thead>
+  <tbody>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> Jemi Topar Sany </td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <%= Group.where(:season_id => @season.id, :isClosed => false).count %>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> Jemi Ýazylyşyk </td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <%= Contract.where(:season_id => @season.id).count %>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> Gaýtarylanlar </td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <%= Contract.where(:season_id => @season.id, :isMoneyReturned => true).count %>
+          (<%= ((Contract.where(:season_id => @season.id, :isMoneyReturned => true).count.to_f / Contract.where(:season_id => @season.id).count)*100).round(2) %>%)
+        </td>
+      </tr>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> Jemi Okaýanlar (Ýazylyşyk-Gaýtarylan) </td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <% @this_season_contracts = Contract.where(:season_id => @season.id, :isMoneyReturned => false) %>
+          <%= @this_season_contracts.count %>
+        </td>
+      </tr>
+
+      <tr><td colspan="3"></td></tr>
+      <tr><td style="background: #5E5E5E" colspan="3"></td></tr>
+      <tr><td colspan="3"></td></tr>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> Rezerwler </td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <%= Contract.where(:season_id => @season.id, :isReserve => true).count %>
+          (<%= ((Contract.where(:season_id => @season.id, :isReserve => true).count.to_f) / (Contract.where(:season_id => @season.id, :isMoneyReturned => false).count)*100).round(2) %>%)
+        </td>
+      </tr>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> Bank Tölegleri </td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <%= Contract.where(:season_id => @season.id, :payment_type_id => PaymentType.find_by_paymentTypeName("BANK AMALY").id).count %>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> Kart Tölegleri </td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <%= Contract.where(:season_id => @season.id, :payment_type_id => PaymentType.find_by_paymentTypeName("KART AMALY").id).count %>
+        </td>
+      </tr>
+
+      <tr><td colspan="3"></td></tr>
+      <tr><td style="background: #5E5E5E" colspan="3"></td></tr>
+      <tr><td colspan="3"></td></tr>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> Okuwçy </td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <% if (Contract.where(:season_id => @season.id).count>0) %>
+              <%= Contract.where(:season_id => @season.id, :isMoneyReturned => false, :student_id => Student.where(:isPupil => true)).count %> (<%=  ((Contract.where(:season_id => @season.id, :isMoneyReturned => false, :student_id => Student.where(:isPupil => true)).count.to_f)/(Contract.where(:season_id => @season.id, :isMoneyReturned => false).count.to_f)*100).round(2) %>%)</i>
+          <% end %>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> Talyp </td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <% if (Contract.where(:season_id => @season.id).count>0) %>
+              <%= Contract.where(:season_id => @season.id, :isMoneyReturned => false, :student_id => Student.where(:isStudent => true)).count %> (<%=  ((Contract.where(:season_id => @season.id, :isMoneyReturned => false, :student_id => Student.where(:isStudent => true)).count.to_f)/(Contract.where(:season_id => @season.id, :isMoneyReturned => false).count.to_f)*100).round(2) %>%)</i>
+          <% end %>
+        </td>
+      </tr>
+
+      <tr><td colspan="3"></td></tr>
+      <tr><td style="background: #5E5E5E" colspan="3"></td></tr>
+      <tr><td colspan="3"></td></tr>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> Erkekler </td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <%= Contract.where(:season_id => @season.id, :isMoneyReturned => false, :student_id => Student.where(:gender => true)).count %>
+          (<%= (Contract.where(:season_id => @season.id, :isMoneyReturned => false, :student_id => Student.where(:gender => true)).count.to_f / Contract.where(:season_id => @season.id, :isMoneyReturned => false).count*100).round(2) %>%)
+        </td>
+      </tr>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> Zenanlar </td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <%= Contract.where(:season_id => @season.id, :isMoneyReturned => false, :student_id => Student.where(:gender => false)).count %>
+          (<%= (Contract.where(:season_id => @season.id, :isMoneyReturned => false, :student_id => Student.where(:gender => false)).count.to_f / Contract.where(:season_id => @season.id, :isMoneyReturned => false).count*100).round(2) %>%)
+        </td>
+      </tr>
+
+      <tr><td colspan="3"></td></tr>
+      <tr><td style="background: #5E5E5E" colspan="3"></td></tr>
+      <tr><td colspan="3"></td></tr>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> Irden </td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <%= Contract.where(:season_id => @season.id, :isMoneyReturned => false, :group_id => Group.where(:season_id => @season.id, :isClosed => false, :lesson_time_id => LessonTime.where(:lessonTimeTitle => "Irden").select(:id))).count %>
+          (<%= (Contract.where(:season_id => @season.id, :isMoneyReturned => false, :group_id => Group.where(:season_id => @season.id, :isClosed => false, :lesson_time_id => LessonTime.where(:lessonTimeTitle => "Irden").select(:id))).count.to_f / Contract.where(:season_id => @season.id, :isMoneyReturned => false).count*100).round(2) %>%)
+        </td>
+      </tr>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> Günortan </td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <%= Contract.where(:season_id => @season.id, :isMoneyReturned => false, :group_id => Group.where(:season_id => @season.id, :isClosed => false, :lesson_time_id => LessonTime.where(:lessonTimeTitle => "Günortan").select(:id))).count %>
+          (<%= (Contract.where(:season_id => @season.id, :isMoneyReturned => false, :group_id => Group.where(:season_id => @season.id, :isClosed => false, :lesson_time_id => LessonTime.where(:lessonTimeTitle => "Günortan").select(:id))).count.to_f / Contract.where(:season_id => @season.id, :isMoneyReturned => false).count*100).round(2) %>%)
+        </td>
+      </tr>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> Öýlän </td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <%= Contract.where(:season_id => @season.id, :isMoneyReturned => false, :group_id => Group.where(:season_id => @season.id, :isClosed => false, :lesson_time_id => LessonTime.where(:lessonTimeTitle => "Öýlän").select(:id))).count %>
+          (<%= (Contract.where(:season_id => @season.id, :isMoneyReturned => false, :group_id => Group.where(:season_id => @season.id, :isClosed => false, :lesson_time_id => LessonTime.where(:lessonTimeTitle => "Öýlän").select(:id))).count.to_f / Contract.where(:season_id => @season.id, :isMoneyReturned => false).count*100).round(2) %>%)</i></div>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> Agşam </td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <%= Contract.where(:season_id => @season.id, :isMoneyReturned => false, :group_id => Group.where(:season_id => @season.id, :isClosed => false, :lesson_time_id => LessonTime.where(:lessonTimeTitle => "Agşam").select(:id))).count %>
+          (<%= (Contract.where(:season_id => @season.id, :isMoneyReturned => false, :group_id => Group.where(:season_id => @season.id, :isClosed => false, :lesson_time_id => LessonTime.where(:lessonTimeTitle => "Agşam").select(:id))).count.to_f / Contract.where(:season_id => @season.id, :isMoneyReturned => false).count*100).round(2) %>%)
+        </td>
+      </tr>
+
+      <% if (@prev_contracts_list)%>
+
+      <tr><td colspan="3"></td></tr>
+      <tr><td style="background: #5E5E5E" colspan="3"></td></tr>
+      <tr><td colspan="3"></td></tr>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> Geçen Tapgyrdan Dowam Edenler </td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <%= @prev_contracts_list.count %>
+          (<%= (@prev_contracts_list.count.to_f / (Contract.where(:season_id => @season.id).count-Contract.where(:season_id => @season.id, :isMoneyReturned => true).count)*100).round(2) %>%)
+        </td>
+      </tr>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> Täze Ýazylanlar </td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <%= ((Contract.where(:season_id => @season.id).count-Contract.where(:season_id => @season.id, :isMoneyReturned => true).count)-@prev_contracts_list.count) %>
+        </td>
+      </tr>
+
+      <% end %>
+
+      <% if (@continuing_contracts_list)%>
+
+      <tr><td colspan="3"></td></tr>
+      <tr><td style="background: #5E5E5E" colspan="3"></td></tr>
+      <tr><td colspan="3"></td></tr>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> Indiki Tapgyra Dowam Edenler </td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <%= @continuing_contracts_list.count %>
+          (<%= (@continuing_contracts_list.count.to_f / (Contract.where(:season_id => @season.id).count-Contract.where(:season_id => @season.id, :isMoneyReturned => true).count)*100).round(2) %>%)
+        </td>
+      </tr>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> Indiki Tapgyrda Okuwy Dowam Etmeýänler </td>
+        <td style="border-width:1; border-style: groove; text-align: right" colspan="2">
+          <%= ((Contract.where(:season_id => @season.id).count-Contract.where(:season_id => @season.id, :isMoneyReturned => true).count)-@continuing_contracts_list.count) %>
+        </td>
+      </tr>
+
+  <% end %>
+
+
+  </tbody>
+</table>
+
+<style>
+
+    @page {
+        size: A4 portrait;
+    }
+
+    @media print {
+        html, body{margin: 0 0 0 0; padding: 0 7 0 7;}
+        .invoice{box-sizing: border-box; height: 100%; width: 100%; border: 1px solid transparent; page-break-after: always;}
+        .invoice-middle{height: 100%; width: 100%; display: table;}
+        .invoice-middle-inner{height: 100%; width: 100%; display: table-cell; vertical-align: middle;}
+    }
+
+</style>
+
+</body>
+</html>

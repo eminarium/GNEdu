@@ -1,0 +1,111 @@
+<div class="row border-bottom">
+  <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+    <div class="navbar-header">
+      <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+      <form role="search" class="navbar-form-custom" action="http://webapplayers.com/inspinia_admin-v2.4/search_results.html">
+        <div class="form-group">
+          <input type="text" placeholder="Gözleg..." class="form-control" name="top-search" id="top-search">
+        </div>
+      </form>
+    </div>
+    <ul class="nav navbar-top-links navbar-right">
+      <li>
+        <span class="m-r-sm text-muted welcome-message">GN Hasaba Alyş Ulgamy.</span>
+      </li>
+      <li class="dropdown">
+        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+
+          <% if Season.find_by_id(session[:active_season_id]) %>
+            <span class="badge badge-warning">
+                <%= Season.find_by_id(session[:active_season_id]).seasonNo %>
+                <%#= Season.find_by_id(current_user_session[:active_season_id]).seasonNo %>
+            </span>
+          <% end %>
+          <!-- <span class="label label-warning">16</span> -->
+        </a>
+
+
+
+        <ul class="dropdown-menu dropdown-messages">
+
+          <% Season.all.order(seasonNo: :desc).each do |season| %>
+
+          <li>
+            <div class="dropdown-messages-box">
+
+              <div class="media-body">
+                <%= link_to "<button id='change' class='btn btn-warning btn-circle' type='button'>".html_safe+season.seasonNo.to_s+"</button>".html_safe, 'http://192.168.0.200:3000/seasons/'+season.id.to_s+'/change_active_season' %>
+                <!-- <small class="pull-right">Aktiw</small> -->
+                <strong>
+                  <!-- <span class="badge badge-warning"><%= season.seasonNo %></span> &nbsp; -->
+                  <%= season.seasonTitle %>
+                  <span class="badge badge-success">( <%= season.seasonFromDate.strftime("%d/%m/%Y") %> - <%= season.seasonToDate.strftime("%d/%m/%Y") %> )</span>
+                </strong>
+              </div>
+            </div>
+          </li>
+          <li class="divider"></li>
+
+        <% end %>
+
+          <!--
+          <li>
+            <div class="dropdown-messages-box">
+              <a href="profile.html" class="pull-left">
+                <img alt="image" class="img-circle" src="images/a4.jpg">
+              </a>
+              <div class="media-body ">
+                <small class="pull-right text-navy">5h ago</small>
+                <strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>. <br>
+                <small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
+              </div>
+            </div>
+          </li>
+          <li class="divider"></li>
+          <li>
+            <div class="text-center link-block">
+              <a href="mailbox.html">
+                <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
+              </a>
+            </div>
+          </li>
+          -->
+        </ul>
+
+      </li>
+      <li class="dropdown">
+        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+          <% @views = AnnouncementsUser.where(:user_id => current_user.id, :announcement_id => Season.find_by_id(session[:active_season_id]).announcements.select(:id)).count %>
+          <i class="fa fa-bell"></i>  <span class="label label-primary"><%= ((Season.find_by_id(session[:active_season_id]).announcements.count - @views) > 0) ? (Season.find_by_id(session[:active_season_id]).announcements.count - @views) : "" %></span>
+        </a>
+        <ul class="dropdown-menu dropdown-alerts">
+          <% Season.find_by_id(session[:active_season_id]).announcements.order(:created_at).limit(3).each do |ann| %>
+          <li>
+            <a href="<%= 'http://192.168.0.200:3000/announcements/'+ann.id.to_s %>">
+              <div>
+                <i class="fa fa-envelope fa-fw"></i> <%= ann.announcementSubject %>
+                <span class="pull-right text-muted small"><%= ann.created_at.strftime("%d / %m / %y") %></span>
+              </div>
+            </a>
+          </li>
+          <li class="divider"></li>
+          <% end %>
+          <li>
+            <div class="text-center link-block">
+              <a href="<%= 'http://192.168.0.200:3000/announcements' %>">
+                <strong>ÄHLISI</strong> &nbsp;
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </li>
+
+
+      <li>
+          <%= link_to  "<i class='fa fa-sign-out'></i>".html_safe+"Çykyş", :logout, :method => :delete  %>
+      </li>
+    </ul>
+
+  </nav>
+</div>

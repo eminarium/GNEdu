@@ -1,0 +1,2 @@
+module GroupLanguagesHelper
+end

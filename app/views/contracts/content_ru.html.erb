@@ -1,0 +1,193 @@
+<html>
+<body>
+
+<div class="contract"><div class="contract-middle"><div class="contract-middle-inner">
+
+          <table style="float: left; border: 1px solid #000;letter-spacing: -0.008em; font-size: 0.8em" id="Order">
+          <tr>
+            <td colspan="5" style="text-align: center; padding-top: 5px">ДОГОВОР № : <%= ((@contract.payment_type.paymentTypeName == "BANK AMALY") || (@contract.payment_type.paymentTypeName == "KART AMALY")) ? @contract.otherContractNo : @contract.seasonContractNo %></td>
+          </tr>
+          <tr>
+            <td colspan="5" style="text-align: center">&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="2" style="text-align: left; padding-left: 5px">Ф.И.О Слушателя</td>
+            <td colspan="3" style="text-align: left;"><%= @contract.student.fName+" "+@contract.student.lName+" "+@contract.student.patronymic %></td>
+          </tr>
+          <tr>
+            <td colspan="2" style="text-align: left; padding-left: 5px">Дата рождения (День,месяц,год)</td>
+            <td colspan="3" style="text-align: left;"><%= @contract.student.birthDate.day.to_s+" "+Contract::MONTH_NAMES_RU[@contract.student.birthDate.month-1].to_s+" "+@contract.student.birthDate.year.to_s %></td>
+          </tr>
+          <tr>
+            <td colspan="2" style="text-align: left; padding-left: 5px">Адрес и телефоны</td>
+            <td colspan="3" style="text-align: left;">
+              <%= @contract.student.addressBody %>
+              <% if (!@contract.student.mobilePhone.blank?) %>
+                | <%= @contract.student.mobilePhone %>
+              <% end %>
+              <% if (!@contract.student.smsMobilePhone.blank?) %>
+                | <%= @contract.student.smsMobilePhone %>
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" style="text-align: left; padding-left: 5px">Национальность</td>
+            <td colspan="3" style="text-align: left;"><%= @contract.student.nationality.nationalityName %></td>
+          </tr>
+          <tr>
+            <td style="text-align: left; padding-left: 5px">Курс</td>
+            <td style="text-align: left;"><%= @contract.group.subject.subjectFullName %></td>
+            <td style="text-align: left; padding-left: 5px">смена</td>
+            <td style="text-align: left;"><%= @contract.group.lesson_time.lessonTimeTitle %></td>
+            <td style="text-align: left;">Оплата : <%= (@contract.amountPaid!=0)? @contract.amountPaid : "-" %> DTM </td>
+          </tr>
+          <tr>
+            <td colspan="2" style="text-align: left; padding-left: 5px">Дата начала и окончания текущего семестра</td>
+            <td colspan="3" style="text-align: left;"><%= (@contract.season.seasonFromDate.strftime("%d-%m-%Y")+" / "+@contract.season.seasonToDate.strftime("%d-%m-%Y")) %></td>
+          </tr>
+          <tr>
+            <td colspan="5">&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="5" style="text-align: center;text-decoration: underline; font-weight: bold">Обязанности сторон</td>
+          </tr>
+          <tr>
+            <td colspan="5" style="text-align: left; padding-left: 5px">
+              1.	Согласно настоящему договору, отдел образования ИП «Гуджурлы Несил» именуемый в дальнейшем «Исполнитель», обязуется обучать «Слушателя» и обеспечить необходимыми условиями для получения образования на основании учебного плана.
+            </td>
+          </tr>
+          <tr>
+            <td colspan="5" style="text-align: left; padding-left: 5px">
+              2.	Согласно договору «Слушатель» обязуется соблюдать правила утвержденные отделом образования, указанные на обратной стороне настоящего договора.
+            </td>
+          </tr>
+          <tr>
+            <td colspan="5" style="text-align: left; padding-left: 5px">
+              3.	В случае, если «Слушатель» отказывается продолжать обучение по различным причинам, то «Слушатель» или сторона заключившая настоящий договор может получить оплату за обучение обратно, в течении 6 (шести) календарных дней со дня начала курсов. (Окончательная дата: <%= @contract.season.return_deadline.strftime("%d-%m-%Y") %> г. ). Для возврата оплаты за обучение обязательно предъявление свидетельства о рождении / паспорта и квитанции об оплате.
+            </td>
+          </tr>
+          <tr>
+            <td colspan="5" style="text-align: left; padding-left: 5px">
+              4.	Позже вышеуказанного срока в пункте 3 настоящего Договора (в течении 6 (шести) календарных дней со дня начала курсов), «Слушателю» не возвращаются оплаченные им ранее средства, в случае если «Слушатель» прекращает посещение занятий по собственному желанию, а также, если «Слушатель» исключается из-за нарушения внутренних правил.
+            </td>
+          </tr>
+          <tr>
+            <td colspan="5" style="text-align: left; padding-left: 5px">
+              5.	В случае возврата «Слушателю» оплаты за обучение, стоимость испорченных или исписанных(в любой мере) учебных книг, ранее выданных «Слушателю» при заключении настоящего Договора, не возвращается.
+            </td>
+          </tr>
+          <tr>
+            <td colspan="5" style="text-align: left; padding-left: 5px">
+              6.	Категорически запрещается регистрация или посещение занятий иного лица кроме самого «Слушателя».
+            </td>
+          </tr>
+          <tr>
+            <td colspan="5" style="text-align: left; padding-left: 5px">
+              7.	Согласно уставу «Исполнителя» на протяжении учебы  проводятся промежуточные экзамены по обучаемым направлениям. При условии регулярной посещяемости занятий и в случае если общее среднее всех промежуточных экзаменов «Слушателя» составляет не менее 50 (пятидесяти) баллов, то «Слушатель» получает допуск к финальному экзамену.
+            </td>
+          </tr>
+          <tr>
+            <td colspan="5" style="text-align: left; padding-left: 5px">
+              8.	Слушателю, получившему не менее 50 (пятьдесят) баллов на финальном экзамене выдается сертификат.
+            </td>
+          </tr>
+          <tr>
+            <td colspan="5" style="text-align: left; padding-left: 5px">
+              9.	Отдел образования не обязуется регистрировать «Слушателя», не прошедшего финальный экзамен, на следующий уровень того же направления. При желании повторить обучение по тому же направлению, «Слушатель» обязан повторно заключить с «Исполнителем» договор.
+            </td>
+          </tr>
+          <tr>
+            <td colspan="5" style="text-align: center;text-decoration: underline; font-weight: bold">Ответственности сторон</td>
+          </tr>
+          <tr>
+            <td colspan="5" style="text-align: left; padding-left: 5px">
+              Стороны берут на себя ответственность за выполнение требований настоящего договора, а также несут ответственность согласно действующему законодательству Туркменистана.
+            </td>
+          </tr>
+            <tr>
+              <td colspan="5" style="text-align: center;text-decoration: underline; font-weight: bold">Решение Споров</td>
+            </tr>
+          <tr>
+            <td colspan="5" style="text-align: left; padding-left: 5px">
+              Все споры и разногласия, возникающие на протяжении действия данного договора решаются путём переговоров. В случае если стороны не пришли к решающему обоюдному соглашению споры будут решаться согласно действующему законодательству Туркменистана.
+            </td>
+          </tr>
+            <tr>
+              <td colspan="5" style="text-align: center;text-decoration: underline; font-weight: bold">Другие условия</td>
+            </tr>
+          <tr>
+            <td colspan="5" style="text-align: left; padding-left: 5px">
+              Настоящий договор составлен в 2 (двух) экземплярах, имеющих одинаковую юридическую силу. Один экземпляр выдаётся «Слушателю», а другой остаётся у «Исполнителя».
+            </td>
+          </tr>
+          <tr>
+            <td colspan="5" style="text-align: center">&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="5" style="text-align: center;text-decoration: underline; font-weight: bold">Подписи Сторон </td>
+          </tr>
+          <tr>
+            <td colspan="5" style="text-align: center">&nbsp;</td>
+          </tr>
+
+          <tr>
+            <td colspan="2" style="text-align: left; padding-left: 5px">
+              “Слушатель” (или Представитель)
+            </td>
+            <td></td>
+            <td colspan="2" style="text-align: right; padding-left: 5px">
+              “Исполнитель”
+            </td>
+          </tr>
+          <tr>
+            <td colspan="5" style="text-align: center">&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="2" style="text-align: left;">
+              <%= @contract.student.lName+" "+@contract.student.fName[0,1]+"." %> __________________
+            </td>
+            <td></td>
+            <td colspan="2" style="text-align: right; padding-left: 5px">
+              Главный Специалист Г. Яматова _______________
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan="5">&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="2" style="text-align: left; padding-left: 5px;">Книгу получил(а) : _______________</td>
+            <td></td>
+            <td colspan="2" style="text-align: right; padding-right: 10px">Дата : <%= @contract.registrationDate.strftime("%d / %m / %Y") %></td>
+          </tr>
+          <tr>
+            <td colspan="5">&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="5">&nbsp;</td>
+          </tr>
+          </table>
+
+          </div></div></div>
+
+
+<style>
+
+    @page {
+        size: A4 portrait;
+    }
+
+    @media print {
+        html, body{margin: 0 0 0 0; padding: 0 7 0 7;}
+        .contract{box-sizing: border-box; height: 100%; width: 100%; border: 1px solid transparent; page-break-after: always;}
+        .contract-middle{height: 100%; width: 100%; display: table;}
+        .contract-middle-inner{height: 100%; width: 100%; display: table-cell; vertical-align: middle;}
+    }
+
+</style>
+
+</body>
+</html>
+
+
+

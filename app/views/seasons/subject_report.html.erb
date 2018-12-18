@@ -1,0 +1,108 @@
+<html>
+<body>
+
+<% @teacher_count = 0 %>
+<% @group_count = 0 %>
+
+<table>
+  <thead>
+      <tr>
+        <th style="border-width:1; border-style: groove" colspan="3"> TAPGYRYŇ UGURLAR WE DERSLER BOÝUNÇA STATISTIKASY</th>
+      </tr>
+      <tr>
+            <tr>
+                <th style="border-width:1; border-style: groove" rowspan="2"><%= @season.seasonTitle %> (<%= @season.seasonNo %> T)</th>
+                <th style="border-width:1; border-style: groove" colspan="2">Seneler</th>
+            </tr>
+            <tr>
+                <th style="border-width:1; border-style: groove"><%= @season.seasonFromDate.strftime("%d-%m-%Y") %></th>
+                <th style="border-width:1; border-style: groove"><%= @season.seasonToDate.strftime("%d-%m-%Y") %></th>
+            </tr>
+      </tr>
+  </thead>
+  <tbody>
+
+
+    <tr>
+        <td style="border-width:1; border-style: groove; text-align: center" colspan="3"> UGURLAR BOÝUNÇA </td>
+    </tr>
+
+    <tr>
+      <td style="border-width:1; border-style: groove; text-align: center"> KATEGORIÝALAR </td>
+      <td style="border-width:1; border-style: groove; text-align: center"> DIŇLEÝJILER </td>
+      <td style="border-width:1; border-style: groove; text-align: center"> TOPARLAR </td>
+    </tr>
+
+  <% SubjectCategory.all.order(:id).each do |subj_cat| %>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> <%= subj_cat.subjectCategoryFullName %> </td>
+
+        <td style="border-width:1; border-style: groove; text-align: right">
+            <% @this_season_contracts = Contract.where(:season_id => @season.id, :isMoneyReturned => false) %>
+            <% @this_season_subject_category_contracts_list = Contract.where(:isMoneyReturned => false, :group_id => Group.select(:id).where(:subject_id => Subject.where(:subject_category_id => subj_cat)), :season_id => @season.id) %>
+            <%= @this_season_subject_category_contracts_list.count %> (<%= (@this_season_subject_category_contracts_list.count.to_f / @this_season_contracts.count*100).round(2) %>%)
+        </td>
+
+        <td style="border-width:1; border-style: groove; text-align: right">
+          <%= Group.where(:season_id => @season.id, :isClosed => false, :subject_id => Subject.where(:subject_category_id => subj_cat)).count %>
+        </td>
+      </tr>
+
+
+  <% end %>
+
+      <tr><td colspan="3"></td></tr>
+      <tr><td style="background: #5E5E5E" colspan="3"></td></tr>
+      <tr><td colspan="3"></td></tr>
+
+  <tr>
+    <td style="border-width:1; border-style: groove; text-align: center" colspan="3"> DERSLER BOÝUNÇA </td>
+  </tr>
+
+  <tr>
+    <td style="border-width:1; border-style: groove; text-align: center"> DERSLER </td>
+    <td style="border-width:1; border-style: groove; text-align: center"> DIŇLEÝJILER </td>
+    <td style="border-width:1; border-style: groove; text-align: center"> TOPARLAR </td>
+  </tr>
+
+  <% Subject.all.order(:subject_category_id).order(:subjectLevel).each do |subj| %>
+
+      <tr>
+        <td style="border-width:1; border-style: groove"> <%= subj.subjectFullName %> </td>
+
+        <td style="border-width:1; border-style: groove; text-align: right">
+            <% @this_season_subject_contracts_list = Contract.where(:isMoneyReturned => false, :group_id => Group.select(:id).where(:subject_id => subj.id), :season_id => @season.id) %>
+            <%= @this_season_subject_contracts_list.count %> (<%= (@this_season_subject_contracts_list.count.to_f / @this_season_contracts.count*100).round(2) %>%)
+        </td>
+
+        <td style="border-width:1; border-style: groove; text-align: right">
+          <%= Group.where(:season_id => @season.id, :isClosed => false, :subject_id => subj).count %>
+        </td>
+
+      </tr>
+
+
+  <% end %>
+
+
+  </tbody>
+</table>
+
+<style>
+
+    @page {
+        size: A4 portrait;
+    }
+
+    @media print {
+        html, body{margin: 0 0 0 0; padding: 0 7 0 7;}
+        .invoice{box-sizing: border-box; height: 100%; width: 100%; border: 1px solid transparent; page-break-after: always;}
+        .invoice-middle{height: 100%; width: 100%; display: table;}
+        .invoice-middle-inner{height: 100%; width: 100%; display: table-cell; vertical-align: middle;}
+    }
+
+</style>
+
+</body>
+</html>

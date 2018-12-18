@@ -1,0 +1,77 @@
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<div><label class="col-sm-4 control-label">Suraty </label>
+  <div class="col-sm-8"><%= f.file_field :avatar_url, :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Ady</label>
+  <div class="col-sm-8"><%= f.text_field :userFName, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Familiýasy</label>
+  <div class="col-sm-8"><%= f.text_field :userLName, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Role</label>
+  <div class="col-sm-8">
+    <%= f.collection_select(:role_id, @roles, :id, :name, :include_blank => t("Please_select"), :class => "form-control" ) %>
+  </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Ulanyjy Ady</label>
+  <div class="col-sm-8"><%= f.text_field :userLogin, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Gizlin Sözi</label>
+  <div class="col-sm-8"><%= f.password_field :password, :type => "password", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Gizlin Sözi Gaýtadan</label>
+  <div class="col-sm-8"><%= f.password_field :password_confirmation, :type => "password", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Blocked ?</label>
+  <div class="col-sm-8"><%= f.check_box :isBlocked, :type => "checkbox", :class => "checkbox checkbox-primary", :id => "checkboxProjector" %></div>
+  <label for="checkboxProjector">
+
+  </label>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Bellikler</label>
+  <div class="col-sm-8"><%= f.text_area :notes, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div class="actions">
+  <%= f.submit "Kabul Et", :class => "btn btn-success" %>
+</div>
+
+<% end %>

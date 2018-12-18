@@ -1,0 +1,78 @@
+<h1>Topar Dilleriniň Sanawy</h1>
+<%= link_to "<i class='fa fa-plus'></i>&nbsp; Täze Topar Dili".html_safe, new_group_language_path, :class => "btn btn-primary"  %>
+<% if (notice) %>
+    <div class="alert alert-success fade in">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <p id="notice"><%= notice %></p>
+    </div>
+<% end %>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Topar Dilleriniň Sanawy</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="ibox-content">
+
+          <div class="table-responsive">
+
+
+            <table class="table table-striped table-bordered table-hover dataTables-example">
+              <thead>
+              <tr>
+                <th>Dili</th>
+                <th>Gysgaça</th>
+                <th>Bellikler</th>
+                <th>Amallar</th>
+              </tr>
+              </thead>
+
+              <tbody>
+              <% @group_languages.each do |group_language| %>
+                  <tr>
+                    <td><%= link_to group_language.groupLanguageFullName, group_language %></td>
+                    <td><%= link_to group_language.groupLanguageShortName, group_language %></td>
+                    <td><%= group_language.notes %></td>
+                    <td><div style="float: right">
+                      <%= link_to "Giňişleýin", group_language, :class => "btn btn-success" %>
+                      <%= link_to "Üýtget", edit_group_language_path(group_language), :class => "btn btn-warning" %>
+                      <% link_to "Boz", group_language, method: :delete, data: { confirm: "Are you sure ?" }, :class => "btn btn-danger" %>
+                    </div></td>
+                  </tr>
+              <% end %>
+              </tbody>
+
+              <tfoot>
+              <tr>
+                <th>Dili</th>
+                <th>Gysgaça</th>
+                <th>Bellikler</th>
+                <th>Amallar</th>
+              </tr>
+              </tfoot>
+
+            </table>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

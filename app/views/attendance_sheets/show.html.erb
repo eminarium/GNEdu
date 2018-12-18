@@ -1,0 +1,107 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+
+    <div class="col-lg-10">
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Topar Gatnaşygy</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+        <div class="ibox-content">
+          <h3>
+            Topar Gatnaşygy
+          </h3>
+          <br>
+
+
+          <p id="notice"><%= notice %></p>
+
+
+          <div><label class="col-sm-1 control-label">Topar:</label>
+            <div class="col-sm-2"><i><%= @attendance_sheet.group.groupTitle %></i></div>
+          </div>
+
+          <div><label class="col-sm-2 control-label">Mugallymy : </label>
+            <div class="col-sm-3"><i><%= @attendance_sheet.group.teacher.full_name %></i></div>
+          </div>
+
+          <br><br>
+
+          <div><label class="col-sm-1 control-label">Senesi:</label>
+            <div class="col-sm-2"><i><%= @attendance_sheet.attendanceSheetDate.strftime("%d.%m.%y") %></i></div>
+          </div>
+
+          <br><br>
+
+          <div><label class="col-sm-4 control-label">Bellikler</label>
+            <div class="col-sm-8"><i><%= @attendance_sheet.attendanceSheetNotes %></i></div>
+          </div>
+          <br><br>
+          <div>
+            <label class="col-sm-1 control-label"><u><b>T/b</b></u></label>
+            <label class="col-sm-6 control-label"><u><b>Diňleýji</b></u></label>
+            <label class="col-sm-2 control-label"><u><b>Gatnaşygy</b></u></label>
+            <label class="col-sm-3 control-label"><u><b>Bellikler</b></u></label>
+          </div>
+          <br><br>
+          <% @counter = 0 %>
+          <% @attendance_sheet.attendances.each do |att| %>
+          <%# Attendance.where(:attendanceSheet_id => @attendance_sheet.id).each do |att| %>
+
+              <div class="col-sm-1"><% @counter = @counter + 1 %> <%= @counter %></div>
+              <div class="col-sm-6"><%= Student.find_by_id(Contract.find_by_id(att.contract_id).student_id).first_and_last_name %></div>
+              <div class="col-sm-2">
+
+                <% if (att.lesson_1) %>
+                    <i class="fa fa-check" style="color: lawngreen"></i>
+                <% else %>
+                    <i class="fa fa-times" style="color: red"></i>
+                <% end %>
+                &nbsp;
+                <% if (att.lesson_2) %>
+                    <i class="fa fa-check" style="color: lawngreen"></i>
+                <% else %>
+                    <i class="fa fa-times" style="color: red"></i>
+                <% end %>
+                &nbsp;
+                <% if (att.lesson_3) %>
+                    <i class="fa fa-check" style="color: lawngreen"></i>
+                <% else %>
+                    <i class="fa fa-times" style="color: red"></i>
+                <% end %>
+
+              </div>
+              <div class="col-sm-3"><%= att.attendanceNotes %> </div> <br><br>
+
+          <% end %>
+
+
+          <br>
+
+          <%= link_to 'Üýtget', edit_attendance_sheet_path(@attendance_sheet), :class => "btn btn-warning" %> &nbsp;
+          <%# link_to 'Back', attendance_sheets_path, :class => "btn btn-outline btn-success" %>
+
+
+        </div>
+
+      </div>
+    </div>
+
+
+  </div>
+</div>

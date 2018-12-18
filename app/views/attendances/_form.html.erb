@@ -1,0 +1,58 @@
+<%# @temp_ids = Array.new() %>
+
+<%# @ids.each do |t| %>
+    <%# @temp_ids.push(t.student.id) %>
+<%# end %>
+
+<%# @studs_ids = Student.where(:id => @temp_ids).order(:fName).select(:id) %>
+<%# @ids = Contract.where(:student_id=>@studs_ids) %>
+
+
+<div>
+  <label class="col-sm-4 control-label">Senesi : </label>
+  <div class="col-sm-4"><%= date_select :calendar, Date.today, :order => [:day, :month, :year] %></div>
+</div>
+<br><br>
+<hr>
+<div>
+  <label class="col-sm-5 control-label"><u><b>Diňleýji</b></u></label>
+  <label class="col-sm-2 control-label"><u><b>Gatnaşygy</b></u></label>
+  <label class="col-sm-4 control-label"><u><b>Bellikler</b></u></label>
+</div>
+
+<br><br>
+
+<%= form_tag attendances_path do %>
+    <% @gatnasyklar.each do |attendance| %>
+        <%= fields_for 'attendances[]', attendance do |a| %>
+
+            <div>
+              <label class="col-sm-5 control-label"><%= @counter+1 %>) <%= @ids[@counter].student.first_and_last_name %></label>
+              <div class="col-sm-2"><%= a.check_box :lesson_1 %></div>
+              <div class="col-sm-2"><%= a.check_box :lesson_2 %></div>
+              <div class="col-sm-2"><%= a.check_box :lesson_3 %></div>
+              <div class="col-sm-4"><%= a.text_area :attendanceNotes, :type => "text", :rows => 1, :class => "form-control"  %></div>
+            </div>
+
+            <br><br>
+
+            <div class="field" hidden="hidden">
+              <%= a.text_field :contract_id, :value => @ids[@counter].id %>
+            </div>
+
+            <div class="field" hidden="hidden">
+              <%= a.datetime_select :attendanceDate %>
+            </div>
+
+
+
+        <% end %>
+        <% @counter = @counter +1 %>
+    <% end %>
+
+    <br>
+    <div class="actions">
+      <%= submit_tag "Kabul Et", :class => "btn btn-success" %>
+    </div>
+
+<% end %>

@@ -1,0 +1,67 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-5">
+
+
+
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Duýduryş Maglumatlary</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+        <div class="ibox-content">
+          <h3>
+            Duýduryş Maglumatlary
+          </h3>
+          <br>
+
+
+          <p id="notice"><%= notice %></p>
+
+
+          <div><label class="col-sm-4 control-label">Mowzugy</label>
+            <div class="col-sm-8"><i><%= @announcement.announcementSubject %></i></div>
+          </div>
+
+          <br><br><br>
+
+          <div><label class="col-sm-4 control-label">Göwresi</label>
+            <div class="col-sm-8"><i><%= @announcement.announcementBody %></i></div>
+          </div>
+
+          <br><br><br>
+
+          <% if (check_restrictions(controller_name, 'edit')) %>
+              <%= link_to 'Üýtget', edit_announcement_path(@announcement), :class => "btn btn-warning" %> &nbsp;
+          <% end %>
+
+          <% if (check_restrictions(controller_name, 'index')) %>
+              <%= link_to 'Back', announcements_path, :class => "btn btn-outline btn-success" %>
+          <% end %>
+
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
+</div>

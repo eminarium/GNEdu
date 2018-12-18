@@ -1,0 +1,583 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+<div class="sidebar-collapse">
+<ul class="nav metismenu" id="side-menu">
+<li class="nav-header">
+  <div class="dropdown profile-element">
+    <span>
+      <% if !current_user.avatar_url.blank? %>
+        <%= image_tag "/uploads/avatars/"+current_user.avatar_url, :alt => "image", :class => "img-circle", :width => 48 %>
+      <% else %>
+        <%= image_tag "/uploads/avatars/gn_logo.png", :alt => "image", :class => "img-circle", :width => 48 %>
+      <% end %>
+    </span>
+    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="clear"> <span class="block m-t-xs">
+                              <strong class="font-bold">
+                                <% if current_user %>
+                                    <%= current_user.userFName+" "+current_user.userLName %>
+                                <% end %>
+                              </strong>
+                             </span> <span class="text-muted text-xs block"><%= current_user.role.name %> <b class="caret"></b></span> </span> </a>
+    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+      <li><%= link_to 'Profile', 'http://192.168.0.200:3000/users/'+current_user.id.to_s+'/edit_profile' %></li>
+      <li><a href="contacts.html">Contacts</a></li>
+      <li><a href="mailbox.html">Mailbox</a></li>
+      <li class="divider"></li>
+      <li><%= link_to  "Logout", :logout, :method => :delete  %></li>
+    </ul>
+  </div>
+  <div class="logo-element">
+    IN+
+  </div>
+</li>
+
+<li <% if (controller_name == 'user_sessions') %>class="active"<% end %> >
+  <a href="/welcome_<%= current_user.role.name.to_s %>"><i class="fa fa-tags"></i> <span class="nav-label">Esasy Sahypa</span></a>
+</li>
+
+<!-- ######################################## DERS MEÝILNAMASY BÖLÜMI - START ##################################### -->
+<% if (check_restrictions('timetables', 'index') || check_restrictions('timetables', 'plan') || check_restrictions('groups', 'availability') || check_restrictions('timetables', 'class_states') || check_restrictions('timetables', 'teachers_states')) %>
+    <li <% if ((controller_name == 'groups' && action_name == 'availability') || (controller_name == 'timetables' && (action_name == 'plan' || action_name == 'index' || action_name == 'class_states' || action_name == 'teachers_states'))) %>class="active"<% end %> >
+        <a href="index-2.html"><i class="fa fa-pencil-square-o"></i> <span class="nav-label">Ders Meýilnamasy</span> <span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level">
+
+          <% if (check_restrictions('timetables', 'index')) %>
+            <li <% if controller_name == 'timetables' && action_name == 'index' %>class="active"<% end %> >
+                <a href="/timetables"><i class="fa fa-caret-right"></i>Sanaw</a>
+            </li>
+          <% end %>
+
+          <% if (check_restrictions('timetables', 'plan')) %>
+            <li <% if controller_name == 'timetables' && action_name == 'plan' %>class="active"<% end %> >
+                <a href="/timetables/plan"><i class="fa fa-caret-right"></i>Meýilnama</a>
+            </li>
+          <% end %>
+
+          <% if (check_restrictions('groups', 'availability')) %>
+              <li <% if controller_name == 'groups' && action_name == 'availability' %>class="active"<% end %> >
+                <a href="/groups/availability"><i class="fa fa-caret-right"></i>Orunlar</a>
+              </li>
+          <% end %>
+
+          <% if (check_restrictions('timetables', 'class_states')) %>
+              <li <% if controller_name == 'timetables' && action_name == 'class_states' %>class="active"<% end %> >
+                <a href="/timetables/class_states"><i class="fa fa-caret-right"></i>Synplar Ýagdaýy</a>
+              </li>
+          <% end %>
+
+          <% if (check_restrictions('timetables', 'teachers_states')) %>
+              <li <% if controller_name == 'timetables' && action_name == 'teachers_states' %>class="active"<% end %> >
+                <a href="/timetables/teachers_states"><i class="fa fa-caret-right"></i>Mugallym Sanawy</a>
+              </li>
+          <% end %>
+
+        </ul>
+    </li>
+<% end %>
+<!-- ######################################## DERS MEÝILNAMASY BÖLÜMI - END ##################################### -->
+
+<!-- ######################################## OKUW BÖLÜMI - START ##################################### -->
+<% if (check_restrictions('teachers', 'index') || check_restrictions('groups', 'index') || check_restrictions('timetables', 'available_teachers')) %>
+    <li <% if (controller_name == 'teachers' || controller_name == 'groups' || (controller_name == 'timetables' && action_name == 'available_teachers')) %>class="active"<% end %> >
+      <a href="index-2.html"><i class="fa fa-university"></i> <span class="nav-label">Okuw Bölümi</span> <span class="fa arrow"></span></a>
+      <ul class="nav nav-second-level">
+
+        <% if (check_restrictions('teachers', 'index')) %>
+            <li <% if controller_name == 'teachers' && action_name == 'index' %>class="active"<% end %> >
+              <a href="/teachers"><i class="fa fa-graduation-cap"></i>Mugallymlar</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('timetables', 'available_teachers')) %>
+            <li <% if controller_name == 'timetables' && action_name == 'available_teachers' %>class="active"<% end %> >
+              <a href="/timetables/available_teachers"><i class="fa fa-search-plus"></i>Elýeter Mugallym</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('groups', 'index')) %>
+            <li <% if controller_name == 'groups' && action_name == 'index' %>class="active"<% end %> >
+              <a href="/groups"><i class="fa fa-group"></i>Toparlar</a>
+            </li>
+        <% end %>
+
+      </ul>
+    </li>
+<% end %>
+<!-- ######################################## OKUW BÖLÜMI - END ##################################### -->
+
+<!-- ######################################## DIŇLEÝJILER - START ##################################### -->
+<% if (check_restrictions('students', 'new') || check_restrictions('students', 'search')) %>
+    <li <% if (controller_name == 'students' && (action_name == 'index' || action_name == 'new' || action_name == 'search'))  %>class="active"<% end %> >
+      <a href="index-2.html"><i class="fa fa-user"></i> <span class="nav-label">Diňleýjiler</span> <span class="fa arrow"></span></a>
+      <ul class="nav nav-second-level">
+
+        <% if (check_restrictions('students', 'new')) %>
+            <li <% if (controller_name == 'students' && action_name == 'new') %>class="active"<% end %> >
+              <a href="/students/new"><i class="fa fa-plus"></i>Täze Diňleýji</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('students', 'search')) %>
+            <li <% if (controller_name == 'students' && action_name == 'search') %>class="active"<% end %> >
+              <a href="/students/search"><i class="fa fa-search-plus"></i>Diňleýji Gözlegi</a>
+            </li>
+        <% end %>
+
+      </ul>
+    </li>
+<% end %>
+
+<!-- ######################################## DIŇLEÝJILER BÖLÜMI - END ##################################### -->
+
+
+
+<!-- ######################################## ÝAZYLYŞYKLAR - START ##################################### -->
+<% if (check_restrictions('contracts', 'new') || check_restrictions('contracts', 'search') || check_restrictions('contracts', 'index')) %>
+    <li <% if (controller_name == 'contracts' && (action_name == 'index' || action_name == 'new' || action_name == 'search'))  %>class="active"<% end %> >
+    <a href="index-2.html"><i class="fa fa-clipboard"></i> <span class="nav-label">Ýazylyşyklar</span> <span class="fa arrow"></span></a>
+    <ul class="nav nav-second-level">
+
+      <% if (check_restrictions('contracts', 'new')) %>
+          <li <% if (controller_name == 'contracts' && action_name == 'new') %>class="active"<% end %> >
+            <a href="/contracts/new"><i class="fa fa-plus"></i>Täze Ýazylyşyk</a>
+          </li>
+      <% end %>
+
+      <% if (check_restrictions('contracts', 'search')) %>
+          <li <% if (controller_name == 'contracts' && action_name == 'search') %>class="active"<% end %> >
+            <a href="/contracts/search"><i class="fa fa-search-plus"></i>Ýazylyşyk Gözlegi</a>
+          </li>
+      <% end %>
+
+      <% if (check_restrictions('contracts', 'index')) %>
+          <li <% if (controller_name == 'contracts' && action_name == 'index') %>class="active"<% end %> >
+            <a href="/contracts"><i class="fa fa-list-ul"></i>Ýazylyşyk Sanawy</a>
+          </li>
+      <% end %>
+
+    </ul>
+    </li>
+<% end %>
+
+<!-- ######################################## ÝAZYLYŞYKLAR BÖLÜMI - END ##################################### -->
+
+<!-- ######################################## OKUW SYNAGLARY - START ##################################### -->
+<% if (check_restrictions('midterms', 'index') || check_restrictions('finals', 'index')) %>
+    <li <% if (controller_name == 'midterms' || controller_name == 'finals' && (action_name == 'index' || action_name == 'new' || action_name == 'search'))  %>class="active"<% end %> >
+      <a href="index-2.html"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Okuw Synaglary</span> <span class="fa arrow"></span></a>
+      <ul class="nav nav-second-level">
+
+        <% if (check_restrictions('midterms', 'index')) %>
+            <li <% if (controller_name == 'midterms' && action_name == 'index') %>class="active"<% end %> >
+              <a href="/midterms"><i class="fa fa-caret-right"></i>Arasynaglar</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('finals', 'index')) %>
+            <li <% if (controller_name == 'finals' && action_name == 'index') %>class="active"<% end %> >
+              <a href="/finals"><i class="fa fa-caret-right"></i>Final Synaglary</a>
+            </li>
+        <% end %>
+
+      </ul>
+    </li>
+<% end %>
+<!-- ######################################## OKUW SYNAGLARY BÖLÜMI - END ##################################### -->
+
+
+<!-- ######################################## GIRIŞ SYNAGLAR BÖLÜMI - START ##################################### -->
+
+<% if (check_restrictions('exams', 'index')) %>
+    <li <% if controller_name == 'exams' && (action_name == 'index' ||  action_name == 'new' || action_name == 'edit') %>class="active"<% end %> >
+        <a href="/exams"><i class="fa fa-pencil-square-o"></i> <span class="nav-label">Giriş Synaglar</span></a>
+    </li>
+<% end %>
+<!-- ######################################## GIRIŞ SYNAGLAR BÖLÜMI - END ##################################### -->
+
+
+<!-- ######################################## HABARLAR - START ##################################### -->
+<% if (check_restrictions('notes', 'index') || check_restrictions('events', 'index') || check_restrictions('announcements', 'index')) %>
+    <li <% if (controller_name == 'notes' || controller_name == 'events' || controller_name == 'announcements' )  %>class="active"<% end %> >
+      <a href="index-2.html"><i class="fa fa-rss"></i> <span class="nav-label">Habarlar</span> <span class="fa arrow"></span></a>
+      <ul class="nav nav-second-level">
+
+        <% if (check_restrictions('announcements', 'index')) %>
+            <li <% if (controller_name == 'announcements' && action_name == 'index') %>class="active"<% end %> >
+              <a href="/announcements"><i class="fa fa-caret-right"></i>Bildirişler</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('notes', 'index')) %>
+            <li <% if (controller_name == 'notes' && action_name == 'index') %>class="active"<% end %> >
+              <a href="/notes"><i class="fa fa-caret-right"></i>Bellikler</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('events', 'index')) %>
+            <li <% if (controller_name == 'events' && action_name == 'index') %>class="active"<% end %> >
+              <a href="/events"><i class="fa fa-caret-right"></i>Çäreler</a>
+            </li>
+        <% end %>
+
+      </ul>
+    </li>
+<% end %>
+<!-- ######################################## HABARLAR BÖLÜMI - END ##################################### -->
+
+<!-- ######################################## KITAPLAR - START ##################################### -->
+<% if (check_restrictions('authors', 'index') || check_restrictions('books', 'index') || check_restrictions('books', 'new') || check_restrictions('books', 'search') || check_restrictions('book_lends', 'index') || check_restrictions('book_lends', 'new') || check_restrictions('book_contests', 'index') || check_restrictions('book_contests', 'new') || check_restrictions('contestant_books', 'index') || check_restrictions('contestant_books', 'new') || check_restrictions('book_contest_participants', 'index') || check_restrictions('book_contest_participants', 'new')) %>
+    <li <% if (controller_name == 'books' && (action_name == 'index' || action_name == 'new' || action_name == 'search') || controller_name == 'authors' || controller_name == 'book_lends' && (action_name == 'index' || action_name == 'new')  || controller_name == 'book_contests' && (action_name == 'index' || action_name == 'new')  || controller_name == 'book_contest_participants' && (action_name == 'index' || action_name == 'new'))  %>class="active"<% end %> >
+      <a href="#"><i class="fa fa-book"></i> <span class="nav-label">Kitaplar</span> <span class="fa arrow"></span></a>
+      <ul class="nav nav-second-level">
+
+        <% if (check_restrictions('books', 'new')) %>
+            <li <% if (controller_name == 'books' && action_name == 'new') %>class="active"<% end %> >
+              <a href="/books/new"><i class="fa fa-caret-right"></i>Täze Kitap</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('books', 'search')) %>
+            <li <% if (controller_name == 'books' && action_name == 'search') %>class="active"<% end %> >
+              <a href="/books/search"><i class="fa fa-caret-right"></i>Kitap Gözlegi</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('books', 'index')) %>
+            <li <% if (controller_name == 'books' && action_name == 'index') %>class="active"<% end %> >
+              <a href="/books"><i class="fa fa-caret-right"></i>Kitaplaryň Sanawy</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('authors', 'index')) %>
+            <li <% if (controller_name == 'authors') %>class="active"<% end %> >
+              <a href="/authors"><i class="fa fa-caret-right"></i>Awtorlar</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('book_lends', 'index') || check_restrictions('book_lends', 'new')) %>
+            <li <% if ( controller_name == 'book_lends' && (action_name == 'index' || action_name == 'new') )  %>class="active"<% end %>>
+            <a href="#"> Berilen Kitaplar<span class="fa arrow"> </span></a>
+                <ul class="nav nav-third-level">
+
+                  <% if (check_restrictions('book_lends', 'index')) %>
+                      <li <% if (controller_name == 'book_lends' &&  action_name == 'index') %>class="active"<% end %> >
+                        <a href="/book_lends"><i class="fa fa-caret-right"></i>Berilen Kitaplar</a>
+                      </li>
+                  <% end %>
+
+                  <% if (check_restrictions('book_lends', 'new')) %>
+                      <li <% if (controller_name == 'book_lends' && action_name == 'new') %>class="active"<% end %> >
+                        <a href="/book_lends/new"><i class="fa fa-caret-right"></i>Täze Kitap Berme</a>
+                      </li>
+                  <% end %>
+                </ul>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('book_contests', 'index') || check_restrictions('book_contests', 'new') || check_restrictions('contestant_books', 'index') || check_restrictions('contestant_books', 'new') || check_restrictions('book_contest_participants', 'index') || check_restrictions('book_contest_participants', 'new')) %>
+            <li <% if (controller_name == 'book_contests' && (action_name == 'index' || action_name == 'new') || controller_name == 'contestant_books' && (action_name == 'index' || action_name == 'new') || controller_name == 'book_contest_participants' && (action_name == 'index' || action_name == 'new'))  %>class="active"<% end %>>
+              <a href="#"> Kitap Ýaryşlary<span class="fa arrow"> </span></a>
+              <ul class="nav nav-third-level">
+
+                <% if (check_restrictions('book_contests', 'index')) %>
+                    <li <% if (controller_name == 'book_contests' &&  action_name == 'index') %>class="active"<% end %> >
+                      <a href="/book_contests"><i class="fa fa-caret-right"></i>Ýaryşlaryň Sanawy</a>
+                    </li>
+                <% end %>
+
+                <% if (check_restrictions('book_contests', 'new')) %>
+                    <li <% if (controller_name == 'book_contests'  && action_name == 'new') %>class="active"<% end %> >
+                      <a href="/book_contests/new"><i class="fa fa-caret-right"></i>Täze Kitap Ýaryşy</a>
+                    </li>
+                <% end %>
+
+                <% if (check_restrictions('contestant_books', 'index')) %>
+                    <li <% if (controller_name == 'contestant_books' &&  action_name == 'index') %>class="active"<% end %> >
+                      <a href="/contestant_books"><i class="fa fa-caret-right"></i>Ýaryş Kitaplary</a>
+                    </li>
+                <% end %>
+
+                <% if (check_restrictions('contestant_books', 'new')) %>
+                    <li <% if (controller_name == 'contestant_books' &&  action_name == 'new') %>class="active"<% end %> >
+                      <a href="/contestant_books/new"><i class="fa fa-caret-right"></i>Täze Ýaryş Kitaby</a>
+                    </li>
+                <% end %>
+
+                <% if (check_restrictions('book_contest_participants', 'index')) %>
+                    <li <% if (controller_name == 'book_contest_participants' &&  action_name == 'index') %>class="active"<% end %> >
+                      <a href="/book_contest_participants"><i class="fa fa-caret-right"></i>Gatnaşyjylar</a>
+                    </li>
+                <% end %>
+
+                <% if (check_restrictions('book_contest_participants', 'new')) %>
+                    <li <% if (controller_name == 'book_contest_participants' &&  action_name == 'new') %>class="active"<% end %> >
+                      <a href="/book_contest_participants/new"><i class="fa fa-caret-right"></i>Täze Gatnaşyjy</a>
+                    </li>
+                <% end %>
+
+              </ul>
+            </li>
+        <% end %>
+
+      </ul>
+    </li>
+<% end %>
+<!-- ######################################## KITAPLAR BÖLÜMI - END ##################################### -->
+
+
+
+<!-- ######################################## NOBAT - START ##################################### -->
+<% if (check_restrictions('positions', 'index') || check_restrictions('orders', 'index')) %>
+    <li <% if (controller_name == 'positions' || controller_name == 'orders' && (action_name == 'index' || action_name == 'new'))  %>class="active"<% end %> >
+      <a href="index-2.html"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Nobat Ulgamy</span> <span class="fa arrow"></span></a>
+      <ul class="nav nav-second-level">
+
+        <% if (check_restrictions('positions', 'index')) %>
+            <li <% if (controller_name == 'positions' && action_name == 'index') %>class="active"<% end %> >
+              <a href="/positions"><i class="fa fa-caret-right"></i>Işgär Orunlary</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('orders', 'index')) %>
+            <li <% if (controller_name == 'orders' && action_name == 'index') %>class="active"<% end %> >
+              <a href="/orders"><i class="fa fa-caret-right"></i>Nobat Belgisi</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('orders', 'proceed')) %>
+            <li <% if (controller_name == 'orders' && action_name == 'proceed') %>class="active"<% end %> >
+              <a href="/orders/proceed"><i class="fa fa-caret-right"></i>Nobat Geçir</a>
+            </li>
+        <% end %>
+
+      </ul>
+    </li>
+<% end %>
+<!-- ######################################## NOBAT BÖLÜMI - END ##################################### -->
+
+<!-- ######################################## SAZLAMALAR BÖLÜMI - START ##################################### -->
+<% if (check_restrictions('users', 'index') || check_restrictions('roles', 'index') || check_restrictions('seasons', 'index') || check_restrictions('subjects', 'index') || check_restrictions('subject_categories', 'index') || check_restrictions('rooms', 'index') || check_restrictions('lesson_times', 'index') || check_restrictions('nationalities', 'index') || check_restrictions('group_languages', 'index') || check_restrictions('book_languages', 'index') || check_restrictions('group_genders', 'index') || check_restrictions('discounts', 'index') || check_restrictions('payment_types', 'index')  || check_restrictions('holidays', 'index') || check_restrictions('settings', 'index') || check_restrictions('states', 'index') || check_restrictions('cities', 'index') || check_restrictions('high_schools', 'index') || check_restrictions('special_schools', 'index')) %>
+    <li <% if controller_name == 'seasons' || controller_name == 'subjects' || controller_name == 'subject_categories' || controller_name == 'rooms' || controller_name == 'lesson_times' || controller_name == 'nationalities' || controller_name == 'group_languages' || controller_name == 'book_languages'|| controller_name == 'group_genders' || controller_name == 'discounts' || controller_name == 'payment_types'  || controller_name == 'holidays' || controller_name == 'settings' || controller_name == 'high_schools'  || controller_name == 'special_schools' || controller_name == 'states' || controller_name == 'cities' || controller_name == 'users' || controller_name == 'roles' %>class="active"<% end %> >
+      <a href="index-2.html"><i class="fa fa-gears"></i> <span class="nav-label">Sazlamalar</span> <span class="fa arrow"></span></a>
+      <ul class="nav nav-second-level">
+
+        <% if (check_restrictions('users', 'index')) %>
+             <li <% if controller_name == 'users' %>class="active"<% end %> >
+              <a href="/users"><i class="fa fa-caret-right"></i>Ulanyjylar</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('roles', 'index')) %>
+            <li <% if controller_name == 'roles' %>class="active"<% end %> >
+              <a href="/roles"><i class="fa fa-caret-right"></i>Rollar</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('seasons', 'index')) %>
+            <li <% if controller_name == 'seasons' %>class="active"<% end %> >
+              <a href="/seasons"><i class="fa fa-caret-right"></i>Tapgyrlar</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('subjects', 'index')) %>
+            <li <% if controller_name == 'subjects' %>class="active"<% end %> >
+              <a href="/subjects"><i class="fa fa-caret-right"></i>Dersler</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('subject_categories', 'index')) %>
+            <li <% if controller_name == 'subject_categories' %>class="active"<% end %> >
+              <a href="/subject_categories"><i class="fa fa-caret-right"></i>Ders Kategoriýalary</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('rooms', 'index')) %>
+            <li <% if controller_name == 'rooms' %>class="active"<% end %> >
+              <a href="/rooms"><i class="fa fa-caret-right"></i>Synplar</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('lesson_times', 'index')) %>
+            <li <% if controller_name == 'lesson_times' %>class="active"<% end %> >
+              <a href="/lesson_times"><i class="fa fa-caret-right"></i>Wagtlar</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('nationalities', 'index')) %>
+            <li <% if controller_name == 'nationalities' %>class="active"<% end %> >
+              <a href="/nationalities"><i class="fa fa-caret-right"></i>Milletler</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('group_languages', 'index')) %>
+            <li <% if controller_name == 'group_languages' %>class="active"<% end %> >
+              <a href="/group_languages"><i class="fa fa-caret-right"></i>Diller</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('book_languages', 'index')) %>
+            <li <% if controller_name == 'book_languages' %>class="active"<% end %> >
+              <a href="/book_languages"><i class="fa fa-caret-right"></i>Kitap Dilleri</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('group_genders', 'index')) %>
+            <li <% if controller_name == 'group_genders' %>class="active"<% end %> >
+              <a href="/group_genders"><i class="fa fa-caret-right"></i>Topar Görnüşleri</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('special_groups', 'index')) %>
+            <li <% if controller_name == 'special_groups' %>class="active"<% end %> >
+              <a href="/special_groups"><i class="fa fa-caret-right"></i>Ýörite Toparlar</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('discounts', 'index')) %>
+            <li <% if controller_name == 'discounts' %>class="active"<% end %> >
+              <a href="/discounts"><i class="fa fa-caret-right"></i>Arzanladyş Görnüşleri</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('payment_types', 'index')) %>
+            <li <% if controller_name == 'payment_types' %>class="active"<% end %> >
+              <a href="/payment_types"><i class="fa fa-caret-right"></i>Töleg Görnüşleri</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('holidays', 'index')) %>
+            <li <% if controller_name == 'holidays' %>class="active"<% end %> >
+              <a href="/holidays"><i class="fa fa-caret-right"></i>Dynç Günleri</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('settings', 'index')) %>
+            <li <% if controller_name == 'settings' %>class="active"<% end %> >
+              <a href="/settings"><i class="fa fa-caret-right"></i>Umumy Sazlamalar</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('states', 'index')) %>
+            <li <% if controller_name == 'states' %>class="active"<% end %> >
+              <a href="/states"><i class="fa fa-caret-right"></i>Welaýatlar</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('cities', 'index')) %>
+            <li <% if controller_name == 'cities' %>class="active"<% end %> >
+              <a href="/cities"><i class="fa fa-caret-right"></i>Şäherler</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('high_schools', 'index')) %>
+            <li <% if controller_name == 'high_schools' %>class="active"<% end %> >
+              <a href="/high_schools"><i class="fa fa-caret-right"></i>Ýokary Okuw Jaýlar</a>
+            </li>
+        <% end %>
+
+        <% if (check_restrictions('special_schools', 'index')) %>
+            <li <% if controller_name == 'special_schools' %>class="active"<% end %> >
+              <a href="/special_schools"><i class="fa fa-caret-right"></i>Ýörite-Orta Okuw Jaýlary</a>
+            </li>
+        <% end %>
+
+      </ul>
+    </li>
+<% end %>
+<!-- ######################################## SAZLAMALAR BÖLÜMI - END ##################################### -->
+
+
+  <!-- ######################################## HASABATLAR BÖLÜMI - START ##################################### -->
+<% if (check_restrictions('contracts', 'mycontractssearch') || check_restrictions('contracts', 'repeating') || check_restrictions('contracts', 'health_notes_report') || check_restrictions('contracts', 'photoless_report') || check_restrictions('contracts', 'discount_report') || check_restrictions('students', 'repeating') || check_restrictions('contracts', 'reserve') || check_restrictions('contracts', 'birthdays')  || check_restrictions('contracts', 'general_report') || check_restrictions('contracts', 'agaly_report') || check_restrictions('groups', 'agaly_report') || check_restrictions('contracts', 'tgb_report')) %>
+  <li <% if (controller_name == 'contracts' && (action_name == 'mycontractssearch' || action_name == 'repeating'  || action_name == 'reserve'  || action_name == 'general_report'  || action_name == 'birthdays'  || action_name == 'photoless_report'  || action_name == 'discount_report' || action_name == 'agaly_report'  || action_name == 'tgb_report'  || action_name == 'passers_check_report'  || action_name == 'health_notes_report' )) || controller_name == 'students'  %>class="active"<% end %> >
+    <a href="index-2.html"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Hasabatlar</span> <span class="fa arrow"></span></a>
+    <ul class="nav nav-second-level">
+
+      <% if (check_restrictions('contracts', 'mycontractssearch')) %>
+          <li <% if (controller_name == 'contracts' &&  action_name == 'mycontractssearch') %>class="active"<% end %> >
+            <a href="/contracts/mycontractssearch"><i class="fa fa-caret-right"></i>Meniň Ýazylyşyklarym</a>
+          </li>
+      <% end %>
+
+      <% if (check_restrictions('contracts', 'repeating')) %>
+          <li <% if (controller_name == 'contracts' &&  action_name == 'repeating') %>class="active"<% end %> >
+            <a href="/contracts/repeating"><i class="fa fa-caret-right"></i>Gaýtalanýan Ýazylyşyklar</a>
+          </li>
+      <% end %>
+
+      <% if (check_restrictions('students', 'repeating')) %>
+          <li <% if (controller_name == 'students' &&  action_name == 'repeating') %>class="active"<% end %> >
+            <a href="/students/repeating"><i class="fa fa-caret-right"></i>Gaýtalanýan Okuwçylar</a>
+          </li>
+      <% end %>
+
+      <% if (check_restrictions('contracts', 'reserve')) %>
+          <li <% if (controller_name == 'contracts' &&  action_name == 'reserve') %>class="active"<% end %> >
+            <a href="/contracts/reserve"><i class="fa fa-caret-right"></i>Rezerwler</a>
+          </li>
+      <% end %>
+
+      <% if (check_restrictions('contracts', 'general_report')) %>
+          <li <% if (controller_name == 'contracts' &&  action_name == 'general_report') %>class="active"<% end %> >
+            <a href="/contracts/general_report"><i class="fa fa-caret-right"></i>Nurnabat Hasabat</a>
+          </li>
+      <% end %>
+
+      <% if (check_restrictions('contracts', 'birthdays')) %>
+          <li <% if (controller_name == 'contracts' &&  action_name == 'birthdays') %>class="active"<% end %> >
+            <a href="/contracts/birthdays"><i class="fa fa-caret-right"></i>Doglan Günler</a>
+          </li>
+      <% end %>
+
+      <% if (check_restrictions('contracts', 'photoless_report')) %>
+          <li <% if (controller_name == 'contracts' &&  action_name == 'photoless_report') %>class="active"<% end %> >
+            <a href="/contracts/photoless_report"><i class="fa fa-caret-right"></i>Suratsyzlar Hasabaty</a>
+          </li>
+      <% end %>
+
+      <% if (check_restrictions('contracts', 'discount_report')) %>
+          <li <% if (controller_name == 'contracts' &&  action_name == 'discount_report') %>class="active"<% end %> >
+            <a href="/contracts/discount_report"><i class="fa fa-caret-right"></i>Arzanladyşlar Hasabaty</a>
+          </li>
+      <% end %>
+
+      <% if (check_restrictions('contracts', 'agaly_report')) %>
+          <li <% if (controller_name == 'contracts' &&  action_name == 'agaly_report') %>class="active"<% end %> >
+            <a href="/contracts/agaly_report"><i class="fa fa-caret-right"></i>Agaly mug. Ýazylyşyk Hasabat</a>
+          </li>
+      <% end %>
+
+      <% if (check_restrictions('groups', 'agaly_report')) %>
+          <li <% if (controller_name == 'groups' &&  action_name == 'agaly_report') %>class="active"<% end %> >
+            <a href="/groups/agaly_report"><i class="fa fa-caret-right"></i>Agaly mug. Toparlar Hasabat</a>
+          </li>
+      <% end %>
+
+      <% if (check_restrictions('contracts', 'tgb_report')) %>
+          <li <% if (controller_name == 'contracts' &&  action_name == 'tgb_report') %>class="active"<% end %> >
+            <a href="/contracts/tgb_report"><i class="fa fa-caret-right"></i>TGB Hasabat</a>
+          </li>
+      <% end %>
+
+      <% if (check_restrictions('contracts', 'passers_check_report')) %>
+          <li <% if (controller_name == 'contracts' &&  action_name == 'passers_check_report') %>class="active"<% end %> >
+            <a href="/contracts/passers_check_report"><i class="fa fa-caret-right"></i>Geçýänler Barada Hasabat</a>
+          </li>
+      <% end %>
+
+      <% if (check_restrictions('contracts', 'health_notes_report')) %>
+          <li <% if (controller_name == 'contracts' &&  action_name == 'health_notes_report') %>class="active"<% end %> >
+            <a href="/contracts/health_notes_report"><i class="fa fa-caret-right"></i>Saglyk Bellikliler Hasabaty</a>
+          </li>
+      <% end %>
+
+    </ul>
+  </li>
+<% end %>
+  <!-- ######################################## HASABATLAR BÖLÜMI - END ##################################### -->
+
+
+</ul>
+
+</div>
+</nav>

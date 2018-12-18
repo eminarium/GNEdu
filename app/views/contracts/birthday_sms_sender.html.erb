@@ -1,0 +1,82 @@
+<html>
+<head>
+  <script>
+
+      var receivers_array = [];
+      var counter = 0;
+
+      <% @sms_receivers.each do |receiver| %>
+          var student = {sms_no: "%2B993<%= receiver.smsMobilePhone %>", faa:"<%= receiver.first_and_last_name %>" };
+          receivers_array[counter] = student;
+          counter = counter+1;
+      <% end %>
+
+      function sendSMS(quantity)
+      {
+          var absent_lesson_count = 0;
+
+          var xhttp = new XMLHttpRequest();
+          xhttp.open("POST", "http://localhost:9710/http/send-message", true);
+          xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+          //xhttp.send("username=admin&password=admin&to=%2B99365562692&message-type=sms.automatic&message=TEST HABAR 2!");
+          xhttp.send("username=admin&password=hllwrld&to="+receivers_array[quantity].sms_no+"&message-type=sms.automatic&message=Hormatly "+receivers_array[quantity].faa+"! Gujurly Nesil Sizi tüýs ýürekden DOGLAN GÜNÜŇIZ bilen gutlaýar! Size okuwlaryňyzda üstünlikler we ylym, bilim äleminde täze açyşlar arzuw edýäris !");
+
+          //var win = window.open("http://localhost:9710/http/send-message?username=admin&password=admin&to="+receivers_array[quantity].sms_no+"&message-type=sms.automatic&message=Hormatly "+receivers_array[quantity].faa+"! Gujurly Nesil Sizi tüýs ýürekden DOGLAN GÜNÜŇIZ bilen gutlaýar! Size okuwlaryňyzda üstünlikler we ylym, bilim äleminde täze açyşlar arzuw edýäris !", '_blank');
+
+          setTimeout(function(){
+              //win.close()
+              if ((--quantity)>=0)
+              {
+                  sendSMS(quantity);
+              }
+              //else
+                  //window.close();
+          }, 1000);
+
+      }
+
+      function changeDivContent()
+      {
+          var my_div = document.getElementById("receiver_studs");
+          my_div.innerHTML = receivers_array.length.toString();
+      }
+
+      function sendSMSReports()
+      {
+          var absent_lesson_count = 0;
+
+          var xhttp = new XMLHttpRequest();
+
+          xhttp.open("POST", "http://localhost:9710/http/send-message", true);
+          xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+          xhttp.send("username=admin&password=hllwrld&to=%2B99365562692&message-type=sms.automatic&message=GN SMS Ulgamy, "+receivers_array.length+" diňleýji doglan güni bilen gutlanyldy !");
+
+          var xhttp = new XMLHttpRequest();
+          xhttp.open("POST", "http://localhost:9710/http/send-message", true);
+          xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+          xhttp.send("username=admin&password=hllwrld&to=%2B99365566424&message-type=sms.automatic&message=GN SMS Ulgamy, "+receivers_array.length+" diňleýji doglan güni bilen gutlanyldy !");
+
+      }
+
+      sendSMS(receivers_array.length-1);
+      sendSMSReports();
+
+  </script>
+
+</head>
+
+<body>
+
+<input type="button" value="Bas" onclick="changeDivContent();">
+
+<div id="receiver_studs" style="background: white">
+  HSLDFDSFKJ
+</div>
+
+<h1 style="color:whitesmoke;">SMS REICEVERS LIST</h1>
+<% @sms_receivers.each do |receiver| %>
+    <%= receiver.first_and_last_name %> -  <%= receiver.birthDate %>  <br>
+<% end %>
+
+</body>
+</html>

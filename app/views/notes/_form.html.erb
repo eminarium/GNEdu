@@ -1,0 +1,59 @@
+<%= form_for(@note) do |f| %>
+    <% if @note.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@note.errors.count, "error") %> prohibited this nationality from being saved:</h2>
+
+          <ul>
+            <% @note.errors.full_messages.each do |note| %>
+                <li><%= note %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="form-group">
+    <label class="font-noraml">Paýlaş</label>
+
+    <div class="input-group">
+
+<!--
+        <select data-placeholder="Choose a Country..." class="chosen-select" multiple style="width:350px;" tabindex="4">
+            <option value="">Select</option>
+            <option value="United States">United States</option>
+            <option value="United Kingdom">United Kingdom</option>
+        </select>
+-->
+
+      <%= f.collection_select(:user_id, @users, :id, :full_name, {include_blank: "Please_select", name: "user_id[]", id: "note_user_id", :selected => @id_array}, {class: "chosen-select", style: "width:350px", tabindex: "4", multiple: "true"} ) %>
+    </div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Umumy Paýlaşmaly</label>
+      <div class="col-sm-8"><%= f.check_box :isPublic, :type => "checkbox", :class => "checkbox checkbox-primary", :id => "checkboxIsPublic" %></div>
+      <label for="checkboxIsPublic">
+
+      </label>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Mowzugy</label>
+      <div class="col-sm-8"><%= f.text_field :noteSubject, :type => "text", :class => "form-control" %></div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Mazmuny</label>
+      <div class="col-sm-8"><%= f.text_area :noteContent, :type => "text", :class => "form-control", :style => "height:150px"  %></div>
+    </div>
+
+    <br><br><br>
+
+    <div class="actions">
+      <%= f.submit "Kabul Et", :class => "btn btn-success" %>
+    </div>
+
+<% end %>
+<br>

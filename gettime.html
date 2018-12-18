@@ -1,0 +1,45 @@
+<html>
+<head>
+
+    <script>
+
+        setInterval(function(){
+            var d = new Date();
+            var h = d.getHours();
+            var m = d.getMinutes();
+            var s = d.getSeconds();
+
+            if ((h == 12 && m == 30 && s == 0) || (h == 18 && m == 15 && s == 0) || (h == 22 && m == 00 && s == 0))
+            {
+                var win = window.open("http://192.168.0.200:3000/attendances/sms_sender", "_blank");
+            }
+
+            if (h == 8 && m == 00 && s == 0)
+            {
+                var win = window.open("http://192.168.0.200:3000/contracts/birthday_sms_sender", "_blank");
+            }
+
+            //window.location.reload(1)
+        }, 1000)
+
+
+    </script>
+
+</head>
+
+<body>
+
+<H1 style="color:lightblue;">SMS SENDING TIME WATCHER ...</H1>
+
+<!--
+<form id="msg-form" action="http://localhost:9710" method="POST">
+  <input id="username" type="hidden" name="username" value="admin">
+  <input id="password" type="hidden" name="password" value="admin">
+  <input id="to" type="hidden" name="to" value="%2B99365562692">
+  <input id="message-type" type="hidden" name="sms.automatic" value="sms.automatic">
+  <input id="message" type="hidden" name="message" value="salam dostjan, nirelerde name ishleyan ?">
+</form>
+-->
+
+</body>
+</html>

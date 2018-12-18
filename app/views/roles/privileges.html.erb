@@ -1,0 +1,80 @@
+<%#= render 'edit_privileges_breadcrumb' %>
+<br>
+
+Params<br>
+<%= @params.inspect %><br>
+<%#= @role_id.inspect  %><br>
+Role id :
+<%= @role_id %><br>
+Keys <br>
+<%= @keys %> <br>
+Values <br>
+<%= @values %><br>
+STH ELSE <br>
+<%= @sth_else %><br>
+TMP PRIV <br>
+<%= @tmp_priv.inspect %><br>
+AHA <br>
+<%= @aha.inspect %><br>
+YESSA <br>
+<%= @yessa.inspect %><br>
+
+<%#= @allowAccess %><br>
+<%#= @auditTrack %>
+
+
+<% @i=0 %>
+
+    <div class="tabs-container">
+      <div class="tabs-left">
+        <ul class="nav nav-tabs">
+          <% @mod_objects.each do |mo| %>
+              <% @i=@i+1 %>
+              <li class="<% if (@i==1)%> active <% end %>"><a data-toggle="tab" href="#tab-<%= @i %>"><%= ModObject.where(:id=>mo.mod_object_id).first().modObjectTranslation %></a></li>
+          <% end %>     <% @i=0 %>
+        </ul>
+        <div class="tab-content">
+          <% @mod_objects.each do |mo| %>
+              <% @i=@i+1 %>
+              <div id="tab-<%= @i %>" class="tab-pane <% if (@i==1)%> active <% end %>">
+                <div class="panel-body">
+                  <strong><%= ModObject.where(:id=>mo.mod_object_id).first().description %></strong>
+                  <br><br><br><br>
+
+
+                  <div class="col-sm-6"><u><b>Ugur</b></u></div>
+                  <div class="col-sm-3"><u><b>Ygtyýar</b></u></div>
+                  <div class="col-sm-3"><u><b>Audit (Gözegçilik)</b></u></div>
+
+                  <hr style="border-top:1px solid orange;">
+
+                  <% @mod_actions.where(:mod_object_id => mo.mod_object_id).order(:modActionName).each do |ma| %>
+                      <%#= link_to ma.modActionName, ma %>
+                      <div class="col-sm-6"><%= ma.modActionName %> <i>(<%= ma.description %>)</i></div>
+                      <% @temp_privilege = ModActionsRole.where(:mod_action_id => ma.id, :role_id => params[:role_id]).first() %>
+                      <% if (@temp_privilege.nil?) %>
+                      <div class="col-sm-3"> <%= text_field_tag 'privileges['+ma.id.to_s+'][allowAccess]', value='0'  %> </div>
+                      <div class="col-sm-3"> <%= text_field_tag 'privileges['+ma.id.to_s+'][auditTrack]', value='0'  %> </div>
+                          <!-- <div class="col-sm-3"><%#= check_box_tag 'privileges['+ma.id.to_s+'][allowAccess]' %></div> -->
+                          <!-- <div class="col-sm-3"><%#= check_box_tag 'privileges['+ma.id.to_s+'][auditTrack]' %></div> -->
+                      <% else %>
+                          <!-- <div class="col-sm-3"> -->
+                            <%#= check_box_tag  'privileges['+ma.id.to_s+'][allowAccess]', @temp_privilege.allowAccess, @temp_privilege.allowAccess %>
+                            <%#= hidden_field_tag  'privileges['+ma.id.to_s+'][allowAccess]', (@temp_privilege.allowAccess ? 'true' : 'false') %>
+                          <!--</div> -->
+                          <!--<div class="col-sm-3"> -->
+                            <%#= hidden_field_tag  'privileges['+ma.id.to_s+'][auditTrack]', (@temp_privilege.auditTrack ? 'true' : 'false') %>
+                            <%#= check_box_tag  'privileges['+ma.id.to_s+'][auditTrack]', @temp_privilege.auditTrack, @temp_privilege.auditTrack %>
+                          <!--</div> -->
+                          <div class="col-sm-3"> <%= text_field_tag 'privileges['+ma.id.to_s+'][allowAccess]', value=(@temp_privilege.allowAccess)? "1" : "0"  %> </div>
+                          <div class="col-sm-3"> <%= text_field_tag 'privileges['+ma.id.to_s+'][auditTrack]', value=(@temp_privilege.auditTrack)? "1" : "0"  %> </div>
+
+                      <% end %> <br><br>
+                  <% end %>
+                </div>
+              </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <br>

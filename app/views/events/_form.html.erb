@@ -1,0 +1,59 @@
+<%= form_for(@event) do |f| %>
+    <% if @event.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@event.errors.count, "error") %> prohibited this high_school from being saved:</h2>
+
+          <ul>
+            <% @event.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div><label class="col-sm-4 control-label">Dynç Güni Sebäbi</label>
+      <div class="col-sm-8"><%= f.text_field :event_title, :type => "text", :class => "form-control" %></div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Başlangyç Wagty</label>
+      <div class="col-sm-8"><%= f.datetime_select :event_from_datetime, :start_year => 2015, :end_year => 2018 %></div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Tamamlanýan Wagty</label>
+      <div class="col-sm-8"><%= f.datetime_select :event_to_datetime, :start_year => 2015, :end_year => 2018 %></div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Çäre Görnüşi</label>
+      <div class="col-sm-8">
+        <%= f.collection_select(:event_type_id, @event_types, :id, :event_type_title, :include_blank => t("Please_select"), :class => "form-control" ) %>
+      </div>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Hepdelik gaýtalanýarmy:</label>
+      <div class="col-sm-8"><%= f.check_box :is_weekly, :type => "checkbox", :class => "checkbox checkbox-primary", :id => "checkboxProjector" %></div>
+      <label for="checkboxProjector">
+
+      </label>
+    </div>
+
+    <br><br><br>
+
+    <div><label class="col-sm-4 control-label">Bellikler</label>
+      <div class="col-sm-8"><%= f.text_area :notes, :type => "text", :class => "form-control"  %></div>
+    </div>
+
+    <br><br><br>
+
+    <div class="actions">
+      <%= f.submit "Kabul Et", :class => "btn btn-success" %>
+    </div>
+
+<% end %>

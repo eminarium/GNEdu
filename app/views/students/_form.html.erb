@@ -1,0 +1,526 @@
+<%= form_for(@student) do |f| %>
+  <% if @student.errors.any? %>
+    <div id="error_explanation">
+      <div class="alert alert-danger">
+        <h2><%= @student.errors.count %> ýalňyş sebäpli maglumatlar kabul edilmedi...</h2>
+
+        <ul>
+          <% @student.errors.each do |attr, message| %>
+              <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+      <% if (!@duplicate_students.nil?) %>
+          <% if (@duplicate_students.count>0) %>
+            <div class="alert alert-danger">
+              <ul>
+                <li style="font-weight: bold">
+                  <%= @duplicate_message %> <%= link_to @duplicate_students.first.id.to_s, @duplicate_students.first %></li>
+                  <%= "Mukdary = "+@duplicate_students.count.to_s %>
+                </li>
+              </ul>
+            </div>
+          <% end %>
+      <% end %>
+
+<div class="col-lg-6">
+
+<!-- #########################################  ESASY PENJIRE - START ############################# -->
+
+<!-- #########################################  ŞAHSY MAGLUMATLAR PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+<div class="ibox float-e-margins">
+<div class="ibox-title" style="border-color: red">
+  <% if action_name == 'new' %>
+    <h5>Täze Diňleýji</h5>
+  <% else %>
+      <h5>Diňleýji Maglumatlaryny Üýtget</h5>
+  <% end %>
+  <div class="ibox-tools">
+    <a class="collapse-link">
+      <i class="fa fa-chevron-up" style="color: red"></i>
+    </a>
+    <!--
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+      <i class="fa fa-wrench"></i>
+    </a>
+    <ul class="dropdown-menu dropdown-user">
+      <li><a href="#">Config option 1</a>
+      </li>
+      <li><a href="#">Config option 2</a>
+      </li>
+    </ul>
+    -->
+  </div>
+</div>
+
+
+
+
+
+<div class="ibox-content" style="border-color: red">
+<h3>
+  Şahsy Maglumatlar
+</h3>
+<br>
+
+<!-- ######################################### ŞERTNAMA PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+
+<!-- #########################################  ŞERTNAMA MAGLUMATLARY - START ############################# -->
+
+<div><label class="col-sm-4 control-label">Suraty </label>
+  <div class="col-sm-8"><%= f.file_field :imageUrl, :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Ady</label>
+    <div class="col-sm-8"><%= f.text_field :fName, :type => "text", :class => "form-control" %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Familiýasy</label>
+    <div class="col-sm-8"><%= f.text_field :lName, :type => "text", :class => "form-control" %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Atasynyň Ady</label>
+    <div class="col-sm-8"><%= f.text_field :patronymic, :type => "text", :class => "form-control" %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Milleti</label>
+    <div class="col-sm-8">
+        <%= f.collection_select(:nationality_id, @nationalities, :id, :nationalityName, :include_blank => t("Please_select"), :class => "form-control" ) %>
+    </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Jynsy</label>
+  <div class="col-sm-8">
+    <%= f.select :gender, Student::GENDER_TYPES, :selected => Student::GENDER_TYPES[(@student.gender ? 1 : 0)], class: 'form-control' %>
+
+  </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Doglan Senesi</label>
+  <div class="col-sm-8"><%= f.date_select :birthDate, :start_year => 1900, :end_year => 2016 %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label"> Mobil Telefon Belgisi</label>
+  <div class="col-sm-8"><div class="input-group m-b"><span class="input-group-addon">+993</span> <%= f.text_field :mobilePhone, :type => "text", :class => "form-control", :placeholder => "Mobil Telefon Belgisi" %></div></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">SMS Belgisi</label>
+    <div class="col-sm-8"><div class="input-group m-b"><span class="input-group-addon">+993</span> <%= f.text_field :smsMobilePhone, :type => "text", :class => "form-control", :placeholder => "SMS Belgisi" %></div></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Öý Telefon Belgisi</label>
+  <div class="col-sm-8"><div class="input-group m-b"><span class="input-group-addon">+993</span> <%= f.text_field :homePhone, :type => "text", :class => "form-control", :placeholder => "Öý Telefon Belgisi" %></div></div>
+</div>
+
+<br><br><br>
+
+<h3>Salgysy</h3>
+
+<br>
+
+<div><label class="col-sm-4 control-label">Şäheri</label>
+  <div class="col-sm-8">
+    <% if action_name == "new" %>
+        <%= f.collection_select(:city_id, @cities, :id, :cityName, :selected => 1, :include_blank => t("Please_select"), :class => "form-control" ) %>
+    <% else %>
+        <%= f.collection_select(:city_id, @cities, :id, :cityName, :selected => @student.city_id, :include_blank => t("Please_select"), :class => "form-control" ) %>
+    <% end %>
+  </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Doly Salgysy</label>
+  <div class="col-sm-8"><%= f.text_area :addressBody, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br><br><br><br>
+
+<div><label class="col-sm-4 control-label">Bellikler</label>
+  <div class="col-sm-8"><%= f.text_area :notes, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br><br><br><br>
+
+<!-- #########################################  ŞAHSY MAGLUMATLARY (IŞGÄR) PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+<div class="ibox collapsed">
+<div class="ibox-title" style="border-color: orange">
+  <h5>IŞGÄR MAGLUMATLARY</h5>
+  <div class="ibox-tools">
+    <a class="collapse-link">
+      <i class="fa fa-chevron-up" style="color: orange"></i>
+    </a>
+  </div>
+</div>
+
+
+
+
+
+<div class="ibox-content" style="border-color: orange">
+
+<!-- #########################################  ŞAHSY MAGLUMATLARY (IŞGÄR) PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+<!-- #########################################  ŞAHSY MAGLUMATLARY (IŞGÄR) - START ############################# -->
+
+<div><label class="col-sm-4 control-label">Işgärmi ?</label>
+    <div class="col-sm-8"><%= f.check_box :isWorker, :type => "checkbox", :class => "checkbox checkbox-primary", :id => "checkboxEBoard" %></div>
+        <label for="checkboxEBoard">
+
+        </label>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Iş Ýeri</label>
+  <div class="col-sm-8"><%= f.text_field :workPlace, :type => "text", :class => "form-control" %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Wezipesi</label>
+  <div class="col-sm-8"><%= f.text_field :occupation, :type => "text", :class => "form-control" %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Iş Telefon Belgisi</label>
+  <div class="col-sm-8"><div class="input-group m-b"><span class="input-group-addon">+993-12</span> <%= f.text_field :officePhone, :type => "text", :class => "form-control", :placeholder => "Iş Telefon Belgisi" %></div></div>
+</div>
+
+<br><br><br>
+
+
+</div>
+</div>
+<!-- #########################################  ŞAHSY MAGLUMATLARY (IŞGÄR) - END ############################# -->
+
+<!-- #########################################  ŞAHSY MAGLUMATLARY (TALYP) PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+<div class="ibox collapsed">
+<div class="ibox-title" style="border-color: green">
+  <h5>TALYP MAGLUMATLARY</h5>
+  <div class="ibox-tools">
+    <a class="collapse-link">
+      <i class="fa fa-chevron-up" style="color: green"></i>
+    </a>
+  </div>
+</div>
+
+
+
+
+
+<div class="ibox-content" style="border-color: green">
+
+<!-- #########################################  ŞAHSY MAGLUMATLARY (TALYP) PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+<!-- #########################################  ŞAHSY MAGLUMATLARY (TALYP) - START ############################# -->
+
+<div><label class="col-sm-4 control-label">Talypmy ?</label>
+    <div class="col-sm-8"><%= f.check_box :isStudent, :type => "checkbox", :class => "checkbox checkbox-primary", :id => "checkboxEBoard" %></div>
+        <label for="checkboxEBoard">
+
+        </label>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Ýokary Okuw Jaýy</label>
+    <div class="col-sm-8">
+        <%= f.collection_select(:high_school_id, @highSchools, :id, :highSchoolName, :include_blank => t("Please_select"), :class => "form-control" ) %>
+    </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Ýörite-Orta Mekdebi</label>
+    <div class="col-sm-8">
+        <%= f.collection_select(:special_school_id, @specialSchools, :id, :specialSchoolName, :include_blank => t("Please_select"), :class => "form-control" ) %>
+    </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Başga Ýokary Okuw Jaýy</label>
+    <div class="col-sm-8"><%= f.text_field :highSpecialSchoolOther, :type => "text", :class => "form-control", :placeholder => "Elden ýazmaly..." %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Okuw Ýyly</label>
+    <div class="col-sm-8"><%= f.text_field :highSpecialSchoolYear, :type => "text", :class => "form-control", :placeholder => "Elden ýazmaly..." %></div>
+</div>
+
+<br><br><br>
+
+</div>
+</div>
+<!-- #########################################  ŞAHSY MAGLUMATLARY (TALYP) - END ############################# -->
+
+<!-- #########################################  ŞAHSY MAGLUMATLARY (OKUWÇY) PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+<div class="ibox collapsed">
+  <div class="ibox-title" style="border-color: blue">
+    <h5>OKUWÇY MAGLUMATLARY</h5>
+    <div class="ibox-tools">
+      <a class="collapse-link">
+        <i class="fa fa-chevron-up" style="color: blue"></i>
+      </a>
+    </div>
+  </div>
+
+
+
+
+
+<div class="ibox-content" style="border-color: blue">
+
+<!-- #########################################  ŞAHSY MAGLUMATLARY (OKUWÇY) PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+<!-- #########################################  ŞAHSY MAGLUMATLARY (OKUWÇY) - START ############################# -->
+
+<div><label class="col-sm-4 control-label">Okuwçymy ?</label>
+    <div class="col-sm-8"><%= f.check_box :isPupil, :type => "checkbox", :class => "checkbox checkbox-primary", :id => "checkboxEBoard" %></div>
+        <label for="checkboxEBoard">
+
+        </label>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Mekdep şäheri</label>
+  <div class="col-sm-8">
+    <% if action_name == "new" %>
+        <%= f.collection_select(:school_city_id, @cities, :id, :cityName, :selected => 1, :include_blank => t("Please_select"), :class => "form-control" ) %>
+    <% else %>
+        <%= f.collection_select(:school_city_id, @cities, :id, :cityName, :selected => @student.school_city_id, :include_blank => t("Please_select"), :class => "form-control" ) %>
+    <% end %>
+  </div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Mekdep Belgisi</label>
+  <div class="col-sm-8"><%= f.text_field :schoolNo, :type => "text", :class => "form-control", :placeholder => "San bilen ýazmaly..." %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label"> Mekdebiniň Ady</label>
+  <div class="col-sm-8"><%= f.text_field :schoolName, :type => "text", :class => "form-control", :placeholder => "Elden ýazmaly..." %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label"> Mekdepde Synpy</label>
+  <div class="col-sm-8"><%= f.text_field :schoolYear, :type => "text", :class => "form-control", :placeholder => "San bilen ýazmaly..." %></div>
+</div>
+
+<br><br><br>
+
+</div>
+</div>
+<!-- #########################################  ŞAHSY MAGLUMATLARY (OKUWÇY) - END ############################# -->
+
+<!-- #########################################  KAKASYNYŇ MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+<div class="ibox collapsed">
+  <div class="ibox-title" style="border-color: indigo">
+    <h5>KAKASYNYŇ MAGLUMATLARY</h5>
+    <div class="ibox-tools">
+      <a class="collapse-link">
+        <i class="fa fa-chevron-up" style="color: indigo"></i>
+      </a>
+    </div>
+  </div>
+
+
+
+
+
+<div class="ibox-content" style="border-color: indigo">
+
+<!-- #########################################  KAKASYNYŇ MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+<!-- #########################################  KAKASYNYŇ MAGLUMATLARY - START ############################# -->
+
+<div><label class="col-sm-4 control-label">Kakasynyň Ady</label>
+    <div class="col-sm-8"><%= f.text_field :faFName, :type => "text", :class => "form-control" %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Kakasynyň Familiýasy</label>
+    <div class="col-sm-8"><%= f.text_field :faLName, :type => "text", :class => "form-control" %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Kakasynyň Wezipesi</label>
+  <div class="col-sm-8"><%= f.text_field :faOccupation, :type => "text", :class => "form-control" %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Kakasynyň Iş Ýeri</label>
+    <div class="col-sm-8"><%= f.text_field :faWorkPlace, :type => "text", :class => "form-control" %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Kakasynyň Iş Telefon Belgisi</label>
+  <div class="col-sm-8"><div class="input-group m-b"><span class="input-group-addon">+993-12</span> <%= f.text_field :faOfficePhone, :type => "text", :class => "form-control", :placeholder => "Kakasynyň Iş Tel." %></div></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Kakasynyň Mobil Telefon Belgisi</label>
+  <div class="col-sm-8"><div class="input-group m-b"><span class="input-group-addon">+993 &nbsp;&nbsp;&nbsp;&nbsp;</span> <%= f.text_field :faMobilePhone, :type => "text", :class => "form-control", :placeholder => "Kakasynyň Mob. Tel." %></div></div>
+</div>
+
+<br><br><br>
+
+
+</div>
+</div>
+<!-- #########################################  KAKASYNYŇ MAGLUMATLARY - END ############################# -->
+
+
+<!-- #########################################  EJESINIŇ MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+<div class="ibox collapsed">
+  <div class="ibox-title" style="border-color: violet">
+    <h5>EJESINIŇ MAGLUMATLARY</h5>
+    <div class="ibox-tools">
+      <a class="collapse-link">
+        <i class="fa fa-chevron-up" style="color: violet"></i>
+      </a>
+    </div>
+  </div>
+
+
+
+
+
+<div class="ibox-content" style="border-color: violet">
+
+<!-- #########################################  EJESINIŇ MAGLUMATLARY PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+<!-- #########################################  EJESINIŇ MAGLUMATLARY - START ############################# -->
+
+<div><label class="col-sm-4 control-label">Ejesiniň Ady</label>
+  <div class="col-sm-8"><%= f.text_field :maFName, :type => "text", :class => "form-control" %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Ejesiniň Familiýasy</label>
+  <div class="col-sm-8"><%= f.text_field :maLName, :type => "text", :class => "form-control" %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Ejesiniň Wezipesi</label>
+  <div class="col-sm-8"><%= f.text_field :maOccupation, :type => "text", :class => "form-control" %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Ejesiniň Iş Ýeri</label>
+  <div class="col-sm-8"><%= f.text_field :maWorkPlace, :type => "text", :class => "form-control" %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Ejesiniň Iş Telefon Belgisi</label>
+  <div class="col-sm-8"><div class="input-group m-b"><span class="input-group-addon">+993-12</span> <%= f.text_field :maOfficePhone, :type => "text", :class => "form-control", :placeholder => "Ejesiniň Iş Tel." %></div></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Ejesiniň Mobil Telefon Belgisi</label>
+  <div class="col-sm-8"><div class="input-group m-b"><span class="input-group-addon">+993 &nbsp;&nbsp;&nbsp;&nbsp;</span> <%= f.text_field :maMobilePhone, :type => "text", :class => "form-control", :placeholder => "Ejesiniň Mob. Tel." %></div></div>
+</div>
+
+<br><br><br>
+
+</div>
+</div>
+
+<!-- #########################################  EJESINIŇ MAGLUMATLARY - END ############################# -->
+
+
+
+<!-- #########################################  SAGLYK BELLIKLERI PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - START ############################# -->
+
+<div class="ibox collapsed">
+  <div class="ibox-title" style="border-color: lightblue">
+    <h5>SAGLYK BELLIKLERI</h5>
+    <div class="ibox-tools">
+      <a class="collapse-link">
+        <i class="fa fa-chevron-up" style="color: lightblue"></i>
+      </a>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="ibox-content" style="border-color: lightblue">
+
+    <!-- #########################################  SAGLYK BELLIKLERI PENJIRESINIŇ KODY - BAŞYNYŇ BÖLEGI - END ############################# -->
+
+    <!-- #########################################  SAGLYK BELLIKLERI - START ############################# -->
+
+    <div><label class="col-sm-4 control-label">Saglygy barada bellikler</label>
+      <div class="col-sm-8"><%= f.text_area :diseaseNotes, :type => "text", :class => "form-control" %></div>
+    </div>
+
+    <br><br><br>
+
+  </div>
+</div>
+
+<!-- #########################################  SAGLYK BELLIKLERI - END ############################# -->
+<div class="actions">
+    <%= f.submit "Kabul Et", :class => "btn btn-success" %>
+</div>
+<br>
+<%= link_to 'Yza', students_path, :class => "btn btn-outline btn-success" %>
+<% end %>
+
+
+
+<!-- ##### -->
+</div>
+</div>
+<!-- #########################################  ESASY PENJIRE - END ############################# -->
+
+
+</div> <!-- Column window -->

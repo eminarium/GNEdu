@@ -1,0 +1,137 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-6">
+
+
+
+      <div class="ibox float-e-margins">
+        <div class="ibox-title">
+          <h5>Synag Maglumatlary</h5>
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#">Config option 1</a>
+              </li>
+              <li><a href="#">Config option 2</a>
+              </li>
+            </ul>
+            <a class="close-link">
+              <i class="fa fa-times"></i>
+            </a>
+          </div>
+        </div>
+
+
+        <div class="ibox-content">
+          <h3>
+            Synag Maglumatlary
+          </h3>
+          <br>
+
+
+<p id="notice"><%= notice %></p>
+
+
+<div><label class="col-sm-4 control-label">Familiýasy</label>
+    <div class="col-sm-8"><i><%= @exam.lName %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Ady</label>
+    <div class="col-sm-8"><i><%= @exam.fName %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Atasynyň Ady</label>
+    <div class="col-sm-8"><i><%= @exam.patronymic %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Dersi</label>
+    <div class="col-sm-8"><i>
+      <% if (@exam.subject) %>
+        <%= @exam.subject.subjectFullName %>
+      <% end %>
+    </i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Tapgyry</label>
+    <div class="col-sm-8"><i>
+      <% if (!@exam.season.nil?) %>
+          <%= @exam.season.seasonTitle %>
+      <% end %>
+    </i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Senesi</label>
+    <div class="col-sm-8"><i><%= @exam.examDate.strftime("%d/%m/%y  %H:%M") %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Bahasy</label>
+    <div class="col-sm-8"><i><%= @exam.examResult %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Resminama Seriýa No:</label>
+    <div class="col-sm-8"><i><%= @exam.doc_serial %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Resminama Belgisi</label>
+    <div class="col-sm-8"><i><%= @exam.doc_no %></i></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Bellikler</label>
+    <div class="col-sm-8"><i><%= @exam.notes %></i></div>
+</div>
+
+<br><br><br>
+
+<% if (check_restrictions(controller_name, 'edit')) %>
+  <%= link_to 'Üýtget', edit_exam_path(@exam), :class => "btn btn-warning"  %> &nbsp;
+<% end %>
+
+<% if (check_restrictions(controller_name, 'destroy')) %>
+  <%= link_to 'Boz', exam_path(@exam), :method => :delete, data: {confirm: "Are you sure ?"}, :class => "btn btn-w-s btn-danger" %> &nbsp;
+<% end %>
+<% if (check_restrictions(controller_name, 'index')) %>
+  <%= link_to 'Umumy Sanaw', exams_path, :class => "btn btn-outline btn-success" %>
+<% end %>
+
+
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="contact-box">
+        <% if !@exam.persona_url.blank? %>
+            <%= image_tag "/uploads/examinees/"+@exam.persona_url, width: 350 %>
+        <% else %>
+            <%= image_tag "/uploads/examinees/no_photo_6.png", width: 350 %>
+        <% end %>
+      </div>
+
+
+  </div>
+</div>

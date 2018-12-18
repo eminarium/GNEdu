@@ -1,0 +1,840 @@
+<h1>Mugallymlaryň Ders Sanawy</h1>
+
+<% if (notice) %>
+    <div class="alert alert-success fade in">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <p id="notice"><%= notice %></p>
+    </div>
+<% end %>
+
+<!-- <% Setting.where(:settingName => 'Aktiw_tapgyr')[0].inspect %> -->
+<!-- <% Season.where(:seasonNo=> Setting.where(:settingName => 'Aktiw_tapgyr')[0].settingValue)[0].id %> -->
+
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+<div class="row">
+<div class="col-lg-12">
+<div class="ibox float-e-margins">
+<div class="ibox-title">
+  <h5>Mugallymlar Sanawy</h5>
+  <div class="ibox-tools">
+    <a class="collapse-link">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+      <i class="fa fa-wrench"></i>
+    </a>
+    <ul class="dropdown-menu dropdown-user">
+      <li><a href="#">Config option 1</a>
+      </li>
+      <li><a href="#">Config option 2</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="ibox-content">
+
+
+<div class="tabs-container">
+<ul class="nav nav-tabs">
+  <li class="active">
+    <a data-toggle="tab" href="#tab-classes-morning"> Irden  </a>
+  </li>
+  <li class="">
+    <a data-toggle="tab" href="#tab-classes-noon"> Günortan  </a>
+  </li>
+  <li class="">
+    <a data-toggle="tab" href="#tab-classes-afternoon"> Öýlän  </a>
+  </li>
+  <li class="">
+    <a data-toggle="tab" href="#tab-classes-evening"> Agşam  </a>
+  </li>
+
+</ul>
+<div class="tab-content">
+
+<div id="tab-classes-morning" class="tab-pane active">
+
+  <div class="panel-body">
+
+    <div class="table-responsive">
+
+      <table class="table table-striped table-bordered table-hover dataTables-example" >
+        <thead>
+        <tr>
+          <th>Synp</th>
+          <th>Duşenbe</th>
+          <th>Sişenbe</th>
+          <th>Çarşenbe</th>
+          <th>Penşenbe</th>
+          <th>Anna</th>
+          <th>Şenbe</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <% @rooms.each do |r| %>
+
+            <% @tmtblGroupsAll = Timetable.where(:group_id => @current_season_morning_groups_ids, :room_id => r.id) %>
+
+            <tr class="gradeA">
+                <td>
+                  <% if (check_restrictions('rooms', 'show')) %>
+                    <%= link_to ("<b>"+r.roomShortTitle+"</b>").html_safe, r %>
+                  <% else %>
+                      <%= ("<b>"+r.roomShortTitle+"</b>").html_safe %>
+                  <% end %>
+                </td>
+                <td>
+                  <% @tmtblGroups = @tmtblGroupsAll.where(:room_id => r.id, :weekday => 1) %>
+                  <% if (!@tmtblGroups.empty?) %>
+                    <% @tmtblGroups.each do |tbl| %>
+                      <% @this_group = Group.where(:id => tbl.group_id).first %>
+                          <% if (current_user.role.name == "teacher") %>
+                              <% if @this_group.teacher %>
+                                  <button type="button" class="btn btn-primary"><b><%= @this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"." %></b></button>&nbsp;
+                              <% else %>
+                                  <button type="button" class="btn btn-primary"><b><%= @this_group.groupTitle %></b></button>
+                              <% end %>
+                          <% else %>
+                              <% if @this_group.teacher %>
+                                  <%= link_to ("<b>"+@this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"."+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                              <% else %>
+                                  <%= link_to ("<b>"+@this_group.groupTitle+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                              <% end %>
+                          <% end %>
+                    <% end %>
+                  <% else %>
+                      <button type="button" class="btn btn-warning"><b>BOŞ</b></button>
+                  <% end %>
+                </td>
+                <td>
+                  <% @tmtblGroups = @tmtblGroupsAll.where(:room_id => r.id, :weekday => 2) %>
+                  <% if (!@tmtblGroups.empty?) %>
+                      <% @tmtblGroups.each do |tbl| %>
+                          <% @this_group = Group.where(:id => tbl.group_id).first %>
+                          <% if (current_user.role.name == "teacher") %>
+                              <% if @this_group.teacher %>
+                                  <button type="button" class="btn btn-primary"><b><%= @this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"." %></b></button>&nbsp;
+                              <% else %>
+                                  <button type="button" class="btn btn-primary"><b><%= @this_group.groupTitle %></b></button>
+                              <% end %>
+                          <% else %>
+                              <% if @this_group.teacher %>
+                                  <%= link_to ("<b>"+@this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"."+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                              <% else %>
+                                  <%= link_to ("<b>"+@this_group.groupTitle+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                              <% end %>
+                          <% end %>
+                      <% end %>
+                  <% else %>
+                      <button type="button" class="btn btn-warning"><b>BOŞ</b></button>
+                  <% end %>
+                </td>
+                <td>
+                  <% @tmtblGroups = @tmtblGroupsAll.where(:room_id => r.id, :weekday => 3) %>
+                  <% if (!@tmtblGroups.empty?) %>
+                      <% @tmtblGroups.each do |tbl| %>
+                          <% @this_group = Group.where(:id => tbl.group_id).first %>
+                          <% if (current_user.role.name == "teacher") %>
+                              <% if @this_group.teacher %>
+                                  <button type="button" class="btn btn-primary"><b><%= @this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"." %></b></button>&nbsp;
+                              <% else %>
+                                  <button type="button" class="btn btn-primary"><b><%= @this_group.groupTitle %></b></button>
+                              <% end %>
+                          <% else %>
+                              <% if @this_group.teacher %>
+                                  <%= link_to ("<b>"+@this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"."+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                              <% else %>
+                                  <%= link_to ("<b>"+@this_group.groupTitle+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                              <% end %>
+                          <% end %>
+                      <% end %>
+                  <% else %>
+                      <button type="button" class="btn btn-warning"><b>BOŞ</b></button>
+                  <% end %>
+                </td>
+                <td>
+                  <% @tmtblGroups = @tmtblGroupsAll.where(:room_id => r.id, :weekday => 4) %>
+                  <% if (!@tmtblGroups.empty?) %>
+                      <% @tmtblGroups.each do |tbl| %>
+                          <% @this_group = Group.where(:id => tbl.group_id).first %>
+                          <% if (current_user.role.name == "teacher") %>
+                              <% if @this_group.teacher %>
+                                  <button type="button" class="btn btn-primary"><b><%= @this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"." %></b></button>&nbsp;
+                              <% else %>
+                                  <button type="button" class="btn btn-primary"><b><%= @this_group.groupTitle %></b></button>
+                              <% end %>
+                          <% else %>
+                              <% if @this_group.teacher %>
+                                  <%= link_to ("<b>"+@this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"."+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                              <% else %>
+                                  <%= link_to ("<b>"+@this_group.groupTitle+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                              <% end %>
+                          <% end %>
+                      <% end %>
+                  <% else %>
+                      <button type="button" class="btn btn-warning"><b>BOŞ</b></button>
+                  <% end %>
+                </td>
+                <td>
+                  <% @tmtblGroups = @tmtblGroupsAll.where(:room_id => r.id, :weekday => 5) %>
+                  <% if (!@tmtblGroups.empty?) %>
+                      <% @tmtblGroups.each do |tbl| %>
+                          <% @this_group = Group.where(:id => tbl.group_id).first %>
+                          <% if (current_user.role.name == "teacher") %>
+                              <% if @this_group.teacher %>
+                                  <button type="button" class="btn btn-primary"><b><%= @this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"." %></b></button>&nbsp;
+                              <% else %>
+                                  <button type="button" class="btn btn-primary"><b><%= @this_group.groupTitle %></b></button>
+                              <% end %>
+                          <% else %>
+                              <% if @this_group.teacher %>
+                                  <%= link_to ("<b>"+@this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"."+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                              <% else %>
+                                  <%= link_to ("<b>"+@this_group.groupTitle+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                              <% end %>
+                          <% end %>
+                      <% end %>
+                  <% else %>
+                      <button type="button" class="btn btn-warning"><b>BOŞ</b></button>
+                  <% end %>
+                </td>
+                <td>
+                  <% @tmtblGroups = @tmtblGroupsAll.where(:room_id => r.id, :weekday => 6) %>
+                  <% if (!@tmtblGroups.empty?) %>
+                      <% @tmtblGroups.each do |tbl| %>
+                          <% @this_group = Group.where(:id => tbl.group_id).first %>
+                          <% if (current_user.role.name == "teacher") %>
+                              <% if @this_group.teacher %>
+                                  <button type="button" class="btn btn-primary"><b><%= @this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"." %></b></button>&nbsp;
+                              <% else %>
+                                  <button type="button" class="btn btn-primary"><b><%= @this_group.groupTitle %></b></button>
+                              <% end %>
+                          <% else %>
+                              <% if @this_group.teacher %>
+                                  <%= link_to ("<b>"+@this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"."+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                              <% else %>
+                                  <%= link_to ("<b>"+@this_group.groupTitle+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                              <% end %>
+                          <% end %>
+                      <% end %>
+                  <% else %>
+                      <button type="button" class="btn btn-warning"><b>BOŞ</b></button>
+                  <% end %>
+                </td>
+            </tr>
+        <% end %>
+
+
+        </tbody>
+        <tfoot>
+        <tr>
+          <th>Synp</th>
+          <th>Duşenbe</th>
+          <th>Sişenbe</th>
+          <th>Çarşenbe</th>
+          <th>Penşenbe</th>
+          <th>Anna</th>
+          <th>Şenbe</th>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+
+<div id="tab-classes-noon" class="tab-pane">
+
+  <div class="panel-body">
+
+    <div class="table-responsive">
+
+      <table class="table table-striped table-bordered table-hover dataTables-example" >
+        <thead>
+        <tr>
+          <th>Synp</th>
+          <th>Duşenbe</th>
+          <th>Sişenbe</th>
+          <th>Çarşenbe</th>
+          <th>Penşenbe</th>
+          <th>Anna</th>
+          <th>Şenbe</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <% @rooms.each do |r| %>
+
+            <% @tmtblGroupsAll = Timetable.where(:group_id => @current_season_noon_groups_ids, :room_id => r.id) %>
+
+            <tr class="gradeA">
+              <td>
+                <% if (check_restrictions('rooms', 'show')) %>
+                    <%= link_to ("<b>"+r.roomShortTitle+"</b>").html_safe, r %>
+                <% else %>
+                    <%= ("<b>"+r.roomShortTitle+"</b>").html_safe %>
+                <% end %>
+              </td>
+              <td>
+                <% @tmtblGroups = @tmtblGroupsAll.where(:weekday => 1) %>
+                <% if (!@tmtblGroups.empty?) %>
+                    <% @tmtblGroups.each do |tbl| %>
+                        <% @this_group = Group.where(:id => tbl.group_id).first %>
+                        <% if (current_user.role.name == "teacher") %>
+                            <% if @this_group.teacher %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"." %></b></button>&nbsp;
+                            <% else %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.groupTitle %></b></button>
+                            <% end %>
+                        <% else %>
+                            <% if @this_group.teacher %>
+                                <%= link_to ("<b>"+@this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"."+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% else %>
+                                <%= link_to ("<b>"+@this_group.groupTitle+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                <% else %>
+                    <button type="button" class="btn btn-warning"><b>BOŞ</b></button>
+                <% end %>
+              </td>
+              <td>
+                <% @tmtblGroups = @tmtblGroupsAll.where(:weekday => 2) %>
+                <% if (!@tmtblGroups.empty?) %>
+                    <% @tmtblGroups.each do |tbl| %>
+                        <% @this_group = Group.where(:id => tbl.group_id).first %>
+                        <% if (current_user.role.name == "teacher") %>
+                            <% if @this_group.teacher %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"." %></b></button>&nbsp;
+                            <% else %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.groupTitle %></b></button>
+                            <% end %>
+                        <% else %>
+                            <% if @this_group.teacher %>
+                                <%= link_to ("<b>"+@this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"."+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% else %>
+                                <%= link_to ("<b>"+@this_group.groupTitle+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                <% else %>
+                    <button type="button" class="btn btn-warning"><b>BOŞ</b></button>
+                <% end %>
+              </td>
+              <td>
+                <% @tmtblGroups = @tmtblGroupsAll.where(:weekday => 3) %>
+                <% if (!@tmtblGroups.empty?) %>
+                    <% @tmtblGroups.each do |tbl| %>
+                        <% @this_group = Group.where(:id => tbl.group_id).first %>
+                        <% if (current_user.role.name == "teacher") %>
+                            <% if @this_group.teacher %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"." %></b></button>&nbsp;
+                            <% else %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.groupTitle %></b></button>
+                            <% end %>
+                        <% else %>
+                            <% if @this_group.teacher %>
+                                <%= link_to ("<b>"+@this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"."+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% else %>
+                                <%= link_to ("<b>"+@this_group.groupTitle+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                <% else %>
+                    <button type="button" class="btn btn-warning"><b>BOŞ</b></button>
+                <% end %>
+              </td>
+              <td>
+                <% @tmtblGroups = @tmtblGroupsAll.where(:weekday => 4) %>
+                <% if (!@tmtblGroups.empty?) %>
+                    <% @tmtblGroups.each do |tbl| %>
+                        <% @this_group = Group.where(:id => tbl.group_id).first %>
+                        <% if (current_user.role.name == "teacher") %>
+                            <% if @this_group.teacher %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"." %></b></button>&nbsp;
+                            <% else %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.groupTitle %></b></button>
+                            <% end %>
+                        <% else %>
+                            <% if @this_group.teacher %>
+                                <%= link_to ("<b>"+@this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"."+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% else %>
+                                <%= link_to ("<b>"+@this_group.groupTitle+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                <% else %>
+                    <button type="button" class="btn btn-warning"><b>BOŞ</b></button>
+                <% end %>
+              </td>
+              <td>
+                <% @tmtblGroups = @tmtblGroupsAll.where(:weekday => 5) %>
+                <% if (!@tmtblGroups.empty?) %>
+                    <% @tmtblGroups.each do |tbl| %>
+                        <% @this_group = Group.where(:id => tbl.group_id).first %>
+                        <% if (current_user.role.name == "teacher") %>
+                            <% if @this_group.teacher %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"." %></b></button>&nbsp;
+                            <% else %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.groupTitle %></b></button>
+                            <% end %>
+                        <% else %>
+                            <% if @this_group.teacher %>
+                                <%= link_to ("<b>"+@this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"."+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% else %>
+                                <%= link_to ("<b>"+@this_group.groupTitle+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                <% else %>
+                    <button type="button" class="btn btn-warning"><b>BOŞ</b></button>
+                <% end %>
+              </td>
+              <td>
+                <% @tmtblGroups = @tmtblGroupsAll.where(:weekday => 6) %>
+                <% if (!@tmtblGroups.empty?) %>
+                    <% @tmtblGroups.each do |tbl| %>
+                        <% @this_group = Group.where(:id => tbl.group_id).first %>
+                        <% if (current_user.role.name == "teacher") %>
+                            <% if @this_group.teacher %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"." %></b></button>&nbsp;
+                            <% else %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.groupTitle %></b></button>
+                            <% end %>
+                        <% else %>
+                            <% if @this_group.teacher %>
+                                <%= link_to ("<b>"+@this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"."+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% else %>
+                                <%= link_to ("<b>"+@this_group.groupTitle+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                <% else %>
+                    <button type="button" class="btn btn-warning"><b>BOŞ</b></button>
+                <% end %>
+              </td>
+            </tr>
+        <% end %>
+
+        </tbody>
+        <tfoot>
+        <tr>
+          <th>Synp</th>
+          <th>Duşenbe</th>
+          <th>Sişenbe</th>
+          <th>Çarşenbe</th>
+          <th>Penşenbe</th>
+          <th>Anna</th>
+          <th>Şenbe</th>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+<div id="tab-classes-afternoon" class="tab-pane">
+
+  <div class="panel-body">
+
+    <div class="table-responsive">
+
+      <table class="table table-striped table-bordered table-hover dataTables-example" >
+        <thead>
+        <tr>
+          <th>Synp</th>
+          <th>Duşenbe</th>
+          <th>Sişenbe</th>
+          <th>Çarşenbe</th>
+          <th>Penşenbe</th>
+          <th>Anna</th>
+          <th>Şenbe</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <% @rooms.each do |r| %>
+
+            <% @tmtblGroupsAll = Timetable.where(:group_id => @current_season_afternoon_groups_ids, :room_id => r.id) %>
+
+            <tr class="gradeA">
+              <td>
+                <% if (check_restrictions('rooms', 'show')) %>
+                    <%= link_to ("<b>"+r.roomShortTitle+"</b>").html_safe, r %>
+                <% else %>
+                    <%= ("<b>"+r.roomShortTitle+"</b>").html_safe %>
+                <% end %>
+              </td>
+              <td>
+                <% @tmtblGroups = @tmtblGroupsAll.where(:weekday => 1) %>
+                <% if (!@tmtblGroups.empty?) %>
+                    <% @tmtblGroups.each do |tbl| %>
+                        <% @this_group = Group.where(:id => tbl.group_id).first %>
+                        <% if (current_user.role.name == "teacher") %>
+                            <% if @this_group.teacher %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"." %></b></button>&nbsp;
+                            <% else %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.groupTitle %></b></button>
+                            <% end %>
+                        <% else %>
+                            <% if @this_group.teacher %>
+                                <%= link_to ("<b>"+@this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"."+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% else %>
+                                <%= link_to ("<b>"+@this_group.groupTitle+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                <% else %>
+                    <button type="button" class="btn btn-warning"><b>BOŞ</b></button>
+                <% end %>
+              </td>
+              <td>
+                <% @tmtblGroups = @tmtblGroupsAll.where(:weekday => 2) %>
+                <% if (!@tmtblGroups.empty?) %>
+                    <% @tmtblGroups.each do |tbl| %>
+                        <% @this_group = Group.where(:id => tbl.group_id).first %>
+                        <% if (current_user.role.name == "teacher") %>
+                            <% if @this_group.teacher %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"." %></b></button>&nbsp;
+                            <% else %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.groupTitle %></b></button>
+                            <% end %>
+                        <% else %>
+                            <% if @this_group.teacher %>
+                                <%= link_to ("<b>"+@this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"."+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% else %>
+                                <%= link_to ("<b>"+@this_group.groupTitle+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                <% else %>
+                    <button type="button" class="btn btn-warning"><b>BOŞ</b></button>
+                <% end %>
+              </td>
+              <td>
+                <% @tmtblGroups = @tmtblGroupsAll.where(:weekday => 3) %>
+                <% if (!@tmtblGroups.empty?) %>
+                    <% @tmtblGroups.each do |tbl| %>
+                        <% @this_group = Group.where(:id => tbl.group_id).first %>
+                        <% if (current_user.role.name == "teacher") %>
+                            <% if @this_group.teacher %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"." %></b></button>&nbsp;
+                            <% else %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.groupTitle %></b></button>
+                            <% end %>
+                        <% else %>
+                            <% if @this_group.teacher %>
+                                <%= link_to ("<b>"+@this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"."+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% else %>
+                                <%= link_to ("<b>"+@this_group.groupTitle+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                <% else %>
+                    <button type="button" class="btn btn-warning"><b>BOŞ</b></button>
+                <% end %>
+              </td>
+              <td>
+                <% @tmtblGroups = @tmtblGroupsAll.where(:weekday => 4) %>
+                <% if (!@tmtblGroups.empty?) %>
+                    <% @tmtblGroups.each do |tbl| %>
+                        <% @this_group = Group.where(:id => tbl.group_id).first %>
+                        <% if (current_user.role.name == "teacher") %>
+                            <% if @this_group.teacher %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"." %></b></button>&nbsp;
+                            <% else %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.groupTitle %></b></button>
+                            <% end %>
+                        <% else %>
+                            <% if @this_group.teacher %>
+                                <%= link_to ("<b>"+@this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"."+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% else %>
+                                <%= link_to ("<b>"+@this_group.groupTitle+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                <% else %>
+                    <button type="button" class="btn btn-warning"><b>BOŞ</b></button>
+                <% end %>
+              </td>
+              <td>
+                <% @tmtblGroups = @tmtblGroupsAll.where(:weekday => 5) %>
+                <% if (!@tmtblGroups.empty?) %>
+                    <% @tmtblGroups.each do |tbl| %>
+                        <% @this_group = Group.where(:id => tbl.group_id).first %>
+                        <% if (current_user.role.name == "teacher") %>
+                            <% if @this_group.teacher %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"." %></b></button>&nbsp;
+                            <% else %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.groupTitle %></b></button>
+                            <% end %>
+                        <% else %>
+                            <% if @this_group.teacher %>
+                                <%= link_to ("<b>"+@this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"."+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% else %>
+                                <%= link_to ("<b>"+@this_group.groupTitle+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                <% else %>
+                    <button type="button" class="btn btn-warning"><b>BOŞ</b></button>
+                <% end %>
+              </td>
+              <td>
+                <% @tmtblGroups = @tmtblGroupsAll.where(:weekday => 6) %>
+                <% if (!@tmtblGroups.empty?) %>
+                    <% @tmtblGroups.each do |tbl| %>
+                        <% @this_group = Group.where(:id => tbl.group_id).first %>
+                        <% if (current_user.role.name == "teacher") %>
+                            <% if @this_group.teacher %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"." %></b></button>&nbsp;
+                            <% else %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.groupTitle %></b></button>
+                            <% end %>
+                        <% else %>
+                            <% if @this_group.teacher %>
+                                <%= link_to ("<b>"+@this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"."+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% else %>
+                                <%= link_to ("<b>"+@this_group.groupTitle+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                <% else %>
+                    <button type="button" class="btn btn-warning"><b>BOŞ</b></button>
+                <% end %>
+              </td>
+            </tr>
+        <% end %>
+
+        </tbody>
+        <tfoot>
+        <tr>
+          <th>Synp</th>
+          <th>Duşenbe</th>
+          <th>Sişenbe</th>
+          <th>Çarşenbe</th>
+          <th>Penşenbe</th>
+          <th>Anna</th>
+          <th>Şenbe</th>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+
+<div id="tab-classes-evening" class="tab-pane">
+
+  <div class="panel-body">
+
+    <div class="table-responsive">
+
+      <table class="table table-striped table-bordered table-hover dataTables-example" >
+        <thead>
+        <tr>
+          <th>Synp</th>
+          <th>Duşenbe</th>
+          <th>Sişenbe</th>
+          <th>Çarşenbe</th>
+          <th>Penşenbe</th>
+          <th>Anna</th>
+          <th>Şenbe</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <% @rooms.each do |r| %>
+
+            <% @tmtblGroupsAll = Timetable.where(:group_id => @current_season_evening_groups_ids, :room_id => r.id) %>
+
+            <tr class="gradeA">
+              <td>
+                <% if (check_restrictions('rooms', 'show')) %>
+                    <%= link_to ("<b>"+r.roomShortTitle+"</b>").html_safe, r %>
+                <% else %>
+                    <%= ("<b>"+r.roomShortTitle+"</b>").html_safe %>
+                <% end %>
+              </td>
+              <td>
+                <% @tmtblGroups = @tmtblGroupsAll.where(:weekday => 1) %>
+                <% if (!@tmtblGroups.empty?) %>
+                    <% @tmtblGroups.each do |tbl| %>
+                        <% @this_group = Group.where(:id => tbl.group_id).first %>
+                        <% if (current_user.role.name == "teacher") %>
+                            <% if @this_group.teacher %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"." %></b></button>&nbsp;
+                            <% else %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.groupTitle %></b></button>
+                            <% end %>
+                        <% else %>
+                            <% if @this_group.teacher %>
+                                <%= link_to ("<b>"+@this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"."+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% else %>
+                                <%= link_to ("<b>"+@this_group.groupTitle+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                <% else %>
+                    <button type="button" class="btn btn-warning"><b>BOŞ</b></button>
+                <% end %>
+              </td>
+              <td>
+                <% @tmtblGroups = @tmtblGroupsAll.where(:weekday => 2) %>
+                <% if (!@tmtblGroups.empty?) %>
+                    <% @tmtblGroups.each do |tbl| %>
+                        <% @this_group = Group.where(:id => tbl.group_id).first %>
+                        <% if (current_user.role.name == "teacher") %>
+                            <% if @this_group.teacher %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"." %></b></button>&nbsp;
+                            <% else %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.groupTitle %></b></button>
+                            <% end %>
+                        <% else %>
+                            <% if @this_group.teacher %>
+                                <%= link_to ("<b>"+@this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"."+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% else %>
+                                <%= link_to ("<b>"+@this_group.groupTitle+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                <% else %>
+                    <button type="button" class="btn btn-warning"><b>BOŞ</b></button>
+                <% end %>
+              </td>
+              <td>
+                <% @tmtblGroups = @tmtblGroupsAll.where(:weekday => 3) %>
+                <% if (!@tmtblGroups.empty?) %>
+                    <% @tmtblGroups.each do |tbl| %>
+                        <% @this_group = Group.where(:id => tbl.group_id).first %>
+                        <% if (current_user.role.name == "teacher") %>
+                            <% if @this_group.teacher %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"." %></b></button>&nbsp;
+                            <% else %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.groupTitle %></b></button>
+                            <% end %>
+                        <% else %>
+                            <% if @this_group.teacher %>
+                                <%= link_to ("<b>"+@this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"."+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% else %>
+                                <%= link_to ("<b>"+@this_group.groupTitle+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                <% else %>
+                    <button type="button" class="btn btn-warning"><b>BOŞ</b></button>
+                <% end %>
+              </td>
+              <td>
+                <% @tmtblGroups = @tmtblGroupsAll.where(:weekday => 4) %>
+                <% if (!@tmtblGroups.empty?) %>
+                    <% @tmtblGroups.each do |tbl| %>
+                        <% @this_group = Group.where(:id => tbl.group_id).first %>
+                        <% if (current_user.role.name == "teacher") %>
+                            <% if @this_group.teacher %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"." %></b></button>&nbsp;
+                            <% else %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.groupTitle %></b></button>
+                            <% end %>
+                        <% else %>
+                            <% if @this_group.teacher %>
+                                <%= link_to ("<b>"+@this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"."+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% else %>
+                                <%= link_to ("<b>"+@this_group.groupTitle+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                <% else %>
+                    <button type="button" class="btn btn-warning"><b>BOŞ</b></button>
+                <% end %>
+              </td>
+              <td>
+                <% @tmtblGroups = @tmtblGroupsAll.where(:weekday => 5) %>
+                <% if (!@tmtblGroups.empty?) %>
+                    <% @tmtblGroups.each do |tbl| %>
+                        <% @this_group = Group.where(:id => tbl.group_id).first %>
+                        <% if (current_user.role.name == "teacher") %>
+                            <% if @this_group.teacher %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"." %></b></button>&nbsp;
+                            <% else %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.groupTitle %></b></button>
+                            <% end %>
+                        <% else %>
+                            <% if @this_group.teacher %>
+                                <%= link_to ("<b>"+@this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"."+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% else %>
+                                <%= link_to ("<b>"+@this_group.groupTitle+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                <% else %>
+                    <button type="button" class="btn btn-warning"><b>BOŞ</b></button>
+                <% end %>
+              </td>
+              <td>
+                <% @tmtblGroups = @tmtblGroupsAll.where(:weekday => 6) %>
+                <% if (!@tmtblGroups.empty?) %>
+                    <% @tmtblGroups.each do |tbl| %>
+                        <% @this_group = Group.where(:id => tbl.group_id).first %>
+                        <% if (current_user.role.name == "teacher") %>
+                            <% if @this_group.teacher %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"." %></b></button>&nbsp;
+                            <% else %>
+                                <button type="button" class="btn btn-primary"><b><%= @this_group.groupTitle %></b></button>
+                            <% end %>
+                        <% else %>
+                            <% if @this_group.teacher %>
+                                <%= link_to ("<b>"+@this_group.teacher.teacherFName+" "+@this_group.teacher.teacherLName.first(1)+"."+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% else %>
+                                <%= link_to ("<b>"+@this_group.groupTitle+"</b>").html_safe, @this_group, :class => "btn btn-primary" %> &nbsp;
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                <% else %>
+                    <button type="button" class="btn btn-warning"><b>BOŞ</b></button>
+                <% end %>
+              </td>
+            </tr>
+        <% end %>
+
+        </tbody>
+        <tfoot>
+        <tr>
+          <th>Synp</th>
+          <th>Duşenbe</th>
+          <th>Sişenbe</th>
+          <th>Çarşenbe</th>
+          <th>Penşenbe</th>
+          <th>Anna</th>
+          <th>Şenbe</th>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<br>
+

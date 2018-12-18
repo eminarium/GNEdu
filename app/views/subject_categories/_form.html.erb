@@ -1,0 +1,45 @@
+<%= form_for(@subject_category) do |f| %>
+  <% if @subject_category.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@subject_category.errors.count, "error") %> prohibited this subject_category from being saved:</h2>
+
+      <ul>
+      <% @subject_category.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<div><label class="col-sm-4 control-label">Doly Ady</label>
+  <div class="col-sm-8"><%= f.text_field :subjectCategoryFullName, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Gysga Ady</label>
+  <div class="col-sm-8"><%= f.text_field :subjectCategoryShortName, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+<div><label class="col-sm-4 control-label">Kody</label>
+  <div class="col-sm-8"><%= f.text_field :subject_code, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br>
+
+
+<div><label class="col-sm-4 control-label">Bellikler</label>
+  <div class="col-sm-8"><%= f.text_area :notes, :type => "text", :class => "form-control"  %></div>
+</div>
+
+<br><br><br><br><br><br>
+
+<div class="actions">
+  <%= f.submit "Kabul Et", :class => "btn btn-success" %>
+</div>
+
+<br>
+
+<% end %>
